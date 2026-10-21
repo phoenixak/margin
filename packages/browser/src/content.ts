@@ -192,6 +192,11 @@ function currentSelection(): { field: Field; start: number; end: number } | unde
   let { start, end } = pick;
   while (start < end && /\s/.test(text[start]!)) start++;
   while (end > start && /\s/.test(text[end - 1]!)) end--;
+  // Widen a selection that starts or stops mid-word to whole words, or the model
+  // completes the word and the rest of it is left behind ("test" + "t.").
+  const word = /[\p{L}\p{N}'’]/u;
+  while (start > 0 && word.test(text[start - 1]!) && word.test(text[start]!)) start--;
+  while (end < text.length && word.test(text[end]!) && word.test(text[end - 1]!)) end++;
   return end > start ? { field: pick.field, start, end } : undefined;
 }
 
