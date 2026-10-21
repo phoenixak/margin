@@ -1,0 +1,26 @@
+name: Provider request
+description: Ask for a model provider Margin doesn't support yet (OpenAI, Anthropic, OpenRouter, …).
+title: "Provider: <name>"
+labels: [provider, gathering interest]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Margin adds providers when people ask for them. **First check the [open provider requests](https://github.com/phoenixak/margin/issues?q=is%3Aissue+label%3Aprovider) and 👍 the one you want** instead of opening a duplicate.
+        Any server with an OpenAI-compatible API (llama.cpp, vLLM, Jan, …) may already work through the "Local" provider by changing the base URL.
+  - type: input
+    id: provider
+    attributes: { label: Provider, placeholder: "Mistral API" }
+    validations: { required: true }
+  - type: input
+    id: models
+    attributes: { label: Models you'd use, placeholder: "mistral-small-latest" }
+  - type: textarea
+    id: why
+    attributes: { label: Why this one, description: "Price, privacy terms, quality, a key you already have…" }
+  - type: dropdown
+    id: help
+    attributes:
+      label: Can you help?
+      multiple: true
+      options: ["I can test it and post a model review", "I can send a pull request (packages/core/src/model.ts shows the pattern)", "I'd just use it"]

@@ -1,0 +1,46 @@
+name: Model review
+description: You ran Margin with a model (local or hosted). Share how it did so others can pick a model.
+title: "Model review: <model> on <hardware>"
+labels: [model-review]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks! Reviews are how Margin learns which models work. The README's model table links to them.
+        **Don't paste your own documents.** The two evals below use synthetic sentences and public datasets, and their results contain no private text.
+  - type: input
+    id: model
+    attributes: { label: Model, placeholder: "gemma4:26b-a4b-it-qat" }
+    validations: { required: true }
+  - type: dropdown
+    id: server
+    attributes: { label: Server or provider, options: [Ollama, LM Studio, Other OpenAI-compatible server, Gemini API] }
+    validations: { required: true }
+  - type: input
+    id: hardware
+    attributes: { label: Hardware, description: "For local models.", placeholder: "RX 9070 XT 16 GB, 32 GB RAM / M3 Pro 36 GB / CPU only" }
+  - type: dropdown
+    id: where
+    attributes: { label: Where you used it, multiple: true, options: [Eval, CLI, VS Code, Browser extension, margin-ls, Obsidian] }
+  - type: textarea
+    id: eval
+    attributes:
+      label: Synthetic eval
+      description: "`pnpm -F @margin/eval eval -- --provider local --model <model> --label <name>` (use `--provider gemini` for Gemini). Paste the table from `packages/eval/results/<date>-<name>.md`."
+      render: markdown
+  - type: textarea
+    id: human
+    attributes:
+      label: Human-text eval
+      description: "`pnpm -F @margin/eval fetch-human`, then `pnpm -F @margin/eval eval-human -- --provider local --model <model> --label <name>`. Paste the two tables from `results/<date>-human-<name>.md`."
+      render: markdown
+  - type: input
+    id: speed
+    attributes: { label: Speed, description: "Roughly how long a check takes in the editor, or the eval's ms per sentence.", placeholder: "~1.5 s per paragraph" }
+  - type: dropdown
+    id: verdict
+    attributes: { label: Would you keep it on automatic checking?, options: ["Yes", "Only on save or manual", "No, too many bad suggestions", "No, too slow"] }
+    validations: { required: true }
+  - type: textarea
+    id: notes
+    attributes: { label: Notes, description: "Wrong or unnecessary suggestions (use made-up sentences that show the pattern), setup trouble, thinking that wouldn't switch off…" }

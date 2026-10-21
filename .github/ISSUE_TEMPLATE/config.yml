@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: A spelling or grammar rule Harper gets wrong
+    url: https://github.com/Automattic/harper/issues
+    about: Harper's own lints belong in Harper's repository. Margin only adds an AI pass on top.

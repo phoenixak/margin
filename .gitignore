@@ -9,3 +9,4 @@ vendor/
 .DS_Store
 *.vsix
 release/
+packages/eval/data/

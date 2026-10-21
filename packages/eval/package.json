@@ -8,7 +8,9 @@
   "scripts": {
     "eval": "node --experimental-strip-types src/run.ts",
     "typecheck": "tsc -p . --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "fetch-human": "node --experimental-strip-types src/fetch-human.ts",
+    "eval-human": "node --experimental-strip-types src/human.ts"
   },
   "dependencies": {
     "@margin/core": "workspace:*",
