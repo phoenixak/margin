@@ -187,7 +187,8 @@ export function widenSelection(text: string, start: number, end: number): { star
   while (start > 0 && word.test(text[start - 1]!) && word.test(text[start]!)) start--;
   while (end < text.length && word.test(text[end]!) && word.test(text[end - 1]!)) end++;
   if (end > start && word.test(text[end - 1]!)) {
-    while (end < text.length && /[.!?…,;:)\]"'”’]/.test(text[end]!)) end++;
+    // Only sentence-ending marks (and closing quotes/brackets): a comma belongs to what follows.
+    while (end < text.length && /[.!?…)\]"'”’]/.test(text[end]!)) end++;
   }
   return end > start ? { start, end } : undefined;
 }

@@ -99,6 +99,11 @@ describe('widenSelection', () => {
   it('trims surrounding whitespace and keeps an exact selection', () => {
     expect(slice(widenSelection(text, text.indexOf(' We'), text.indexOf('station.') + 'station.'.length + 1))).toBe('We went to the the station.');
   });
+  it('leaves a following comma alone', () => {
+    const t = 'The results were surprising, the team decided.';
+    const r = widenSelection(t, 4, t.indexOf(','));
+    expect(t.slice(r!.start, r!.end)).toBe('results were surprising');
+  });
   it('returns undefined for whitespace only', () => {
     expect(widenSelection('a   b', 1, 4)).toBeUndefined();
   });
