@@ -248,11 +248,12 @@ Rewrite: keep the language, dialect, meaning, Markdown and placeholders; output 
 
 ### Phase 5: Browser extension (Chrome + Firefox)
 
-- [ ] One MV3 codebase (`browser_specific_settings.gecko` for Firefox), as Harper does.
-- [ ] Background service worker calls the model; content script finds editable fields (`textarea`, `contenteditable`), maps text ↔ DOM ranges, draws underlines in an overlay, and offers fixes on click.
-- [ ] harper.js in the extension for dedup only.
-- [ ] Options page: provider, key (`chrome.storage.local`, not encrypted; say so), site allow/deny list, consent notice. Default: off on all sites until enabled per site or globally.
-- [ ] Rewrite/tone from a context-menu item on selected text.
+- [x] One MV3 codebase (`browser_specific_settings.gecko` for Firefox), as Harper does. `pnpm -F @margin/browser build` → `dist/chrome`, `dist/firefox`.
+- [x] Background service worker calls the model; content script finds editable fields (`textarea`, `contenteditable`; skips `spellcheck="false"`), maps text ↔ DOM ranges (`field.ts`, tested), draws underlines (CSS Custom Highlight API for contenteditable, a mirror overlay for textareas), and offers Apply / Ignore on click.
+- [x] harper.js in the extension for dedup only (the slim WASM shipped as a file, loaded by URL; 20 MB).
+- [x] Options page: local first (detect servers, pick a model, OS-specific OLLAMA_ORIGINS / LM Studio CORS help), Gemini (key in `chrome.storage.local`, not encrypted, said so; explicit consent checkbox), test button, sites list, clear cache/ignored. Sites are off until enabled one by one from the toolbar popup (optional host permission per origin).
+- [x] Rewrite/tone from the context menu (works on any page via activeTab), streamed into a card with Accept/Reject.
+- [ ] Manual run in real Chrome and Firefox (`pnpm -F @margin/browser serve-test` serves a test page at http://localhost:5173).
 - [ ] Out of scope at first: Google Docs (canvas rendering) and other custom editors.
 
 ### Phase 6: Language server and Obsidian

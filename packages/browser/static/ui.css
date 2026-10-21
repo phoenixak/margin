@@ -1,0 +1,25 @@
+:root { --accent: #7c3aed; --fg: #1f2937; --muted: #6b7280; --bg: #ffffff; --line: #e5e7eb; --help: #fff7ed; --help-line: #fdba74; }
+@media (prefers-color-scheme: dark) { :root { --fg: #f3f4f6; --muted: #9ca3af; --bg: #111827; --line: #374151; --help: #2a1f12; --help-line: #b45309; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 680px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { color: var(--accent); margin: 0 0 4px; font-size: 22px; }
+h2 { font-size: 15px; margin: 0 0 8px; }
+section { border-top: 1px solid var(--line); padding: 16px 0; }
+.lead { color: var(--muted); margin-top: 0; }
+label { display: block; margin: 8px 0; }
+label input[type=url], label input[type=password], label select { display: block; width: 100%; margin-top: 4px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: inherit; font: inherit; }
+label input[type=number] { width: 90px; padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: inherit; font: inherit; }
+.choice { display: flex; gap: 8px; align-items: flex-start; }
+.choice small, .muted { color: var(--muted); display: block; }
+.check { display: flex; gap: 8px; align-items: flex-start; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 8px 0; }
+button { font: inherit; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--line); background: transparent; color: inherit; cursor: pointer; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+code { font-size: 12px; padding: 1px 4px; border-radius: 4px; background: rgba(124, 58, 237, .1); }
+.help { background: var(--help); border: 1px solid var(--help-line); border-radius: 8px; padding: 10px 12px; white-space: pre-wrap; }
+.saved { color: var(--accent); min-height: 1.5em; }
+ul { padding-left: 18px; }
+li { margin: 4px 0; }
+/* popup */
+body.popup main { width: 300px; padding: 12px; }

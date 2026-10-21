@@ -1,4 +1,5 @@
-import { overlaps, type Range, type Suggestion } from '@margin/core';
+import { overlaps } from './guards.js';
+import type { Range, Suggestion } from './types.js';
 
 /** One text change, in offsets of the text before the change (VS Code's `rangeOffset` / `rangeLength`). */
 export interface TextChange {
@@ -37,4 +38,15 @@ const move = (r: Range, d: number): Range => ({ start: r.start + d, end: r.end +
 /** Drops suggestions whose edits overlap ranges Harper now flags (Harper re-lints after our check). */
 export function withoutHarperOverlaps(suggestions: Suggestion[], harper: Range[]): Suggestion[] {
   return suggestions.filter((s) => !harper.some((h) => overlaps(s.range, h)));
+}
+
+/** The single change that turns `before` into `after` (common prefix and suffix), for editors that don't report changes. */
+export function diffText(before: string, after: string): TextChange | undefined {
+  if (before === after) return undefined;
+  let start = 0;
+  const max = Math.min(before.length, after.length);
+  while (start < max && before[start] === after[start]) start++;
+  let end = 0;
+  while (end < max - start && before[before.length - 1 - end] === after[after.length - 1 - end]) end++;
+  return { offset: start, length: before.length - start - end, inserted: after.length - start - end };
 }

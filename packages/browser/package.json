@@ -1,0 +1,26 @@
+{
+  "name": "@margin/browser",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Margin for Chrome and Firefox: an AI second pass for Harper in web text fields.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc -p . --noEmit",
+    "test": "vitest run",
+    "serve-test": "node serve-test.mjs"
+  },
+  "dependencies": {
+    "@margin/core": "workspace:*",
+    "harper.js": "^2.13.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.3.6",
+    "@types/node": "^26.6.5",
+    "esbuild": "^0.28.2",
+    "happy-dom": "^21.0.4",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  }
+}

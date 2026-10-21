@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Margin options</title>
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<main>
+  <h1>Margin</h1>
+  <p class="lead">An AI second pass for <a href="https://writewithharper.com" target="_blank" rel="noopener">Harper</a>. It catches what rules can't (agreement, tense, wrong-but-real words, run-ons) and rewrites on request. Not affiliated with Harper or Automattic.</p>
+
+  <section>
+    <h2>Where your text is checked</h2>
+    <label class="choice"><input type="radio" name="provider" value="local">
+      <span><b>A local model</b> (Ollama or LM Studio): text stays on your computer.
+      <small>Honest status: implemented, but not yet tested by the maintainer. Please report how it goes.</small></span></label>
+    <label class="choice"><input type="radio" name="provider" value="gemini">
+      <span><b>Google Gemini API</b> (Gemma 4) with your own key: tested.
+      <small>The text being checked is sent to Google.</small></span></label>
+    <label class="choice"><input type="radio" name="provider" value="off">
+      <span><b>Off</b>: send nothing.</span></label>
+  </section>
+
+  <section id="local" hidden>
+    <h2>Local model</h2>
+    <label>Server URL <input id="localBaseUrl" type="url" placeholder="http://localhost:11434/v1"></label>
+    <div class="row"><button id="detect">Find models</button><span id="detectStatus" class="muted"></span></div>
+    <label>Model <select id="localModel"></select></label>
+    <p class="muted">Recommended: <code>gemma4:26b-a4b-it-qat</code> (16 GB GPU). It has the same weights as the model that passed Margin's eval (100% precision on 137 test sentences). Smaller models tend to over-correct.</p>
+    <div id="help" class="help" hidden></div>
+  </section>
+
+  <section id="gemini" hidden>
+    <h2>Gemini API</h2>
+    <label>API key <input id="geminiKey" type="password" autocomplete="off" placeholder="from aistudio.google.com"></label>
+    <p class="muted">Stored in this browser's extension storage, which is <b>not encrypted</b>. Anyone with access to this browser profile could read it.</p>
+    <label class="check"><input id="geminiConsent" type="checkbox"> I understand that the text Margin checks is sent to Google's Gemini API, and that on the free tier Google may use it to improve its products. Code, URLs and emails are masked first.</label>
+  </section>
+
+  <section>
+    <h2>Checking</h2>
+    <label>English dialect <select id="dialect">
+      <option>American</option><option>British</option><option>Australian</option><option>Canadian</option><option>Indian</option>
+    </select></label>
+    <label>Check after a pause of <input id="idleDelayMs" type="number" min="500" step="250"> ms</label>
+    <div class="row"><button id="test">Test the model</button><span id="testStatus" class="muted"></span></div>
+  </section>
+
+  <section>
+    <h2>Sites</h2>
+    <p class="muted">Margin checks text fields only on sites you turn on (from its toolbar button). The right-click <b>Margin: rewrite</b> menu works anywhere. Google Docs isn't supported.</p>
+    <ul id="sites"></ul>
+  </section>
+
+  <section>
+    <h2>Stored data</h2>
+    <p class="muted">Margin remembers which sentences needed no change (a hash and a date only, no text) and the suggestions you ignored. No telemetry.</p>
+    <div class="row"><button id="clearCache">Clear cache</button><button id="clearIgnored">Clear ignored</button><span id="clearStatus" class="muted"></span></div>
+  </section>
+
+  <p id="saved" class="saved" aria-live="polite"></p>
+</main>
+<script src="options.js"></script>
+</body>
+</html>

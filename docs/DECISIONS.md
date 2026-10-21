@@ -2,6 +2,14 @@
 
 Newest first. Each entry: the decision, why, and what it changed.
 
+## 2026-10-21: Local route first-class; browser extension
+
+- Phoenix expects most users to run a local model. Local is now listed first everywhere, Margin detects Ollama / LM Studio and lists their models (`core/local.ts`), runs one call at a time for local GPUs (`MarginModel.parallel`), and explains local failures plainly (`core/errors.ts`). `margin models` lists what's installed.
+- `gemma4:26b-a4b-it-qat` gets `autoCheck: true` because it has the same weights as the hosted model that passed the eval; it's still labelled "not yet tested" everywhere. Other local models get a one-time note that they haven't been evaluated and may over-correct (`modelAdvice`).
+- Ollama refuses browser-extension origins by default (docs.ollama.com/faq): the browser options page detects the 403 and gives the OS-specific `OLLAMA_ORIGINS` command; LM Studio needs "Enable CORS". VS Code and the CLI aren't affected (Node sends no Origin).
+- Ollama maps `reasoning_effort: "none"` to thinking off on its OpenAI-compatible API, which is what Margin sends.
+- Browser: Harper's slim WASM ships as a file (20 MB) and loads by URL; the inlined build would be 27 MB of JS in a service worker. The extension builds against core's source so content scripts stay small (14 KB).
+
 ## 2026-10-21: Eval results and tuned defaults
 
 - Hosted Gemma 4 26B A4B on 137 synthetic items: **precision 100%, recall 82.3%, 0 of 70 correct sentences changed** (two identical runs at batch 8). Report: `packages/eval/results/README.md`.

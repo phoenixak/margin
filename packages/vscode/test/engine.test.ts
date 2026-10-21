@@ -1,9 +1,8 @@
 import { APICallError } from '@ai-sdk/provider';
 import { type CheckInput, type CheckResult, lruCache, type MarginModel, type Suggestion } from '@margin/core';
 import { describe, expect, it, vi } from 'vitest';
-import { explainError as explain } from '@margin/core';
+import { diffText, explainError as explain, shiftSuggestions } from '@margin/core';
 import { Engine, type EngineHost, type EngineSettings, type Status } from '../src/engine.js';
-import { shiftSuggestions } from '../src/shift.js';
 
 const model: MarginModel = { id: 'mock:m', model: {} as MarginModel['model'], foldSystem: false, structured: true, tested: true, parallel: 1, provider: 'local' as const, modelId: 'mock' };
 
@@ -199,6 +198,11 @@ describe('shiftSuggestions', () => {
   });
   it('leaves suggestions alone for an edit after their sentence', () => {
     expect(shiftSuggestions([s], [{ offset: 50, length: 3, inserted: 0 }])[0]).toBe(s);
+  });
+  it('diffText finds the one change between two texts', () => {
+    expect(diffText('They was late.', 'They were late.')).toEqual({ offset: 6, length: 2, inserted: 3 }) // "They w" is shared;
+    expect(diffText('abc', 'abc')).toBeUndefined();
+    expect(diffText('aaa', 'aaaa')).toEqual({ offset: 3, length: 0, inserted: 1 });
   });
   it('drops suggestions whose sentence was edited', () => {
     expect(shiftSuggestions([s], [{ offset: 30, length: 1, inserted: 2 }])).toEqual([]);

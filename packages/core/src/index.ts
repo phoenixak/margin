@@ -15,4 +15,5 @@ export { checkSystemPrompt, checkUserPrompt, type OutputFormat, PROMPT_VERSION }
 export { REWRITE_PRESETS, type RewritePreset } from './prompts/rewrite.js';
 export { type RewriteInput, type RewriteResult, type RewriteWarning, rewrite } from './rewrite.js';
 export { countWords, type Sentence, splitSentences } from './sentences.js';
+export { diffText, shiftSuggestions, type TextChange, withoutHarperOverlaps } from './shift.js';
 export type { Dialect, FixKind, Hunk, Offset, Range, RejectReason, Rejection, Suggestion } from './types.js';
