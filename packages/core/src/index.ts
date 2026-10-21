@@ -6,6 +6,7 @@ export { type CheckInput, type CheckResult, check, ignoreKey, MarginParseError }
 export { applyHunks, toHunks } from './diff.js';
 export { type GuardOptions, guardFix, overlaps } from './guards.js';
 export { type Masked, mask, unmask } from './mask.js';
+export { MODELS, type ModelInfo, modelInfo } from './models.js';
 export { createModel, DEFAULT_GEMINI_MODEL, DEFAULT_LOCAL_MODEL, type MarginModel, type ModelConfig } from './model.js';
 export { Fix, Fixes, parseJsonLenient, parseTags } from './parse.js';
 export { checkSystemPrompt, checkUserPrompt, type OutputFormat, PROMPT_VERSION } from './prompts/check.js';

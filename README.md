@@ -10,7 +10,7 @@ Margin is an independent project. It is not made by or affiliated with Harper or
 
 | Path | Status |
 |---|---|
-| **Hosted Gemma 4 26B A4B** through Google's Gemini API, with your own key | **Tested.** On a 20-sentence synthetic smoke test it fixed 12/12 errors and changed 0 of 8 correct sentences. A proper eval is planned. |
+| **Hosted Gemma 4 26B A4B** through Google's Gemini API, with your own key | **Tested.** On Margin's eval (137 synthetic items) it scored 100% precision and 82% recall, and changed **0 of 70** correct sentences. See [the eval report](packages/eval/results/README.md). |
 | **Local models** (Ollama / LM Studio, e.g. `gemma4:26b-a4b-it-qat`) | **Implemented, not tested.** The maintainer couldn't download the multi-GB weights. It should behave like the hosted model, but nobody has checked. Turning Gemma 4's "thinking" off locally is unverified. If you try it, please open an issue with your model, hardware and results. |
 | Small models (under ~9B) | Research shows they over-correct noticeably. Margin will only allow automatic checking for models that pass its eval. |
 

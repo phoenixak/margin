@@ -2,6 +2,14 @@
 
 Newest first. Each entry: the decision, why, and what it changed.
 
+## 2026-10-21: Eval results and tuned defaults
+
+- Hosted Gemma 4 26B A4B on 137 synthetic items: **precision 100%, recall 82.3%, 0 of 70 correct sentences changed** (two identical runs at batch 8). Report: `packages/eval/results/README.md`.
+- Defaults: **batch 8, 2 calls in parallel** (VS Code engine and CLI). Batch 15 lost recall (82% → 69%); batch 4 was slower with no gain.
+- The guard now rejects fixes that add or remove `[ ] < > | #` as well as `* _ ~ \``: the model occasionally leaked stray characters in big batches.
+- Gemini's per-minute quota for Gemma is the practical limit; the VS Code engine's 30 s wait on 429 is the right behavior.
+- `MODELS` registry: hosted Gemma 4 26B A4B gets `autoCheck: true`; the local model has the same weights but is `autoCheck: false` until someone evaluates the local path.
+
 ## 2026-10-21: Hosted-first, full scope, open-source starting point
 
 - **Hosted Gemma 4 26B A4B (Gemini API, user's key) is the tested path** for development, tests, the eval and demos. Local (Ollama / LM Studio) is implemented but **untested**: Phoenix has limited bandwidth (multi-GB weights) and Margin is a showpiece first. The README says this plainly and invites local testers.

@@ -238,11 +238,13 @@ Rewrite: keep the language, dialect, meaning, Markdown and placeholders; output 
 
 ### Phase 4: Eval
 
-- [ ] Own fixtures (check licences before using public GEC data; JFLEG is non-commercial): error set, a clean set at least as large, a Markdown set, an offsets set.
-- [ ] Score **acceptable alternatives**, not one exact string (the spike's two "misses" were valid fixes).
-- [ ] Metrics: precision first, recall, false-positive rate on the clean set, placeholder violations, parse failures, latency p50/p95, tokens, 429/503 counts. Dated runs with commit hash and raw JSON.
-- [ ] Tune batch size, edit-ratio threshold, the `<ctx>` sentence; try strict mode.
-- [ ] Verify Gemini free-tier limits for Gemma; set the registry's `autoCheck` flags from results.
+- [x] Own fixtures (synthetic, MIT): 59 errors with acceptable alternatives, 68 clean (bait-heavy), 10 Markdown/offset cases.
+- [x] Score **acceptable alternatives**, not one exact string (the spike's two "misses" were valid fixes).
+- [x] Metrics: precision first, recall, false-positive rate on the clean set, placeholder violations, parse failures, latency p50/p95, tokens, 429/503 counts. Dated runs with commit hash and raw JSON.
+- [x] Tune batch size: **8** (4 = slower, no gain; 15 = recall 82% → 69%). 2 calls in parallel.
+- [ ] Edit-ratio threshold: never triggered on this set (precision is already 100%); revisit with harder fixtures.
+- [ ] The `<ctx>` previous-sentence option and strict mode (voting): not needed at current precision; revisit for smaller models.
+- [x] Gemini free tier for Gemma: per-minute quota hit by back-to-back eval runs with 2 parallel calls (exact numbers unpublished); the daily quota held. Registry (`core/src/models.ts`): Gemma 4 26B A4B hosted → `autoCheck: true`.
 
 ### Phase 5: Browser extension (Chrome + Firefox)
 

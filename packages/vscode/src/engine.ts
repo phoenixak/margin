@@ -130,6 +130,9 @@ export class Engine {
         existing: host.harperRanges(key),
         ignored: this.opts.ignored(),
         cache: this.opts.cache,
+        // Eval 2026-10-21: batch 8 with 2 calls in parallel was best (batch 15 lost recall).
+        batch: { maxSentences: 8 },
+        concurrency: 2,
         signal: controller.signal,
         ...(ranges ? { ranges } : {}),
       });

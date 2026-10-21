@@ -66,7 +66,7 @@ async function main(argv: string[]): Promise<number> {
   if (command === 'check') {
     const existing = values['no-harper'] ? [] : await harperRanges(text, dialect, language);
     const started = performance.now();
-    const r = await check({ text, model, dialect, language, existing, signal: ctl.signal });
+    const r = await check({ text, model, dialect, language, existing, signal: ctl.signal, batch: { maxSentences: 8 }, concurrency: 2 });
     if (values.json) {
       console.log(JSON.stringify(r.suggestions.map((s) => ({ ...lineCol(text, s.range.start), ...s })), null, 2));
     } else {
