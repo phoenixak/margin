@@ -58,13 +58,12 @@ docs/              PLAN.md, DECISIONS.md, HARPER-NOTES.md (+ QUOTA-NOTES.md, UPS
 
 ## Commands
 
-Fill these in during Phase 1 and keep them current.
-
 ```
 pnpm install
-pnpm -r build
-pnpm -r test                 # unit tests: mock models only, no network
-pnpm -F @margin/eval eval    # real model: GEMINI_API_KEY in env (synthetic text only)
+pnpm build                   # core, then cli
+pnpm test                    # unit tests: mock models only, no network
+pnpm typecheck
+node packages/cli/dist/cli.js check fixtures/sample.md   # real model: GEMINI_API_KEY in ./.env (synthetic text only)
 ```
 
 ## How to work

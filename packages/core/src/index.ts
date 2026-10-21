@@ -1,0 +1,14 @@
+export { type BatchOptions, batches } from './batch.js';
+export { type Block, type Language, splitBlocks } from './blocks.js';
+export { type CachedResult, type CheckCache, lruCache, sha256 } from './cache.js';
+export { type CheckInput, type CheckResult, check, ignoreKey, MarginParseError } from './check.js';
+export { applyHunks, toHunks } from './diff.js';
+export { type GuardOptions, guardFix, overlaps } from './guards.js';
+export { type Masked, mask, unmask } from './mask.js';
+export { createModel, DEFAULT_GEMINI_MODEL, DEFAULT_LOCAL_MODEL, type MarginModel, type ModelConfig } from './model.js';
+export { Fix, Fixes, parseJsonLenient, parseTags } from './parse.js';
+export { checkSystemPrompt, checkUserPrompt, type OutputFormat, PROMPT_VERSION } from './prompts/check.js';
+export { REWRITE_PRESETS, type RewritePreset } from './prompts/rewrite.js';
+export { type RewriteInput, type RewriteResult, type RewriteWarning, rewrite } from './rewrite.js';
+export { countWords, type Sentence, splitSentences } from './sentences.js';
+export type { Dialect, FixKind, Hunk, Offset, Range, RejectReason, Rejection, Suggestion } from './types.js';

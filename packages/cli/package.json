@@ -1,0 +1,29 @@
+{
+  "name": "@margin/cli",
+  "version": "0.0.0",
+  "private": true,
+  "description": "margin check / margin rewrite: Margin's AI second pass for Harper, from the command line.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "margin": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/cli.ts --format esm --clean --target es2022",
+    "typecheck": "tsc -p . --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@margin/core": "workspace:*",
+    "harper.js": "^2.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsup": "^9.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  }
+}

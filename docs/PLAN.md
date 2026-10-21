@@ -206,12 +206,12 @@ Rewrite: keep the language, dialect, meaning, Markdown and placeholders; output 
 
 ### Phase 1: Core and CLI
 
-- [ ] Workspace: pnpm, strict tsconfig, vitest, tsup, Biome or ESLint (ask).
-- [ ] Pure pieces, tests first: block splitter, segmenter, masker/unmasker, batcher, prompt builder, parsers A and B, word diff → hunks → ranges, guards, Harper dedup, LRU cache, staleness.
-- [ ] `createModel()` for Gemini (thinking off, system prompt folded) and Local (openai-compatible).
-- [ ] `check()` and `rewrite()` (streamed) with abort support.
-- [ ] `margin check <file>` and `margin rewrite <file> --preset …` (key from `GEMINI_API_KEY`; harper.js dedup).
-- [ ] Tests: emoji/CJK offsets; placeholders lost, duplicated or reordered; negation flips; edit ratio; stale results; abort mid-call; unit tests make no network calls (a test `fetch` that throws).
+- [x] Workspace: pnpm, strict tsconfig, vitest, tsup. (Linter: not chosen yet; ask.)
+- [x] Pure pieces, tests first: block splitter, segmenter, masker/unmasker, batcher, prompt builder, parsers A and B, word diff → hunks → ranges, guards, Harper dedup, LRU cache, staleness.
+- [x] `createModel()` for Gemini (thinking off, system prompt folded) and Local (openai-compatible).
+- [x] `check()` and `rewrite()` (streamed) with abort support.
+- [x] `margin check <file>` and `margin rewrite <file> --preset …` (key from `GEMINI_API_KEY`; harper.js dedup).
+- [x] Tests: emoji/CJK offsets; placeholders lost, duplicated or reordered; negation flips; edit ratio; stale results; abort mid-call; unit tests make no network calls (a test `fetch` that throws).
 
 **Done when** `pnpm -r test` is green and `margin check fixtures/sample.md` gives sensible suggestions with hosted Gemma.
 
