@@ -1,5 +1,7 @@
 # Margin: plan
 
+> **Scope change, 2026-10-21:** v1 is a **local-models-only companion to Harper**. No cloud providers, no API keys, no privacy modes, no ai-sdk-quota pool (§6, §7.2 and the cloud parts of the roadmap are deferred and kept for reference). `core` takes an injected AI SDK `LanguageModel` built with `@ai-sdk/openai-compatible` for Ollama or LM Studio. See `docs/DECISIONS.md`.
+
 Researched on 2026-10-21. Anything marked **(verify)** is uncertain or likely to drift, so confirm it before building on it.
 
 ## 0. Summary
@@ -112,7 +114,7 @@ Adapters convert between these offsets and editor positions. VS Code's `document
 - **VS Code: don't bundle Harper.** The official Harper extension already runs harper-ls.
   - Read its diagnostics with `vscode.languages.getDiagnostics(uri)`, filtered by their `source`, and refresh on `vscode.languages.onDidChangeDiagnostics`. This respects the user's Harper config and dictionary and avoids duplicate squiggles.
   - The extension id is `elijah-potter.harper`; harper-ls diagnostics have `source: "Harper"` and `code: <rule name>`.
-  - If Harper isn't installed, show a one-time recommendation and run without dedup.
+  - Margin requires Harper (`extensionDependencies`), so Harper is always there.
 - **CLI, eval and language server:** use `LocalLinter`.
 - **Obsidian:** use `WorkerLinter`, for dedup only. Harper's own Obsidian plugin renders Harper's lints.
 
@@ -444,8 +446,8 @@ Keep prompts in `packages/core/src/prompts/`, versioned with `PROMPT_VERSION` an
 
 - [x] Clone Automattic/harper to `../../harper` and write `docs/HARPER-NOTES.md` (checklist in §4).
 - [x] Read `../../ai-sdk-quota`: README, PHASE0.md, public types, store interface, limits registry and probe. Write `docs/QUOTA-NOTES.md` answering §6.6, with small tests where possible.
-- [ ] Run the format spike: a script that sends one synthetic 20-sentence fixture to each candidate member, once with format A and once with format B. Record parse success, latency p50/p95, tokens, and the edits made. Commit the results as JSON plus a table. **Ask** before making any cloud call.
-- [ ] Decide the format, the capability tags and the starting members, and record them in `docs/DECISIONS.md`.
+- [ ] Run the format spike: send one synthetic 20-sentence fixture to each candidate local model, once with format A and once with format B. Record parse success, latency p50/p95, tokens, and the edits made. Commit the results as JSON plus a table.
+- [ ] Decide the format and the default local model, and record them in `docs/DECISIONS.md`.
 
 **Done when** the notes and decisions exist, and every open question has an answer or an UPSTREAM entry.
 
@@ -453,7 +455,7 @@ Keep prompts in `packages/core/src/prompts/`, versioned with `PROMPT_VERSION` an
 
 - [ ] Scaffold the workspace: pnpm, strict tsconfig, vitest, tsup, lint.
 - [ ] Build the pipeline pieces: segmenter, block splitter, masker/unmasker, batcher, prompt builder, parsers (A and B), word diff → hunks → ranges, guards, dedup, LRU cache, staleness check, `check()` and `rewrite()`.
-- [ ] Build `createMarginPool()` with privacy modes, profiles and local-server detection.
+- [ ] Build `createLocalModel()` (Ollama / LM Studio via `@ai-sdk/openai-compatible`) and local-server detection. One request in flight at a time (one GPU).
 - [ ] Build `margin check <file>` with harper.js dedup.
 - [ ] Write tests for:
   - emoji and CJK offsets
@@ -469,31 +471,27 @@ Keep prompts in `packages/core/src/prompts/`, versioned with `PROMPT_VERSION` an
 ### Phase 2: VS Code MVP (check mode)
 
 - [ ] Scaffold the extension: esbuild → CJS, activating on markdown and plaintext.
-- [ ] Add settings: privacy, trigger, idle delay, profile, local URL and model, cloud excludeGlobs, dialect, severity.
-- [ ] Add commands: Check document, Check selection, Set API key (per provider, in SecretStorage), Clear cache, Show model status, Toggle.
+- [ ] Declare `extensionDependencies: ["elijah-potter.harper"]` and read the dialect from Harper's settings.
+- [ ] Add settings: trigger, idle delay, local URL and model, severity.
+- [ ] Add commands: Check document, Check selection, Clear cache, Show model status, Toggle.
 - [ ] Publish a DiagnosticCollection `margin`, with the message set to the reason and the source set to `Margin (member)`.
 - [ ] Add code actions: apply a hunk, apply the whole sentence, ignore.
-- [ ] Dedup against Harper via `getDiagnostics`, with a one-time recommendation if Harper is missing.
-- [ ] Drive the status bar from pool events, and disable cloud members in untrusted workspaces.
+- [ ] Dedup against Harper via `getDiagnostics` (`source === 'Harper'`).
+- [ ] Status bar: model, busy/idle, server unreachable.
 
 **Done when:**
 
 - In local-only mode on the dev machine, suggestions appear within about 3 s of pausing.
 - Typing never stutters.
-- Changing the privacy mode changes routing immediately, asserted from pool events.
-- An integration test proves no request leaves localhost in local-only mode.
+- An integration test proves no request leaves localhost.
 
 ### Phase 3: Rewrite and persistence
 
 - [ ] Rewrite selection: preset QuickPick → stream into a virtual document → diff editor → Accept or Reject. Accept only applies if the selection hasn't changed.
-- [ ] Add a persistent quota store that is safe across windows (§6.6, question 4).
 - [ ] Add a persistent cache with a TTL, the ignore list, and the Clear cache command.
-- [ ] Add the daily cap, with the remaining count in the status bar.
 
 **Done when:**
 
-- Restarting VS Code keeps the daily counts.
-- Two windows don't double-spend, tested with two processes sharing one store.
 - Rewrites stream and cancel cleanly.
 
 ### Phase 4: Eval and recommendations

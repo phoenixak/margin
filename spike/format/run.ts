@@ -1,9 +1,11 @@
-// Phase 0 format spike (PLAN §5.3): structured output (A) vs tag protocol (B), per member.
+// Phase 0 format spike (PLAN §5.3): structured output (A) vs tag protocol (B), per model.
 //
-//   LOCAL_BASE_URL=http://localhost:11434/v1 LOCAL_MODELS=gemma4:12b-it-qat node format/run.ts
+// Margin v1 is local-only. This dev-only spike also runs *hosted copies of the same open
+// models* (Gemma 4, Qwen, gpt-oss) so a default can be picked without downloading weights.
+// Only the synthetic fixture is sent. Keys come from spike/.env (gitignored):
 //
-// Cloud members run only with MARGIN_SPIKE_CLOUD=1 plus their key (GROQ_API_KEY,
-// GEMINI_API_KEY, OPENROUTER_API_KEY). The fixture is synthetic; no real text is sent.
+//   node --env-file=.env format/run.ts                    # every model whose key is set
+//   LOCAL_MODELS=gemma4:12b-it-qat node format/run.ts     # a local Ollama server
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createGroq } from '@ai-sdk/groq';
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
@@ -80,36 +82,41 @@ interface Member {
   id: string;
   model: LanguageModel;
   providerOptions?: Record<string, Record<string, unknown>>;
+  /** The endpoint rejects system instructions (Gemma on the Gemini API): fold the system prompt into the user prompt. */
+  noSystem?: boolean;
 }
+
+const list = (v: string | undefined) => (v ?? '').split(',').map((x) => x.trim()).filter(Boolean);
 
 function members(): Member[] {
   const out: Member[] = [];
-  const baseURL = process.env.LOCAL_BASE_URL ?? 'http://localhost:11434/v1';
+  const env = process.env;
+  const baseURL = env.LOCAL_BASE_URL ?? 'http://localhost:11434/v1';
   const local = createOpenAICompatible({ name: 'local', baseURL, supportsStructuredOutputs: true });
-  for (const id of (process.env.LOCAL_MODELS ?? 'gemma4:12b-it-qat').split(',').filter(Boolean)) {
+  for (const id of list(env.LOCAL_MODELS)) {
     out.push({ id: `local:${id}`, model: local(id), providerOptions: { local: { reasoningEffort: 'none' } } });
   }
-  if (process.env.MARGIN_SPIKE_CLOUD !== '1') return out;
-  if (process.env.GROQ_API_KEY) {
-    out.push({
-      id: 'groq:gpt-oss-20b',
-      model: createGroq({ apiKey: process.env.GROQ_API_KEY })('openai/gpt-oss-20b'),
-      providerOptions: { groq: { reasoningEffort: 'low' } },
-    });
+  if (env.OPENROUTER_API_KEY) {
+    const or = createOpenRouter({ apiKey: env.OPENROUTER_API_KEY });
+    // Free: Gemma 4 26B A4B (the 16 GB "to try" model) and 31B. Paid ones cost fractions of a cent per run.
+    const ids = list(env.OPENROUTER_MODELS ?? 'google/gemma-4-26b-a4b-it:free,google/gemma-4-31b-it:free,qwen/qwen3.5-9b,qwen/qwen3-14b,openai/gpt-oss-20b');
+    for (const id of ids) {
+      const reasoning = /gpt-oss/.test(id) ? { effort: 'low' } : { effort: 'none' };
+      out.push({ id: `openrouter:${id}`, model: or(id), providerOptions: { openrouter: { reasoning, provider: { data_collection: 'deny' } } } });
+    }
   }
-  if (process.env.GEMINI_API_KEY) {
-    out.push({
-      id: 'gemini:3.5-flash-lite',
-      model: createGoogleGenerativeAI({ apiKey: process.env.GEMINI_API_KEY })('gemini-3.5-flash-lite'),
-      providerOptions: { google: { thinkingConfig: { thinkingLevel: 'minimal' } } },
-    });
+  if (env.GROQ_API_KEY) {
+    const groq = createGroq({ apiKey: env.GROQ_API_KEY });
+    for (const id of list(env.GROQ_MODELS ?? 'openai/gpt-oss-20b')) {
+      out.push({ id: `groq:${id}`, model: groq(id), providerOptions: { groq: { reasoningEffort: 'low' } } });
+    }
   }
-  if (process.env.OPENROUTER_API_KEY) {
-    out.push({
-      id: 'openrouter:gemma-4-26b-a4b:free',
-      model: createOpenRouter({ apiKey: process.env.OPENROUTER_API_KEY })('google/gemma-4-26b-a4b-it:free'),
-      providerOptions: { openrouter: { reasoning: { effort: 'none' }, provider: { data_collection: 'deny' } } },
-    });
+  if (env.GEMINI_API_KEY) {
+    const google = createGoogleGenerativeAI({ apiKey: env.GEMINI_API_KEY });
+    // Gemma variants hosted by Google; set GEMINI_MODELS from the model listing (see format/list-gemini.ts).
+    for (const id of list(env.GEMINI_MODELS)) {
+      out.push({ id: `gemini:${id}`, model: google(id), noSystem: id.startsWith('gemma') });
+    }
   }
   return out;
 }
@@ -128,21 +135,24 @@ interface Run {
 
 async function once(m: Member, format: 'A' | 'B'): Promise<Run> {
   const t0 = performance.now();
-  const base = {
+  const call = (system: string) => ({
     model: m.model,
     maxRetries: 0,
     temperature: 0,
     maxOutputTokens,
-    prompt,
     providerOptions: m.providerOptions as never,
     abortSignal: AbortSignal.timeout(120_000),
-  };
+    ...(m.noSystem ? { prompt: `${system}
+
+Input:
+${prompt}` } : { system, prompt }),
+  });
   try {
     if (format === 'A') {
-      const r = await generateText({ ...base, system: SYSTEM_A, output: Output.object({ schema: Fixes }) });
+      const r = await generateText({ ...call(SYSTEM_A), output: Output.object({ schema: Fixes }) });
       return { member: m.id, format, ok: true, ms: performance.now() - t0, ...tokens(r.usage), fixes: r.output.fixes };
     }
-    const r = await generateText({ ...base, system: SYSTEM_B });
+    const r = await generateText(call(SYSTEM_B));
     const fixes = parseTags(r.text);
     return { member: m.id, format, ok: fixes !== undefined, ms: performance.now() - t0, ...tokens(r.usage), ...(fixes ? { fixes } : { error: 'unparseable' }) };
   } catch (e) {
@@ -181,7 +191,9 @@ const pct = (xs: number[], p: number) => {
 };
 
 const all: Run[] = [];
-for (const m of members()) {
+const targets = members();
+if (!targets.length) throw new Error('No models configured: set keys in spike/.env or LOCAL_MODELS (see the header comment).');
+for (const m of targets) {
   for (const format of ['A', 'B'] as const) {
     for (let i = 0; i < RUNS; i++) {
       const r = await once(m, format);

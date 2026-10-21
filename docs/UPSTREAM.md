@@ -1,5 +1,7 @@
 # Upstream requests for ai-sdk-quota
 
+> **Deferred, 2026-10-21:** Margin v1 is local-only and doesn't use ai-sdk-quota. These notes stay as feedback for the library and for a possible later cloud tier. The tests that backed them were in `spike/quota/` (removed; see git history at `2c460aa`).
+
 Gaps Margin found in `ai-sdk-quota` (commit `ee9e776`). Margin doesn't edit the library; each entry has the need, why, an API sketch and a test that would prove it. Evidence: `spike/quota/quota.test.ts`, write-up in `QUOTA-NOTES.md`.
 
 Ordered by how much they matter before the npm release (planned 2026-10-22). #1 and #4 change behavior, so they're cheaper to settle before 0.1.0.

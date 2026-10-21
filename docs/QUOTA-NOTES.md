@@ -1,5 +1,7 @@
 # ai-sdk-quota notes
 
+> **Deferred, 2026-10-21:** Margin v1 is local-only and doesn't use ai-sdk-quota. These notes stay as feedback for the library and for a possible later cloud tier. The tests that backed them were in `spike/quota/` (removed; see git history at `2c460aa`).
+
 Phase 0, 2026-10-21. Library at `../../ai-sdk-quota` commit `ee9e776`, installed from a `pnpm pack` tarball (`vendor/ai-sdk-quota-0.0.0.tgz`, gitignored). Tests: `spike/quota/quota.test.ts` (mock models, no network; 13 passing).
 
 Single copy check: `ai@7.0.148`, `@ai-sdk/provider@4.0.31`, one copy each in the lockfile. No "LanguageModelV4 is not assignable" errors.
