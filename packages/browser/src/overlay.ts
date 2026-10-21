@@ -200,3 +200,74 @@ export function changeLine(before: string, after: string): DocumentFragment {
   } else frag.append(' (remove)');
   return frag;
 }
+
+export type BadgeState = { kind: 'hidden' } | { kind: 'checking' } | { kind: 'count'; count: number } | { kind: 'error'; message: string };
+
+/**
+ * A small status dot in the field's top-right corner (Grammarly's and Harper's badges
+ * sit bottom-right): pulsing while checking, the number of suggestions, or "!" for an
+ * error that can be clicked to read.
+ */
+export class Badge {
+  private readonly host = document.createElement('div');
+  private readonly dot: HTMLButtonElement;
+  private state: BadgeState = { kind: 'hidden' };
+  private readonly observer: ResizeObserver;
+  private readonly onMove = () => this.place();
+
+  constructor(
+    private readonly field: HTMLElement,
+    onClick: (state: BadgeState, rect: DOMRect) => void,
+  ) {
+    this.host.style.cssText = `position:absolute;top:0;left:0;z-index:${Z}`;
+    const shadow = this.host.attachShadow({ mode: 'closed' });
+    shadow.innerHTML = `<style>
+      button{all:initial;position:absolute;min-width:16px;height:16px;padding:0 4px;box-sizing:border-box;border-radius:8px;
+        font:600 10px/16px system-ui,sans-serif;color:#fff;background:${COLOR};text-align:center;cursor:pointer;
+        box-shadow:0 1px 3px rgba(0,0,0,.25);opacity:.9}
+      button.checking{animation:pulse 1s ease-in-out infinite;width:10px;min-width:10px;height:10px;padding:0}
+      button.error{background:#d97706}
+      @keyframes pulse{50%{opacity:.35}}
+    </style><button type="button" aria-label="Margin"></button>`;
+    this.dot = shadow.querySelector('button')!;
+    this.dot.addEventListener('mousedown', (e) => e.preventDefault()); // keep the field's focus
+    this.dot.addEventListener('click', () => onClick(this.state, this.dot.getBoundingClientRect()));
+    document.documentElement.append(this.host);
+    this.observer = new ResizeObserver(this.onMove);
+    this.observer.observe(field);
+    window.addEventListener('scroll', this.onMove, true);
+    window.addEventListener('resize', this.onMove);
+    this.set({ kind: 'hidden' });
+  }
+
+  set(state: BadgeState) {
+    this.state = state;
+    const d = this.dot;
+    d.className = state.kind === 'checking' ? 'checking' : state.kind === 'error' ? 'error' : '';
+    d.style.display = state.kind === 'hidden' ? 'none' : '';
+    d.textContent = state.kind === 'count' ? String(state.count) : state.kind === 'error' ? '!' : '';
+    d.title =
+      state.kind === 'checking'
+        ? 'Margin is checking…'
+        : state.kind === 'count'
+          ? `Margin: ${state.count} suggestion${state.count === 1 ? '' : 's'} (click an underline)`
+          : state.kind === 'error'
+            ? `Margin: ${state.message}`
+            : '';
+    this.place();
+  }
+
+  private place() {
+    const r = this.field.getBoundingClientRect();
+    const w = this.dot.offsetWidth || 16;
+    this.dot.style.top = `${r.top + window.scrollY + 4}px`;
+    this.dot.style.left = `${r.right + window.scrollX - w - 4}px`;
+  }
+
+  dispose() {
+    this.observer.disconnect();
+    window.removeEventListener('scroll', this.onMove, true);
+    window.removeEventListener('resize', this.onMove);
+    this.host.remove();
+  }
+}

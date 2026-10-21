@@ -1,6 +1,6 @@
 import { diffText, REWRITE_PRESETS, type RewritePreset, shiftSuggestions, type Suggestion } from '@margin/core';
 import { caretIn, editableRoot, type Field, isTextArea, rangeAt, readField, replaceText, selectionIn } from './field.js';
-import { changeLine, closeCard, highlight, Mirror, showCard } from './overlay.js';
+import { Badge, type BadgeState, changeLine, closeCard, highlight, Mirror, showCard } from './overlay.js';
 import type { CheckResponse, Request, RewritePortIn, RewritePortOut, Settings, TabMessage } from './settings.js';
 
 /*
@@ -28,6 +28,7 @@ interface FieldState {
   timer?: ReturnType<typeof setTimeout>;
   requestId?: string;
   mirror?: Mirror;
+  badge?: Badge;
 }
 
 const states = new WeakMap<Field, FieldState>();
@@ -91,7 +92,10 @@ function onInput(field: Field) {
     // Keep underlines on the right words until the next check; drop ones in edited sentences.
     const shifted = shiftSuggestions(s.suggestions, [change]) as FieldState['suggestions'];
     s.suggestions = shifted.filter((x) => text.slice(x.range.start, x.range.end) === x.before);
-    render(field);
+  }
+  if (change) {
+    render(field); // also clears underlines left by an applied fix
+    setBadge(field, s.suggestions.length ? { kind: 'count', count: s.suggestions.length } : { kind: 'hidden' });
   }
   if (s.requestId) void send({ type: 'cancel', id: s.requestId });
   clearTimeout(s.timer);
@@ -104,10 +108,12 @@ async function runCheck(field: Field) {
   if (text.trim().length < MIN_CHARS) return;
   const id = crypto.randomUUID();
   s.requestId = id;
+  setBadge(field, { kind: 'checking' });
   const res = await send<CheckResponse>({ type: 'check', id, text });
   if (s.requestId !== id) return;
   s.requestId = undefined;
   if (!res.ok) {
+    setBadge(field, res.cancelled ? { kind: 'hidden' } : { kind: 'error', message: res.error });
     if (res.setup && !setupShown) {
       setupShown = true;
       const r = field.getBoundingClientRect();
@@ -123,6 +129,20 @@ async function runCheck(field: Field) {
   s.text = text;
   s.suggestions = res.suggestions.map((x) => ({ ...x, before: text.slice(x.range.start, x.range.end) }));
   render(field);
+  setBadge(field, s.suggestions.length ? { kind: 'count', count: s.suggestions.length } : { kind: 'hidden' });
+}
+
+function setBadge(field: Field, badge: BadgeState) {
+  const s = state(field);
+  if (badge.kind === 'hidden' && !s.badge) return;
+  s.badge ??= new Badge(field, (current, rect) => {
+    if (current.kind !== 'error') return;
+    showCard(rect, (b) => (b.textContent = current.message), [
+      { label: 'Options', onClick: () => void chrome.runtime.sendMessage({ type: 'open-options' }) },
+      { label: 'Retry', primary: true, onClick: () => (closeCard(), void runCheck(field)) },
+    ]);
+  });
+  s.badge.set(badge);
 }
 
 function rectFor(field: Field, index: number): DOMRect {
@@ -168,6 +188,7 @@ function maybeShowSuggestion(field: Field) {
           if (readField(field).text.slice(x.range.start, x.range.end) !== x.before) return;
           s.suggestions = s.suggestions.filter((y) => y !== x);
           replaceText(field, x.range.start, x.range.end, x.replacement);
+          render(field);
         },
       },
     ],
@@ -179,6 +200,7 @@ async function ignore(field: Field, x: Suggestion) {
   const s = state(field);
   s.suggestions = s.suggestions.filter((y) => y.sentence.start !== x.sentence.start);
   render(field);
+  setBadge(field, s.suggestions.length ? { kind: 'count', count: s.suggestions.length } : { kind: 'hidden' });
 }
 
 /** The selection to rewrite: the live one, or the last one if focus moved and the text is unchanged. Trimmed of surrounding whitespace so paragraphs never merge. */
