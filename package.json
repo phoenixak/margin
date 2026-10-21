@@ -1,0 +1,12 @@
+{
+  "name": "margin",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "spike:test": "vitest run spike"
+  }
+}

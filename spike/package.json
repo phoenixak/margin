@@ -1,0 +1,25 @@
+{
+  "name": "@margin/spike",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "format": "node --experimental-strip-types format/run.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^4.0.102",
+    "@ai-sdk/groq": "^4.0.67",
+    "@ai-sdk/openai-compatible": "^3.0.75",
+    "@ai-sdk/provider": "^4.0.31",
+    "@openrouter/ai-sdk-provider": "^3.1.0",
+    "ai": "^7.0.148",
+    "ai-sdk-quota": "file:..\\vendor\\ai-sdk-quota-0.0.0.tgz",
+    "harper.js": "^2.13.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}

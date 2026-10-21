@@ -1,0 +1,25 @@
+{
+  "note": "Synthetic text written for the Phase 0 format spike. Not from any real document. expected = null means the sentence is correct and must be left untouched.",
+  "sentences": [
+    { "id": 1, "text": "The committee have reviewed the proposal last week and approve it.", "expected": "The committee reviewed the proposal last week and approved it.", "type": "tense" },
+    { "id": 2, "text": "Our team ships a new release every two weeks.", "expected": null },
+    { "id": 3, "text": "Each of the reports were checked by two reviewers.", "expected": "Each of the reports was checked by two reviewers.", "type": "agreement" },
+    { "id": 4, "text": "Run ⟦0⟧ before you open the pull request.", "expected": null, "type": "placeholder" },
+    { "id": 5, "text": "The new policy will effect everyone who works remotely.", "expected": "The new policy will affect everyone who works remotely.", "type": "wrong-word" },
+    { "id": 6, "text": "She said she would call back, but she never did.", "expected": null, "type": "negation" },
+    { "id": 7, "text": "We went to the the station to meet them.", "expected": "We went to the station to meet them.", "type": "repeated-word" },
+    { "id": 8, "text": "The results were surprising, the team decided to repeat the test.", "expected": "The results were surprising, so the team decided to repeat the test.", "type": "comma-splice" },
+    { "id": 9, "text": "Honestly, the meeting could have been an email.", "expected": null, "type": "style-bait" },
+    { "id": 10, "text": "If I would have known, I would have come earlier.", "expected": "If I had known, I would have come earlier.", "type": "grammar" },
+    { "id": 11, "text": "The server restarts at 3:00 and takes about 40 seconds.", "expected": null, "type": "numbers" },
+    { "id": 12, "text": "They was waiting outside when the rain started.", "expected": "They were waiting outside when the rain started.", "type": "agreement" },
+    { "id": 13, "text": "The report, which was long, it covered every region.", "expected": "The report, which was long, covered every region.", "type": "extra-word" },
+    { "id": 14, "text": "Data from the sensors is stored for thirty days.", "expected": null, "type": "style-bait" },
+    { "id": 15, "text": "Please send the files to ⟦1⟧ when your ready.", "expected": "Please send the files to ⟦1⟧ when you're ready.", "type": "wrong-word+placeholder" },
+    { "id": 16, "text": "He don't think the plan will work.", "expected": "He doesn't think the plan will work.", "type": "agreement+negation" },
+    { "id": 17, "text": "The quick fix worked, though nobody is sure why.", "expected": null },
+    { "id": 18, "text": "We need to decide by Friday whether to continue.", "expected": null },
+    { "id": 19, "text": "The library was closed so we studying at the cafe.", "expected": "The library was closed, so we studied at the cafe.", "type": "missing-verb-form" },
+    { "id": 20, "text": "Their going to announce the winners tomorrow.", "expected": "They're going to announce the winners tomorrow.", "type": "wrong-word" }
+  ]
+}
