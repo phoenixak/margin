@@ -26,6 +26,11 @@ Small models (under ~9B) tend to over-correct, according to research and the eva
 - **Local provider:** nothing leaves your machine.
 - Margin has no server, no accounts and no telemetry. It never logs your text.
 
+## Install
+
+- **VS Code:** [Margin on the Marketplace](https://marketplace.visualstudio.com/items?itemName=phoenixak.margin-ai), or `code --install-extension phoenixak.margin-ai`. It installs Harper's extension too.
+- **Browser, margin-ls, Obsidian, CLI:** from source for now (see below and each package's README).
+
 ## Use a local model (text never leaves your computer)
 
 1. Install [Ollama](https://ollama.com) (or [LM Studio](https://lmstudio.ai)).

@@ -2,6 +2,11 @@
 
 Newest first. Each entry: the decision, why, and what it changed.
 
+## 2026-10-21: First release
+
+- Public repo `phoenixak/margin`; VS Code extension published as `phoenixak.margin-ai` 0.1.0. Marketplace extension names are unique across publishers and `margin` was taken, so the id is `margin-ai`; the display name, settings (`margin.*`) and commands are unchanged.
+- Azure DevOps "global" PATs (all accessible organizations), which vsce needs, stop working on 2026-12-01; publishing after that needs vsce's Microsoft Entra sign-in instead.
+
 ## 2026-10-21: Language server and Obsidian
 
 - The check engine moved from the VS Code package into `core`; margin-ls and the Obsidian plugin reuse it. `harperRanges` may now be async (harper.js lints asynchronously).
