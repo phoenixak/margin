@@ -253,7 +253,9 @@ Rewrite: keep the language, dialect, meaning, Markdown and placeholders; output 
 - [x] harper.js in the extension for dedup only (the slim WASM shipped as a file, loaded by URL; 20 MB).
 - [x] Options page: local first (detect servers, pick a model, OS-specific OLLAMA_ORIGINS / LM Studio CORS help), Gemini (key in `chrome.storage.local`, not encrypted, said so; explicit consent checkbox), test button, sites list, clear cache/ignored. Sites are off until enabled one by one from the toolbar popup (optional host permission per origin).
 - [x] Rewrite/tone from the context menu (works on any page via activeTab), streamed into a card with Accept/Reject.
-- [ ] Manual run in real Chrome and Firefox (`pnpm -F @margin/browser serve-test` serves a test page at http://localhost:5173).
+- [x] Manual run in real Chrome, 2026-10-21 (with Grammarly installed alongside): underlines in textarea, fix card + Apply, rewrite via Alt+Shift+R → Formal → Accept, Ctrl+Z undo. Bugs found and fixed: Grammarly's `spellcheck="false"` hid every field; triple-click selections mapped wrong; invented `⟦0⟧` in rewrites; cards overlapping Grammarly's; partial-word selections.
+- [ ] Manual run in Firefox, and on real sites (GitHub comments, Gmail, Reddit).
+- [ ] Right-click menu path (Chrome's native menu can't be driven by automation; only the shortcut path was verified).
 - [ ] Out of scope at first: Google Docs (canvas rendering) and other custom editors.
 
 ### Phase 6: Language server and Obsidian

@@ -2,6 +2,13 @@
 
 Newest first. Each entry: the decision, why, and what it changed.
 
+## 2026-10-21: Browser, after the first real Chrome run
+
+- Margin no longer treats `spellcheck="false"` as "don't check": Grammarly sets it on every field it manages. Opt-outs are now structural (CodeMirror, Monaco, Ace) or explicit (`data-gramm="false"`, `data-enable-grammarly="false"`, `data-margin="false"`).
+- Margin's cards open above the word, because Grammarly's and Harper's open below it.
+- Rewrite: the system prompt mentions placeholders only when the text has some (the model invented `⟦0⟧` otherwise), invented placeholders are dropped, and partial-word selections are widened to whole words.
+- Alt+Shift+R is handled by the content script too: Chrome assigns an extension's suggested shortcut only on a fresh install.
+
 ## 2026-10-21: Local route first-class; browser extension
 
 - Phoenix expects most users to run a local model. Local is now listed first everywhere, Margin detects Ollama / LM Studio and lists their models (`core/local.ts`), runs one call at a time for local GPUs (`MarginModel.parallel`), and explains local failures plainly (`core/errors.ts`). `margin models` lists what's installed.
