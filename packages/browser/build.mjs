@@ -28,7 +28,14 @@ const targets = {
   firefox: {
     ...base,
     background: { scripts: ['background.js'] },
-    browser_specific_settings: { gecko: { id: 'margin@phoenixak.dev', strict_min_version: '128.0' } },
+    browser_specific_settings: {
+      gecko: {
+        id: 'margin@phoenixak.dev',
+        strict_min_version: '128.0',
+        // Text leaves the device only if the user picks Gemini; asked for then (src/firefox.ts).
+        data_collection_permissions: { required: ['none'], optional: ['websiteContent'] },
+      },
+    },
   },
 };
 

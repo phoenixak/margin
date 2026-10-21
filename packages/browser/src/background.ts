@@ -15,6 +15,7 @@ import {
 } from '@margin/core';
 import { createBinaryModuleFromUrl, Dialect as HarperDialect, LocalLinter } from 'harper.js';
 import { type CheckResponse, loadSettings, type Request, type RewritePortIn, type RewritePortOut, type Settings, type StatusResponse, type TabMessage } from './settings.js';
+import { hasDataConsent } from './firefox.js';
 import { registerEnabledSites } from './sites.js';
 
 /*
@@ -66,9 +67,18 @@ async function harperRanges(text: string, dialect: Settings['dialect']): Promise
   }
 }
 
+/** The model, or why it can't be used: settings, plus Firefox's data consent for Gemini. */
+async function usableModel(s: Settings): Promise<MarginModel | { problem: string; setup: boolean }> {
+  const m = modelFor(s);
+  if (!('problem' in m) && m.provider === 'gemini' && !(await hasDataConsent())) {
+    return { problem: 'Allow Margin to send text to Google: tick the consent box in its options again.', setup: true };
+  }
+  return m;
+}
+
 async function handleCheck(id: string, text: string, ranges?: Range[]): Promise<CheckResponse> {
   const settings = await loadSettings();
-  const model = modelFor(settings);
+  const model = await usableModel(settings);
   if ('problem' in model) return { ok: false, error: model.problem, setup: model.setup };
   controllers.get(id)?.abort();
   const controller = new AbortController();
@@ -158,7 +168,7 @@ chrome.runtime.onConnect.addListener((port) => {
       }
     };
     const settings = await loadSettings();
-    const model = modelFor(settings);
+    const model = await usableModel(settings);
     if ('problem' in model) return post({ type: 'error', error: model.problem });
     try {
       const r = rewrite({ text: msg.text, model, preset: msg.preset, dialect: settings.dialect, signal: controller.signal, ...(msg.instruction ? { instruction: msg.instruction } : {}) });

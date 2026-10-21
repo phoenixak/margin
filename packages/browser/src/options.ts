@@ -1,5 +1,6 @@
 import { DEFAULT_LOCAL_MODEL, type LocalProbe, localSetupHelp, modelInfo } from '@margin/core';
 import { type CheckResponse, loadSettings, type Request, saveSettings, type Settings } from './settings.js';
+import { requestDataConsent } from './firefox.js';
 import { disableSite, enabledSites } from './sites.js';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -126,7 +127,14 @@ async function init() {
   key.addEventListener('change', () => save({ geminiKey: key.value.trim() }));
   const consent = $<HTMLInputElement>('geminiConsent');
   consent.checked = s.geminiConsent;
-  consent.addEventListener('change', () => save({ geminiConsent: consent.checked }));
+  consent.addEventListener('change', async () => {
+    // Firefox also asks through its own data-sharing prompt.
+    if (consent.checked && !(await requestDataConsent())) {
+      consent.checked = false;
+      $('saved').textContent = 'Firefox’s permission to send text to Google was not granted.';
+    }
+    await save({ geminiConsent: consent.checked });
+  });
 
   const dialect = $<HTMLSelectElement>('dialect');
   dialect.value = s.dialect;
