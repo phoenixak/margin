@@ -7,8 +7,8 @@ Build everything with `pnpm build`. Release files go in `release/` (gitignored).
 | GitHub repo | ✅ https://github.com/phoenixak/margin | |
 | VS Code Marketplace | ✅ `phoenixak.margin-ai` 0.1.0 | Next version: `npx @vscode/vsce publish --no-dependencies` in `packages/vscode`. Global Azure DevOps tokens stop working on 2026-12-01; after that use vsce's Entra ID sign-in. |
 | Open VSX (VSCodium, Cursor, Windsurf) | Not yet | Free account at open-vsx.org (signs in with GitHub), create the `phoenixak` namespace, make a token, then `npx ovsx publish release/margin-ai-0.1.0.vsix -p <token>` |
-| Chrome Web Store | ⏳ 0.1.0 submitted for review 2026-10-21 | Store assets in `release/store/` (screenshots from `http://localhost:5173/demo`). Privacy policy: `PRIVACY.md`. |
-| Firefox Add-ons | ⏳ 0.1.0 submitted 2026-10-21 as `margin-ai` (Firefox 140+, desktop only) | Source zip from `git archive` + `packages/browser/BUILD.md`; reviewer notes cover build and testing. |
+| Chrome Web Store | ⏳ 0.1.0 submitted for review 2026-10-21; 0.1.1 (third-party notices, check fixes) to upload after approval | Store assets in `release/store/` (screenshots from `http://localhost:5173/demo`). Privacy policy: `PRIVACY.md`. |
+| Firefox Add-ons | ⏳ 0.1.0 submitted 2026-10-21 as `margin-ai` (Firefox 140+, desktop only); 0.1.1 ready | Source zip from `git archive` + `packages/browser/BUILD.md`; reviewer notes cover build and testing. |
 | Obsidian community plugins | Submitted (in review) | Published from the generated repo [phoenixak/margin-obsidian](https://github.com/phoenixak/margin-obsidian), not from this monorepo (the directory scans the whole repo and reads `manifest.json` at its root). Run `node packages/obsidian/scripts/export-standalone.mjs`, commit there, then push a tag equal to the version; its workflow builds, attests and releases `main.js`, `manifest.json`, `styles.css`. |
 | npm (`@phoenixak/margin-*`) | Not yet | Only worth it once margin-ls has users; `npm publish --access public` per package. |
 

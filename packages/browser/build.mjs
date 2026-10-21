@@ -1,4 +1,4 @@
-import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { build } from 'esbuild';
@@ -40,11 +40,33 @@ const targets = {
   },
 };
 
+// Every npm package that ends up in the bundle (plus harper.js, whose .wasm is copied
+// as-is), with its license text: Apache-2.0 and the others require shipping it.
+function notices(metafile) {
+  const dirs = new Set([dirname(harperDist)]);
+  for (const input of Object.keys(metafile.inputs)) {
+    const m = /^(.*node_modules\/(?:@[^/]+\/)?[^/]+)\//.exec(input.replaceAll('\\', '/'));
+    if (m) dirs.add(resolve(m[1]));
+  }
+  const sections = [...dirs]
+    .map((dir) => {
+      const { name, version, license } = JSON.parse(readFileSync(join(dir, 'package.json'), 'utf8'));
+      const file = readdirSync(dir).find((f) => /^licen[cs]e/i.test(f));
+      const text = file ? readFileSync(join(dir, file), 'utf8').trim() : `License: ${license}`;
+      return { name, body: `${name} ${version} (${license})\n\n${text}` };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const header =
+    'Margin bundles the open-source packages below, unmodified. harper.js (Harper, by Automattic)\n' +
+    "is used only to skip errors Harper already flags; Margin isn't affiliated with Harper.\n";
+  return `${header}\n${sections.map((s) => `${'='.repeat(72)}\n${s.body}\n`).join('\n')}`;
+}
+
 for (const [name, manifest] of Object.entries(targets)) {
   const out = join('dist', name);
   rmSync(out, { recursive: true, force: true });
   mkdirSync(out, { recursive: true });
-  await build({
+  const { metafile } = await build({
     entryPoints: { background: 'src/background.ts', content: 'src/content.ts', options: 'src/options.ts', popup: 'src/popup.ts' },
     outdir: out,
     bundle: true,
@@ -57,12 +79,14 @@ for (const [name, manifest] of Object.entries(targets)) {
     // Build from core's source modules so content/options/popup only pull in what they use.
     alias: { '@margin/core': resolve('../core/src/index.ts') },
     logLevel: 'warning',
+    metafile: true,
   });
   for (const f of ['options.html', 'popup.html', 'ui.css']) copyFileSync(join('static', f), join(out, f));
   mkdirSync(join(out, 'icons'), { recursive: true });
   for (const s of [16, 32, 48, 128]) copyFileSync(join('static', 'icons', `icon-${s}.png`), join(out, 'icons', `icon-${s}.png`));
   copyFileSync(join(harperDist, 'harper_wasm_slim_bg.wasm'), join(out, 'harper_wasm_slim_bg.wasm'));
   copyFileSync('../../LICENSE', join(out, 'LICENSE'));
+  writeFileSync(join(out, 'THIRD_PARTY_NOTICES.txt'), notices(metafile));
   writeFileSync(join(out, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   console.log(`built ${out}`);
 }

@@ -1,6 +1,6 @@
 {
   "name": "@margin/browser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Margin for Chrome and Firefox: an AI second pass for Harper in web text fields.",
   "license": "MIT",

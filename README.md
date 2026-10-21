@@ -60,7 +60,7 @@ Build it with `pnpm -F @margin/browser build`, then load `packages/browser/dist/
 
 - It checks text fields only on sites you turn on from its toolbar button; nothing runs elsewhere.
 - The right-click **Margin: rewrite** menu works on any page.
-- Harper runs inside the extension for dedup (browser extensions can't read each other), so Margin never repeats what Harper flags.
+- Use it alongside [Harper's browser extension](https://writewithharper.com). Browser extensions can't read each other's results, so Margin bundles Harper's engine ([harper.js](https://www.npmjs.com/package/harper.js), Apache-2.0) only to skip what Harper already flags; it never shows Harper's errors itself.
 - The Gemini key, if you use Gemini, is stored in the browser's extension storage, which is not encrypted.
 - Google Docs isn't supported.
 
@@ -86,4 +86,4 @@ If Margin helps you, you can support it on [GitHub Sponsors](https://github.com/
 
 ## License
 
-MIT
+MIT. The browser extension and CLI include [harper.js](https://github.com/Automattic/harper) (Apache-2.0, by Automattic) to skip errors Harper already flags; the browser build ships its license in `THIRD_PARTY_NOTICES.txt`. Thanks to the Harper team for publishing it.

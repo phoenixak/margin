@@ -24,10 +24,10 @@ pnpm -F @margin/browser build
 1. bundles `packages/browser/src/{background,content,options,popup}.ts` and the parts of `packages/core/src` they import with esbuild (minified IIFE, target `firefox140`);
 2. copies `static/options.html`, `static/popup.html`, `static/ui.css` and `static/icons/*`;
 3. copies `harper_wasm_slim_bg.wasm` unmodified from the `harper.js` npm package (Apache-2.0, https://github.com/Automattic/harper);
-4. writes `manifest.json`.
+4. writes `manifest.json`, and `THIRD_PARTY_NOTICES.txt` with the license of every npm package in the bundle (from esbuild's metafile).
 
 The result is in `packages/browser/dist/firefox`.
 
 ## Third-party code
 
-The bundle includes open-source libraries from npm, unmodified: `ai`, `@ai-sdk/*` (Vercel AI SDK, Apache-2.0), `zod` (MIT), `diff` (BSD-3-Clause) and `harper.js` (Apache-2.0).
+The bundle includes open-source libraries from npm, unmodified: `ai`, `@ai-sdk/*` (Vercel AI SDK, Apache-2.0), `zod` (MIT), `diff` (BSD-3-Clause) and `harper.js` (Apache-2.0). Their licenses ship in `THIRD_PARTY_NOTICES.txt`.
