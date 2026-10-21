@@ -10,13 +10,13 @@ export const REWRITE_PRESETS: Record<Exclude<RewritePreset, 'custom'>, { label: 
   'fix-only': { label: 'Fix only', instruction: 'Fix grammar, wrong words and punctuation only. Change nothing else.' },
 };
 
-export function rewriteSystemPrompt(dialect: Dialect): string {
+/** Placeholders are only mentioned when the text has some: otherwise models invent them. */
+export function rewriteSystemPrompt(dialect: Dialect, hasPlaceholders = false): string {
   return `You rewrite text in ${dialect} English as instructed.
 Rules:
 - Keep the same language, dialect and meaning. Don't add facts, names or numbers, and don't change negation.
 - Keep Markdown formatting (lists, emphasis, links) as it is.
-- Keep placeholders like ⟦0⟧ exactly once each, in the same order.
-- Output only the rewritten text, with no preamble, quotes or explanation.`;
+${hasPlaceholders ? '- Keep placeholders like ⟦0⟧ exactly once each, in the same order.\n' : ''}- Output only the rewritten text, with no preamble, quotes or explanation.`;
 }
 
 export function rewriteUserPrompt(text: string, instruction: string): string {

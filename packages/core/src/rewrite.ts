@@ -38,7 +38,7 @@ export function rewrite(input: RewriteInput): RewriteResult {
       : [REWRITE_PRESETS[input.preset].instruction, input.instruction?.trim()].filter(Boolean).join(' ');
   if (!instruction) throw new Error('rewrite: a custom preset needs an instruction');
 
-  const system = rewriteSystemPrompt(input.dialect ?? 'American');
+  const system = rewriteSystemPrompt(input.dialect ?? 'American', originals.length > 0);
   const user = rewriteUserPrompt(masked, instruction);
   const m = input.model;
   const result = streamText({
@@ -73,7 +73,7 @@ export function rewrite(input: RewriteInput): RewriteResult {
         }
       }
       if (raw.length > emitted) yield restore(raw.slice(emitted), originals);
-      const trimmed = raw.trim();
+      const trimmed = dropInvented(raw, originals).trim();
       const full = unmask(trimmed, originals);
       const restored = full ?? restore(trimmed, originals);
       const warnings: RewriteWarning[] = [];
@@ -90,7 +90,12 @@ export function rewrite(input: RewriteInput): RewriteResult {
   return { textStream: stream(), done };
 }
 
-/** Best-effort restore for streaming: known placeholders are replaced, unknown ones left visible. */
+/** Best-effort restore for streaming: known placeholders are replaced, invented ones dropped. */
 function restore(s: string, originals: string[]): string {
-  return s.replace(/⟦(\d+)⟧/g, (m, n: string) => originals[Number(n)] ?? m);
+  return dropInvented(s, originals).replace(/⟦(\d+)⟧/g, (m, n: string) => originals[Number(n)] ?? m);
+}
+
+/** Removes placeholders the model made up (an index we never sent), with the space before them. */
+function dropInvented(s: string, originals: string[]): string {
+  return s.replace(/\s?⟦(\d+)⟧/g, (m, n: string) => (Number(n) < originals.length ? m : ''));
 }

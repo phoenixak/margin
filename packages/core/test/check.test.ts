@@ -187,6 +187,33 @@ describe('check', () => {
 });
 
 describe('rewrite', () => {
+  it('drops placeholders the model invents when the text had none, without a warning', async () => {
+    const mock = new MockLanguageModelV4({
+      provider: 'mock',
+      modelId: 'w',
+      doStream: async (options) => {
+        const prompt = promptText(options);
+        if (prompt.includes('⟦')) throw new Error('placeholders mentioned with none in the text');
+        return {
+          stream: simulateReadableStream({
+            chunks: [
+              { type: 'text-start' as const, id: 't' },
+              { type: 'text-delta' as const, id: 't', delta: 'The team repeated the test ⟦0⟧.' },
+              { type: 'text-end' as const, id: 't' },
+              { type: 'finish' as const, finishReason: { unified: 'stop' as const, raw: 'stop' }, usage: { inputTokens: { total: 1, noCache: 1, cacheRead: undefined, cacheWrite: undefined }, outputTokens: { total: 1, text: 1, reasoning: undefined } } },
+            ],
+          }),
+        };
+      },
+    });
+    const r = rewrite({ text: 'The team decided to repeat the test.', preset: 'formal', model: { id: 'mock:w', model: mock, foldSystem: false, structured: true, tested: true, parallel: 1, provider: 'local', modelId: 'mock' } });
+    let streamed = '';
+    for await (const part of r.textStream) streamed += part;
+    expect(streamed).toBe('The team repeated the test.');
+    expect(await r.done).toEqual({ text: 'The team repeated the test.', warnings: [] });
+  });
+
+
   it('streams with placeholders restored and warns about negation changes', async () => {
     const mock = new MockLanguageModelV4({
       provider: 'mock',

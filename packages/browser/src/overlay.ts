@@ -159,9 +159,9 @@ export function showCard(
   };
   setButtons(buttons);
   document.documentElement.append(host);
-  // Below the anchor, or above it when there's no room.
+  // Above the anchor when there's room: Grammarly's and Harper's cards open below the same word.
   const h = card.offsetHeight || 120;
-  const top = anchor.bottom + 6 + h > window.innerHeight ? Math.max(4, anchor.top - h - 6) : anchor.bottom + 6;
+  const top = anchor.top - h - 6 >= 4 ? anchor.top - h - 6 : anchor.bottom + 6;
   card.style.top = `${top}px`;
   card.style.left = `${Math.min(Math.max(4, anchor.left), window.innerWidth - 390)}px`;
   const onKey = (e: KeyboardEvent) => e.key === 'Escape' && close();
