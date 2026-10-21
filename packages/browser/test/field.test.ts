@@ -26,6 +26,20 @@ describe('readField (contenteditable)', () => {
     expect(rangeAt(f, next, next + 4)!.toString()).toBe('Next');
   });
 
+  it('maps element-boundary points, as triple-click selections produce', () => {
+    const el = ce('<p>First one here.</p><p>Second <b>bold</b> end.</p>');
+    const f = readField(el);
+    const [p1, p2] = el.querySelectorAll('p');
+    // Before the first child of p2 = start of "Second".
+    expect(offsetOf(f, p2!, 0)).toBe(f.text.indexOf('Second'));
+    // After all of p1's children = end of "First one here."
+    expect(offsetOf(f, p1!, p1!.childNodes.length)).toBe('First one here.'.length);
+    // A point in the root, between the paragraphs.
+    expect(offsetOf(f, el, 1)).toBe(f.text.indexOf('Second'));
+    // At the very end of the root.
+    expect(offsetOf(f, el, el.childNodes.length)).toBe(f.text.indexOf(' end.') + ' end.'.length);
+  });
+
   it('handles emoji (UTF-16 offsets, same as Margin)', () => {
     const el = ce('<p>😀 They was late.</p>');
     const f = readField(el);
@@ -55,18 +69,23 @@ describe('replaceText', () => {
 });
 
 describe('editableRoot', () => {
-  it('accepts textareas and contenteditable roots, skips spellcheck=false and read-only', () => {
+  it('accepts textareas and contenteditable roots; skips code editors, opt-outs and read-only', () => {
     document.body.innerHTML = `
       <textarea id="a"></textarea>
       <textarea id="b" spellcheck="false"></textarea>
       <textarea id="c" readonly></textarea>
       <div id="d" contenteditable="true"><p><span id="e">x</span></p></div>
-      <div id="f" contenteditable="true" spellcheck="false">code</div>`;
+      <div class="cm-editor"><div id="f" contenteditable="true">code</div></div>
+      <textarea id="g" data-gramm="false"></textarea>
+      <div id="h" contenteditable="true" data-margin="false">no</div>`;
     const $ = (id: string) => document.getElementById(id);
     expect(editableRoot($('a'))?.id).toBe('a');
-    expect(editableRoot($('b'))).toBeUndefined();
+    // Grammarly sets spellcheck="false" on fields it manages, so it must not hide them from Margin.
+    expect(editableRoot($('b'))?.id).toBe('b');
     expect(editableRoot($('c'))).toBeUndefined();
     expect(editableRoot($('e'))?.id).toBe('d');
     expect(editableRoot($('f'))).toBeUndefined();
+    expect(editableRoot($('g'))).toBeUndefined();
+    expect(editableRoot($('h'))).toBeUndefined();
   });
 });

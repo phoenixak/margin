@@ -25,14 +25,26 @@ export const isTextArea = (el: Element): el is HTMLTextAreaElement => el.tagName
 /** The editable root for an event target, or undefined if Margin shouldn't touch it. */
 export function editableRoot(target: EventTarget | null): Field | undefined {
   if (!(target instanceof Element)) return undefined;
-  if (isTextArea(target)) return target.readOnly || target.disabled || target.getAttribute('spellcheck') === 'false' ? undefined : target;
+  if (isTextArea(target)) return target.readOnly || target.disabled || optedOut(target) ? undefined : target;
   const host = target.closest('[contenteditable]:not([contenteditable="false"])');
   if (!(host instanceof HTMLElement) || !host.isContentEditable) return undefined;
   // The outermost editing host, so a whole editor is one field.
   let root: HTMLElement = host;
   while (root.parentElement?.isContentEditable) root = root.parentElement;
-  // Code editors and similar opt out of spellcheck; respect that.
-  return root.getAttribute('spellcheck') === 'false' ? undefined : root;
+  return optedOut(root) ? undefined : root;
+}
+
+// Code editors (CodeMirror 5/6, Monaco, Ace) are not prose.
+const CODE_EDITOR = '.cm-editor, .CodeMirror, .monaco-editor, .ace_editor';
+// Explicit opt-outs sites already use for grammar checkers, plus Margin's own.
+const OPT_OUT = '[data-gramm="false"], [data-enable-grammarly="false"], [data-margin="false"]';
+
+/**
+ * Whether a field asked not to be grammar-checked. `spellcheck="false"` is NOT used:
+ * Grammarly sets it on every field it manages, which would hide all of them from Margin.
+ */
+function optedOut(el: Element): boolean {
+  return el.closest(CODE_EDITOR) !== null || el.closest(OPT_OUT) !== null;
 }
 
 export function readField(el: Field): FieldText {
@@ -85,10 +97,21 @@ export function pointAt(field: FieldText, offset: number): { node: Text; offset:
 export function offsetOf(field: FieldText, node: Node, offset: number): number | undefined {
   const seg = field.segments.find((s) => s.node === node);
   if (seg) return seg.start + offset;
-  // An element point: use the first text segment at or after it.
-  const target = node.childNodes[offset] ?? node;
-  const after = field.segments.find((s) => target === s.node || target.contains(s.node) || (target.compareDocumentPosition(s.node) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0);
-  return after?.start;
+  if (node.nodeType === Node.TEXT_NODE) {
+    // An empty text node (not a segment): use the next segment after it.
+    return field.segments.find((s) => (node.compareDocumentPosition(s.node) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0)?.start;
+  }
+  // An element point, as triple-click and drag selections produce.
+  const child = node.childNodes[offset];
+  if (child) {
+    // Before `child`: the first text at or after it.
+    const at = field.segments.find((s) => child === s.node || child.contains(s.node) || (child.compareDocumentPosition(s.node) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0);
+    return at?.start ?? field.text.length;
+  }
+  // After all of `node`'s children: the end of the last text inside it.
+  const inside = field.segments.filter((s) => node.contains(s.node)).at(-1);
+  if (inside) return inside.start + inside.node.data.length;
+  return field.segments.find((s) => (node.compareDocumentPosition(s.node) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0)?.start ?? field.text.length;
 }
 
 export function rangeAt(field: FieldText, start: number, end: number): Range | undefined {

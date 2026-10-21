@@ -5,12 +5,12 @@
 </head>
 <body>
 <h1>Margin test page</h1>
-<p>Synthetic text with errors. Click into a field, wait a couple of seconds, then click an underline. Harper's own extension (if installed) underlines "your", "a example" and "the the"; Margin should leave those to it.</p>
+<p>Synthetic text with errors. Click into a field, wait a couple of seconds, then click a purple underline. Margin leaves errors Harper catches ("your", "a example", "the the") to Harper. Select text and press Alt+Shift+R (or right-click → Margin: rewrite) to rewrite.</p>
 <h2>Textarea</h2>
 <textarea>Each of the reports were checked by two reviewers. The results were surprising, the team decided to repeat the test. Please send the files when your ready.</textarea>
 <h2>Rich text (contenteditable)</h2>
 <div contenteditable="true"><p>Yesterday we meet the client and agreed on the <b>timeline</b>. This is a example sentence.</p><p>She said she would call back, but she never did. We went to the the station.</p></div>
-<h2>Skipped (spellcheck="false", like code editors)</h2>
-<textarea spellcheck="false">They was late. This field is never checked.</textarea>
+<h2>Skipped (data-gramm="false": the site opted out of grammar checkers)</h2>
+<textarea data-gramm="false">They was late. This field is never checked.</textarea>
 </body>
 </html>

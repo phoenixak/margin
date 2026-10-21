@@ -14,7 +14,7 @@ import {
   storedCache,
 } from '@margin/core';
 import { createBinaryModuleFromUrl, Dialect as HarperDialect, LocalLinter } from 'harper.js';
-import { type CheckResponse, loadSettings, type Request, type RewritePortIn, type RewritePortOut, type Settings, type StatusResponse } from './settings.js';
+import { type CheckResponse, loadSettings, type Request, type RewritePortIn, type RewritePortOut, type Settings, type StatusResponse, type TabMessage } from './settings.js';
 import { registerEnabledSites } from './sites.js';
 
 /*
@@ -120,7 +120,8 @@ async function handle(req: Request): Promise<unknown> {
     case 'detect':
       return detectLocalServers(req.urls ? { urls: req.urls } : {});
     case 'test-model': {
-      const r = await handleCheck('test', 'They was late to the meeting.');
+      // An error Harper doesn't flag, so a working model always has something to say.
+      const r = await handleCheck('test', 'The results of the survey shows a clear preference for remote work.');
       const s = await loadSettings();
       const m = modelFor(s);
       return { ...r, advice: 'problem' in m ? undefined : modelAdvice(m.provider, m.modelId).note };
@@ -188,17 +189,25 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-  if (!tab?.id || !String(info.menuItemId).startsWith('margin-')) return;
-  const preset = String(info.menuItemId).slice('margin-'.length) as RewritePreset;
-  const target = { tabId: tab.id, ...(info.frameId !== undefined ? { frameIds: [info.frameId] } : {}) };
+/** Asks the page to rewrite its selection, injecting the content script once if the site isn't enabled (activeTab allows it after a click or shortcut). */
+async function rewriteInTab(tabId: number, preset: RewritePreset | undefined, frameId?: number) {
+  const msg: TabMessage = { type: 'rewrite-selection', ...(preset ? { preset } : {}) };
+  const opts = frameId !== undefined ? { frameId } : {};
   try {
-    await chrome.tabs.sendMessage(tab.id, { type: 'rewrite-selection', preset }, info.frameId !== undefined ? { frameId: info.frameId } : {});
+    await chrome.tabs.sendMessage(tabId, msg, opts);
   } catch {
-    // Not injected on this site: activeTab (granted by this click) lets us inject once.
-    await chrome.scripting.executeScript({ target, files: ['content.js'] });
-    await chrome.tabs.sendMessage(tab.id, { type: 'rewrite-selection', preset }, info.frameId !== undefined ? { frameId: info.frameId } : {});
+    await chrome.scripting.executeScript({ target: { tabId, ...(frameId !== undefined ? { frameIds: [frameId] } : {}) }, files: ['content.js'] });
+    await chrome.tabs.sendMessage(tabId, msg, opts);
   }
+}
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (!tab?.id || !String(info.menuItemId).startsWith('margin-')) return;
+  void rewriteInTab(tab.id, String(info.menuItemId).slice('margin-'.length) as RewritePreset, info.frameId);
+});
+
+chrome.commands?.onCommand.addListener((command, tab) => {
+  if (command === 'rewrite' && tab?.id) void rewriteInTab(tab.id, undefined);
 });
 
 chrome.runtime.onStartup?.addListener(() => void registerEnabledSites());

@@ -1,4 +1,4 @@
-import { diffText, type RewritePreset, shiftSuggestions, type Suggestion } from '@margin/core';
+import { diffText, REWRITE_PRESETS, type RewritePreset, shiftSuggestions, type Suggestion } from '@margin/core';
 import { caretIn, editableRoot, type Field, isTextArea, rangeAt, readField, replaceText, selectionIn } from './field.js';
 import { changeLine, closeCard, highlight, Mirror, showCard } from './overlay.js';
 import type { CheckResponse, Request, RewritePortIn, RewritePortOut, Settings, TabMessage } from './settings.js';
@@ -31,6 +31,8 @@ interface FieldState {
 }
 
 const states = new WeakMap<Field, FieldState>();
+/** The last non-empty selection inside a field: a right-click or shortcut can move focus before we're asked. */
+let lastSelection: { field: Field; start: number; end: number; text: string } | undefined;
 let idleDelayMs = 2000;
 let setupShown = false;
 
@@ -48,6 +50,15 @@ function state(field: Field): FieldState {
   return s;
 }
 
+/** Short edits (a comma, one letter) are hard to see: underline back to the start of the previous word. */
+function visibleRange(text: string, r: { start: number; end: number }): { start: number; end: number } {
+  if (r.end - r.start >= 3) return r;
+  let start = r.start;
+  while (start > 0 && /\s/.test(text[start - 1]!)) start--;
+  while (start > 0 && /\S/.test(text[start - 1]!)) start--;
+  return { start, end: Math.max(r.end, r.start) };
+}
+
 function render(field: Field) {
   const s = state(field);
   if (isTextArea(field)) {
@@ -57,15 +68,15 @@ function render(field: Field) {
       return;
     }
     s.mirror ??= new Mirror(field);
-    s.mirror.render(s.text, s.suggestions.map((x) => x.range));
+    s.mirror.render(s.text, s.suggestions.map((x) => visibleRange(s.text, x.range)));
     return;
   }
   const text = readField(field);
   highlight(
     field,
     s.suggestions.flatMap((x) => {
-      const start = x.range.start === x.range.end ? Math.max(0, x.range.start - 1) : x.range.start;
-      const r = rangeAt(text, start, x.range.end === x.range.start ? x.range.start : x.range.end);
+      const v = visibleRange(text.text, x.range);
+      const r = rangeAt(text, v.start, v.end);
       return r ? [r] : [];
     }),
   );
@@ -130,7 +141,10 @@ function maybeShowSuggestion(field: Field) {
   const s = state(field);
   const caret = caretIn(field);
   if (caret === undefined) return;
-  const index = s.suggestions.findIndex((x) => caret >= Math.max(0, x.range.start - (x.range.start === x.range.end ? 1 : 0)) && caret <= x.range.end);
+  const index = s.suggestions.findIndex((x) => {
+    const v = visibleRange(s.text, x.range);
+    return caret >= v.start && caret <= v.end;
+  });
   if (index < 0) return;
   const x = s.suggestions[index]!;
   const card = showCard(
@@ -167,15 +181,37 @@ async function ignore(field: Field, x: Suggestion) {
   render(field);
 }
 
-/** Context menu → Margin: rewrite. Streams into a card; Accept replaces the selection if it's unchanged. */
-async function rewriteSelection(preset: RewritePreset) {
-  const field = editableRoot(document.activeElement);
-  const sel = field && selectionIn(field);
-  const anchor = field?.getBoundingClientRect() ?? new DOMRect(16, 16, 0, 0);
-  if (!field || !sel) {
-    showCard(anchor, (b) => (b.textContent = 'Select some text in a text field, then choose Margin: rewrite.'), [{ label: 'OK', onClick: closeCard }]);
+/** The selection to rewrite: the live one, or the last one if focus moved and the text is unchanged. Trimmed of surrounding whitespace so paragraphs never merge. */
+function currentSelection(): { field: Field; start: number; end: number } | undefined {
+  const active = editableRoot(document.activeElement);
+  const live = active && selectionIn(active);
+  let pick = live ? { field: active, ...live } : undefined;
+  if (!pick && lastSelection && readField(lastSelection.field).text.slice(lastSelection.start, lastSelection.end) === lastSelection.text) pick = lastSelection;
+  if (!pick) return undefined;
+  const text = readField(pick.field).text;
+  let { start, end } = pick;
+  while (start < end && /\s/.test(text[start]!)) start++;
+  while (end > start && /\s/.test(text[end - 1]!)) end--;
+  return end > start ? { field: pick.field, start, end } : undefined;
+}
+
+/** Context menu or shortcut → rewrite. Streams into a card; Accept replaces the selection if it's unchanged. */
+async function rewriteSelection(preset: RewritePreset | undefined) {
+  const picked = currentSelection();
+  const anchor = (picked ? selectionRect(picked.field) : undefined) ?? picked?.field.getBoundingClientRect() ?? new DOMRect(16, 16, 0, 0);
+  if (!picked) {
+    showCard(anchor, (b) => (b.textContent = 'Select some text in a text field, then choose Margin: rewrite (or press Alt+Shift+R).'), [{ label: 'OK', onClick: closeCard }]);
     return;
   }
+  if (!preset) {
+    showCard(anchor, (b) => (b.textContent = 'Rewrite the selection:'), [
+      ...(Object.keys(REWRITE_PRESETS) as Exclude<RewritePreset, 'custom'>[]).map((p) => ({ label: REWRITE_PRESETS[p].label, onClick: () => void rewriteSelection(p) })),
+      { label: 'Custom…', onClick: () => void rewriteSelection('custom') },
+    ]);
+    return;
+  }
+  const field = picked.field;
+  const sel = { start: picked.start, end: picked.end };
   const original = readField(field).text.slice(sel.start, sel.end);
 
   const start = (instruction?: string) => {
@@ -239,6 +275,13 @@ async function rewriteSelection(preset: RewritePreset) {
   };
 }
 
+function selectionRect(field: Field): DOMRect | undefined {
+  if (isTextArea(field)) return undefined;
+  const sel = document.getSelection();
+  const r = sel?.rangeCount ? sel.getRangeAt(0).getBoundingClientRect() : undefined;
+  return r && r.width + r.height > 0 ? r : undefined;
+}
+
 if (!window.__margin && !/(^|\.)docs\.google\.com$/.test(location.hostname)) {
   window.__margin = true;
   void chrome.storage.local.get('settings').then((r) => {
@@ -251,6 +294,24 @@ if (!window.__margin && !/(^|\.)docs\.google\.com$/.test(location.hostname)) {
       void runCheck(field);
     }
   });
+  document.addEventListener('selectionchange', () => {
+    const field = editableRoot(document.activeElement);
+    const sel = field && selectionIn(field);
+    if (field && sel) lastSelection = { field, ...sel, text: readField(field).text.slice(sel.start, sel.end) };
+  });
+  // The page-level shortcut: works even when Chrome hasn't assigned the extension
+  // command (it only does so on a fresh install, and not if another extension took it).
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      if (!(e.altKey && e.shiftKey && !e.ctrlKey && !e.metaKey && e.code === 'KeyR')) return;
+      if (!editableRoot(document.activeElement)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      void rewriteSelection(undefined);
+    },
+    true,
+  );
   chrome.runtime.onMessage.addListener((msg: TabMessage) => {
     if (msg.type === 'rewrite-selection') void rewriteSelection(msg.preset);
   });

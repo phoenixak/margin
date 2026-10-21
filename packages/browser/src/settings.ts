@@ -58,7 +58,8 @@ export interface StatusResponse {
 }
 
 /** Messages from the background to a content script. */
-export type TabMessage = { type: 'rewrite-selection'; preset: RewritePreset };
+/** `preset` absent: show a preset picker (keyboard shortcut). */
+export type TabMessage = { type: 'rewrite-selection'; preset?: RewritePreset };
 
 /** Messages on a `rewrite` port. */
 export type RewritePortIn = { type: 'start'; text: string; preset: RewritePreset; instruction?: string };

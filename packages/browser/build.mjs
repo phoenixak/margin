@@ -18,6 +18,7 @@ const base = {
   optional_host_permissions: ['https://*/*', 'http://*/*'],
   action: { default_popup: 'popup.html', default_title: 'Margin' },
   options_ui: { page: 'options.html', open_in_tab: true },
+  commands: { rewrite: { suggested_key: { default: 'Alt+Shift+R' }, description: 'Rewrite the selected text (Margin)' } },
   // Harper's WASM needs wasm-unsafe-eval; nothing else is loaded from outside the extension.
   content_security_policy: { extension_pages: "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'" },
 };
