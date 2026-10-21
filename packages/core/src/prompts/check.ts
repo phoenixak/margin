@@ -1,7 +1,7 @@
 import type { Dialect } from '../types.js';
 
 /** Bump on any change to the prompt bytes: it's part of every cache key. */
-export const PROMPT_VERSION = 1;
+export const PROMPT_VERSION = 2;
 
 export type OutputFormat = 'json' | 'tags';
 
@@ -17,7 +17,7 @@ Fix only clear errors:
 Do not:
 - change a sentence that is already correct
 - change word choice, tone, style or dialect
-- fix spelling or capitalization (another tool handles those)
+- fix spelling or capitalization (another tool handles those): leave them as they are, but still fix any other error in that sentence
 - touch placeholders like ⟦0⟧; keep each one exactly once, in order
 - add or remove negation, numbers, names or facts
 Return only the sentences you changed, each as the full corrected sentence, with a kind and a reason of at most 12 words. If nothing needs fixing, return an empty list.`;

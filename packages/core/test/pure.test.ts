@@ -78,6 +78,11 @@ describe('splitSentences', () => {
     expect(s.map((x) => text.slice(x.start, x.end))).toEqual(['They was late.', 'The sky is blue today.']);
   });
 
+  it('does not merge a sentence just because it starts lowercase', () => {
+    const [block] = splitBlocks('Let me know if anything is missing. is howdy how was you');
+    expect(splitSentences(block!).length).toBe(2);
+  });
+
   it('merges short fragments into the previous sentence', () => {
     const [block] = splitBlocks('We met Dr. Smith yesterday at noon. It went well overall.');
     expect(splitSentences(block!).length).toBe(2);
@@ -171,7 +176,7 @@ describe('batches', () => {
 
 describe('prompts', () => {
   it('are byte-stable for a PROMPT_VERSION (bump the version when this snapshot changes)', () => {
-    expect(PROMPT_VERSION).toBe(1);
+    expect(PROMPT_VERSION).toBe(2);
     expect(checkSystemPrompt('American', 'json')).toMatchSnapshot();
     expect(checkSystemPrompt('British', 'tags')).toMatchSnapshot();
   });

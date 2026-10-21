@@ -39,6 +39,11 @@ export interface CheckResult {
   cacheHits: number;
 }
 
+const MAX_ECHO_RETRIES = 4;
+const ECHO_NOTE =
+  'Note: you flagged this sentence as wrong earlier but returned it unchanged. If it has an error, return the corrected sentence with the error actually fixed. If it is correct, return no fixes.';
+const isEcho = (fixed: string, original: string) => fixed.replace(/\s+/g, ' ').trim() === original.replace(/\s+/g, ' ').trim();
+
 export class MarginParseError extends Error {
   override readonly name = 'MarginParseError';
 }
@@ -99,13 +104,29 @@ export async function check(input: CheckInput): Promise<CheckResult> {
       result.modelCalls++;
       for (const [i, { p }] of batch.entries()) {
         const fix = fixes.get(i + 1);
+        if (fix && isEcho(fix.text, p.masked)) {
+          echoes.push(p); // flagged but returned unchanged: retried alone below
+          continue;
+        }
         const answer: CachedResult = fix ? { fixed: fix.text, kind: fix.kind, why: fix.why } : { fixed: null };
         answers.set(p, answer);
         await input.cache?.set(p.key, answer);
       }
     }
   };
+  const echoes: Prepared[] = [];
   await Promise.all(Array.from({ length: Math.max(1, Math.min(input.concurrency ?? 1, queue.length)) }, worker));
+
+  // Models sometimes diagnose an error ("subject-verb agreement") but copy the sentence
+  // unchanged. Ask once more for just that sentence; if it echoes again, treat it as correct.
+  for (const p of echoes.slice(0, MAX_ECHO_RETRIES)) {
+    input.signal?.throwIfAborted();
+    const fix = (await callModel(model, dialect, [{ id: 1, text: p.masked }], input.signal, ECHO_NOTE)).get(1);
+    result.modelCalls++;
+    const answer: CachedResult = fix && !isEcho(fix.text, p.masked) ? { fixed: fix.text, kind: fix.kind, why: fix.why } : { fixed: null };
+    answers.set(p, answer);
+    await input.cache?.set(p.key, answer);
+  }
 
   for (const p of prepared) {
     const answer = answers.get(p);
@@ -168,8 +189,8 @@ function collapse(s: string): { text: string; starts: number[]; ends: number[] }
   return { text, starts, ends };
 }
 
-async function callModel(m: MarginModel, dialect: Dialect, sentences: { id: number; text: string }[], signal?: AbortSignal): Promise<Map<number, Fix>> {
-  const user = checkUserPrompt(sentences);
+async function callModel(m: MarginModel, dialect: Dialect, sentences: { id: number; text: string }[], signal?: AbortSignal, note?: string): Promise<Map<number, Fix>> {
+  const user = note ? `${checkUserPrompt(sentences)}\n\n${note}` : checkUserPrompt(sentences);
   const ids = new Set(sentences.map((s) => s.id));
   const call = (format: OutputFormat) => {
     const system = checkSystemPrompt(dialect, format);

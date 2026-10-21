@@ -135,6 +135,24 @@ describe('check', () => {
     expect(calls).toHaveLength(3);
   });
 
+  it('retries a sentence the model flagged but echoed back unchanged', async () => {
+    let n = 0;
+    const mock = new MockLanguageModelV4({
+      provider: 'mock',
+      modelId: 'echo',
+      doGenerate: async (options) => {
+        n++;
+        const retried = promptText(options).includes('returned it unchanged');
+        const text = retried ? 'Hey, how were you?' : 'Hey, how was you?';
+        return reply(JSON.stringify({ fixes: [{ id: 1, text, kind: 'grammar', why: 'Agreement.' }] }));
+      },
+    });
+    const r = await check({ text: 'Hey, how was you?', model: { id: 'mock:echo', model: mock, foldSystem: false, structured: true, tested: true, parallel: 1, provider: 'local', modelId: 'mock' } });
+    expect(n).toBe(2);
+    expect(r.modelCalls).toBe(2);
+    expect(r.suggestions.map((s) => s.replacement)).toEqual(['were']);
+  });
+
   it('runs batches concurrently up to `concurrency`', async () => {
     let active = 0;
     let peak = 0;
