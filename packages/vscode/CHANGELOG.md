@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1
+
+- A sentence that starts with a lowercase letter after a period is now checked on its own (it used to be merged into the previous sentence, which hid its errors).
+- When the model points out an error but returns the sentence unchanged, Margin asks again for just that sentence.
+- The check prompt now says to fix grammar even when the sentence also has a capitalization slip (which Harper handles). Margin's eval: precision still 100%, 0 of 70 correct sentences changed.
+
 ## 0.1.0
 
 First release.
