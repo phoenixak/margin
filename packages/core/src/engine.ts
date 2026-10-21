@@ -29,8 +29,8 @@ export type Status =
 
 export interface EngineHost {
   snapshot(key: string): DocSnapshot | undefined;
-  /** Harper's lint ranges for the document, as offsets. */
-  harperRanges(key: string): Range[];
+  /** Harper's lint ranges for the document, as offsets (from the editor's Harper, or harper.js). */
+  harperRanges(key: string): Range[] | Promise<Range[]>;
   model(): ModelState;
   dialect(key: string): Dialect;
   /** Excluded by glob, untrusted, or otherwise never to be sent. */
@@ -131,7 +131,7 @@ export class Engine {
         model: m.model,
         dialect: host.dialect(key),
         language,
-        existing: host.harperRanges(key),
+        existing: await host.harperRanges(key),
         ignored: this.opts.ignored(),
         cache: this.opts.cache,
         // Eval 2026-10-21: batch 8 was best (batch 15 lost recall). Hosted: 2 calls at once; a local GPU: 1.

@@ -1,0 +1,33 @@
+{
+  "name": "@margin/ls",
+  "version": "0.0.1",
+  "private": true,
+  "description": "margin-ls: Margin's AI second pass for Harper as a language server (Neovim, Helix, Emacs, Sublime, Zed).",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "margin-ls": "./dist/margin-ls.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/margin-ls.ts --format esm --clean --target node22",
+    "typecheck": "tsc -p . --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@margin/core": "workspace:*",
+    "harper.js": "^2.13.0",
+    "vscode-languageserver": "^10.1.2",
+    "vscode-languageserver-textdocument": "^1.0.15"
+  },
+  "devDependencies": {
+    "@ai-sdk/provider": "^4.0.31",
+    "@types/node": "^26.6.5",
+    "ai": "^7.0.148",
+    "tsup": "^9.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  }
+}
