@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { describe, expect, it } from 'vitest';
-import { editableRoot, offsetOf, pointAt, rangeAt, readField, replaceText } from '../src/field.js';
+import { editableRoot, offsetOf, pointAt, rangeAt, readField, replaceText, widenSelection } from '../src/field.js';
 
 function ce(html: string): HTMLElement {
   document.body.innerHTML = `<div contenteditable="true">${html}</div>`;
@@ -87,5 +87,19 @@ describe('editableRoot', () => {
     expect(editableRoot($('f'))).toBeUndefined();
     expect(editableRoot($('g'))).toBeUndefined();
     expect(editableRoot($('h'))).toBeUndefined();
+  });
+});
+
+describe('widenSelection', () => {
+  const text = 'She said hi. We went to the the station. Next one.';
+  const slice = (r?: { start: number; end: number }) => (r ? text.slice(r.start, r.end) : undefined);
+  it('widens mid-word ends to whole words and takes the sentence-ending period', () => {
+    expect(slice(widenSelection(text, text.indexOf('he said'), text.indexOf('ation.')))).toBe('She said hi. We went to the the station.');
+  });
+  it('trims surrounding whitespace and keeps an exact selection', () => {
+    expect(slice(widenSelection(text, text.indexOf(' We'), text.indexOf('station.') + 'station.'.length + 1))).toBe('We went to the the station.');
+  });
+  it('returns undefined for whitespace only', () => {
+    expect(widenSelection('a   b', 1, 4)).toBeUndefined();
   });
 });

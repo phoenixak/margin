@@ -174,3 +174,20 @@ export function caretIn(el: Field): number | undefined {
   if (!sel?.rangeCount || !el.contains(sel.anchorNode)) return undefined;
   return offsetOf(readField(el), sel.anchorNode!, sel.anchorOffset);
 }
+
+/**
+ * What a rewrite should replace: the selection without surrounding whitespace, widened
+ * to whole words (else the model completes "tes" and a stray "t." is left behind), plus
+ * the punctuation that ends the last word (else the model adds its own: "station..").
+ */
+export function widenSelection(text: string, start: number, end: number): { start: number; end: number } | undefined {
+  while (start < end && /\s/.test(text[start]!)) start++;
+  while (end > start && /\s/.test(text[end - 1]!)) end--;
+  const word = /[\p{L}\p{N}'’]/u;
+  while (start > 0 && word.test(text[start - 1]!) && word.test(text[start]!)) start--;
+  while (end < text.length && word.test(text[end]!) && word.test(text[end - 1]!)) end++;
+  if (end > start && word.test(text[end - 1]!)) {
+    while (end < text.length && /[.!?…,;:)\]"'”’]/.test(text[end]!)) end++;
+  }
+  return end > start ? { start, end } : undefined;
+}

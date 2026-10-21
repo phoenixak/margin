@@ -257,11 +257,13 @@ export class Badge {
     this.place();
   }
 
+  /** Just outside the field's top-right corner, so it never covers text; inside when there's no room. */
   private place() {
     const r = this.field.getBoundingClientRect();
     const w = this.dot.offsetWidth || 16;
-    this.dot.style.top = `${r.top + window.scrollY + 4}px`;
-    this.dot.style.left = `${r.right + window.scrollX - w - 4}px`;
+    const outside = r.right + 4 + w <= document.documentElement.clientWidth;
+    this.dot.style.top = `${r.top + window.scrollY + (outside ? 2 : -w / 2)}px`;
+    this.dot.style.left = `${r.right + window.scrollX + (outside ? 4 : -w - 2)}px`;
   }
 
   dispose() {

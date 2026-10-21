@@ -1,5 +1,5 @@
 import { diffText, REWRITE_PRESETS, type RewritePreset, shiftSuggestions, type Suggestion } from '@margin/core';
-import { caretIn, editableRoot, type Field, isTextArea, rangeAt, readField, replaceText, selectionIn } from './field.js';
+import { caretIn, editableRoot, type Field, isTextArea, rangeAt, readField, replaceText, selectionIn, widenSelection } from './field.js';
 import { Badge, type BadgeState, changeLine, closeCard, highlight, Mirror, showCard } from './overlay.js';
 import type { CheckResponse, Request, RewritePortIn, RewritePortOut, Settings, TabMessage } from './settings.js';
 
@@ -215,16 +215,8 @@ function currentSelection(): { field: Field; start: number; end: number } | unde
   let pick = live ? { field: active, ...live } : undefined;
   if (!pick && lastSelection && readField(lastSelection.field).text.slice(lastSelection.start, lastSelection.end) === lastSelection.text) pick = lastSelection;
   if (!pick) return undefined;
-  const text = readField(pick.field).text;
-  let { start, end } = pick;
-  while (start < end && /\s/.test(text[start]!)) start++;
-  while (end > start && /\s/.test(text[end - 1]!)) end--;
-  // Widen a selection that starts or stops mid-word to whole words, or the model
-  // completes the word and the rest of it is left behind ("test" + "t.").
-  const word = /[\p{L}\p{N}'’]/u;
-  while (start > 0 && word.test(text[start - 1]!) && word.test(text[start]!)) start--;
-  while (end < text.length && word.test(text[end]!) && word.test(text[end - 1]!)) end++;
-  return end > start ? { field: pick.field, start, end } : undefined;
+  const range = widenSelection(readField(pick.field).text, pick.start, pick.end);
+  return range ? { field: pick.field, ...range } : undefined;
 }
 
 /** Context menu or shortcut → rewrite. Streams into a card; Accept replaces the selection if it's unchanged. */
