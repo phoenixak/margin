@@ -10,7 +10,7 @@ import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createGroq } from '@ai-sdk/groq';
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
-import { generateText, type LanguageModel, Output } from 'ai';
+import { generateText, type LanguageModel, NoObjectGeneratedError, Output } from 'ai';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { z } from 'zod';
 
@@ -71,7 +71,8 @@ function parseTags(text: string): FixT[] | undefined {
     const r = Fix.safeParse({ id: Number(m[1]), kind: m[2] ?? 'grammar', text: m[3]!.trim(), why: (m[4] ?? '').trim().slice(0, 120) });
     if (r.success) out.push(r.data);
   }
-  return out.length || !text.trim() ? out : undefined;
+  // An empty reply is a failure (e.g. reasoning used up the output budget), not "no fixes".
+  return out.length ? out : undefined;
 }
 
 const prompt = fixture.sentences.map((s) => `<s id="${s.id}">${s.text}</s>`).join('\n');
@@ -115,7 +116,8 @@ function members(): Member[] {
     const google = createGoogleGenerativeAI({ apiKey: env.GEMINI_API_KEY });
     // Gemma variants hosted by Google; set GEMINI_MODELS from the model listing (see format/list-gemini.ts).
     for (const id of list(env.GEMINI_MODELS)) {
-      out.push({ id: `gemini:${id}`, model: google(id), noSystem: id.startsWith('gemma') });
+      // Gemma 4 thinks by default here and can spend the whole output budget on it; 'minimal' turns it off.
+      out.push({ id: `gemini:${id}`, model: google(id), noSystem: id.startsWith('gemma'), providerOptions: { google: { thinkingConfig: { thinkingLevel: 'minimal' } } } });
     }
   }
   return out;
@@ -131,6 +133,8 @@ interface Run {
   outputTokens?: number;
   reasoningTokens?: number;
   fixes?: FixT[];
+  /** Raw reply (synthetic fixture only), for debugging parse failures. */
+  text?: string;
 }
 
 async function once(m: Member, format: 'A' | 'B'): Promise<Run> {
@@ -150,13 +154,14 @@ ${prompt}` } : { system, prompt }),
   try {
     if (format === 'A') {
       const r = await generateText({ ...call(SYSTEM_A), output: Output.object({ schema: Fixes }) });
-      return { member: m.id, format, ok: true, ms: performance.now() - t0, ...tokens(r.usage), fixes: r.output.fixes };
+      return { member: m.id, format, ok: true, ms: performance.now() - t0, ...tokens(r.usage), fixes: r.output.fixes, text: r.text };
     }
     const r = await generateText(call(SYSTEM_B));
     const fixes = parseTags(r.text);
-    return { member: m.id, format, ok: fixes !== undefined, ms: performance.now() - t0, ...tokens(r.usage), ...(fixes ? { fixes } : { error: 'unparseable' }) };
+    return { member: m.id, format, ok: fixes !== undefined, ms: performance.now() - t0, ...tokens(r.usage), ...(fixes ? { fixes } : { error: 'unparseable' }), text: r.text };
   } catch (e) {
-    return { member: m.id, format, ok: false, ms: performance.now() - t0, error: e instanceof Error ? `${e.name}: ${e.message.slice(0, 200)}` : String(e) };
+    const text = NoObjectGeneratedError.isInstance(e) ? e.text : undefined;
+    return { member: m.id, format, ok: false, ms: performance.now() - t0, error: e instanceof Error ? `${e.name}: ${e.message.slice(0, 200)}` : String(e), ...(text === undefined ? {} : { text }) };
   }
 }
 

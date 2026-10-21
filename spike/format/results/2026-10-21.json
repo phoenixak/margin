@@ -1,0 +1,1077 @@
+{
+  "date": "2026-10-21",
+  "runs": 3,
+  "maxOutputTokens": 519,
+  "rows": [
+    {
+      "member": "gemini:gemma-4-26b-a4b-it",
+      "format": "A",
+      "runs": 3,
+      "parsed": 3,
+      "p50": 9516,
+      "p95": 9563,
+      "outTokens": 418,
+      "tp": 36,
+      "exact": 30,
+      "fp": 0,
+      "fn": 0,
+      "placeholderViolations": 0,
+      "unknownIds": 0
+    },
+    {
+      "member": "gemini:gemma-4-26b-a4b-it",
+      "format": "B",
+      "runs": 3,
+      "parsed": 3,
+      "p50": 9469,
+      "p95": 9477,
+      "outTokens": 418,
+      "tp": 36,
+      "exact": 30,
+      "fp": 0,
+      "fn": 0,
+      "placeholderViolations": 0,
+      "unknownIds": 0
+    },
+    {
+      "member": "gemini:gemma-4-31b-it",
+      "format": "A",
+      "runs": 3,
+      "parsed": 3,
+      "p50": 40468,
+      "p95": 42200,
+      "outTokens": 384,
+      "tp": 36,
+      "exact": 30,
+      "fp": 0,
+      "fn": 0,
+      "placeholderViolations": 0,
+      "unknownIds": 0
+    },
+    {
+      "member": "gemini:gemma-4-31b-it",
+      "format": "B",
+      "runs": 3,
+      "parsed": 3,
+      "p50": 39477,
+      "p95": 68120,
+      "outTokens": 427,
+      "tp": 36,
+      "exact": 30,
+      "fp": 0,
+      "fn": 0,
+      "placeholderViolations": 0,
+      "unknownIds": 0
+    }
+  ],
+  "raw": [
+    {
+      "member": "gemini:gemma-4-26b-a4b-it",
+      "format": "A",
+      "ok": true,
+      "ms": 9563.407000000001,
+      "inputTokens": 676,
+      "outputTokens": 418,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Tense consistency for past events."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "Singular subject 'Each' requires singular verb 'was'."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "Use 'affect' as a verb meaning to influence."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "word",
+          "why": "Removed repeated word 'the'."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "punctuation",
+          "why": "Fixed comma splice with a semicolon."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional structure uses 'had known'."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Plural subject 'They' requires 'were'."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun 'it'."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "grammar",
+          "why": "Use 'you're' as a contraction of 'you are'."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Third-person singular subject requires 'doesn't'."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Verb tense consistency."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Use 'they're' as a contraction of 'they are'."
+        }
+      ],
+      "text": "{\"fixes\":[{\"id\":1,\"text\":\"The committee reviewed the proposal last week and approved it.\",\"kind\":\"grammar\",\"why\":\"Tense consistency for past events.\"},{\"id\":3,\"text\":\"Each of the reports was checked by two reviewers.\",\"kind\":\"grammar\",\"why\":\"Singular subject 'Each' requires singular verb 'was'.\"},{\"id\":5,\"text\":\"The new policy will affect everyone who works remotely.\",\"kind\":\"word\",\"why\":\"Use 'affect' as a verb meaning to influence.\"},{\"id\":7,\"text\":\"We went to the station to meet them.\",\"kind\":\"word\",\"why\":\"Removed repeated word 'the'.\"},{\"id\":8,\"text\":\"The results were surprising; the team decided to repeat the test.\",\"kind\":\"punctuation\",\"why\":\"Fixed comma splice with a semicolon.\"},{\"id\":10,\"text\":\"If I had known, I would have come earlier.\",\"kind\":\"grammar\",\"why\":\"Correct conditional structure uses 'had known'.\"},{\"id\":12,\"text\":\"They were waiting outside when the rain started.\",\"kind\":\"grammar\",\"why\":\"Plural subject 'They' requires 'were'.\"},{\"id\":13,\"text\":\"The report, which was long, covered every region.\",\"kind\":\"grammar\",\"why\":\"Removed redundant pronoun 'it'.\"},{\"id\":15,\"text\":\"Please send the files to ⟦1⟧ when you're ready.\",\"kind\":\"grammar\",\"why\":\"Use 'you're' as a contraction of 'you are'.\"},{\"id\":16,\"text\":\"He doesn't think the plan will work.\",\"kind\":\"grammar\",\"why\":\"Third-person singular subject requires 'doesn't'.\"},{\"id\":19,\"text\":\"The library was closed so we studied at the cafe.\",\"kind\":\"grammar\",\"why\":\"Verb tense consistency.\"},{\"id\":20,\"text\":\"They're going to announce the winners tomorrow.\",\"kind\":\"word\",\"why\":\"Use 'they're' as a contraction of 'they are'.\"}]}"
+    },
+    {
+      "member": "gemini:gemma-4-26b-a4b-it",
+      "format": "A",
+      "ok": true,
+      "ms": 9491.503100000002,
+      "inputTokens": 676,
+      "outputTokens": 418,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Tense consistency for past events."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "Singular subject 'Each' requires singular verb 'was'."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "Use 'affect' as a verb meaning to influence."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "word",
+          "why": "Removed repeated word 'the'."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "punctuation",
+          "why": "Fixed comma splice with a semicolon."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional structure uses 'had known'."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Plural subject 'They' requires 'were'."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun 'it'."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "grammar",
+          "why": "Use 'you're' as a contraction of 'you are'."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Third-person singular subject requires 'doesn't'."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Verb tense consistency."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Use 'they're' as a contraction of 'they are'."
+        }
+      ],
+      "text": "{\"fixes\":[{\"id\":1,\"text\":\"The committee reviewed the proposal last week and approved it.\",\"kind\":\"grammar\",\"why\":\"Tense consistency for past events.\"},{\"id\":3,\"text\":\"Each of the reports was checked by two reviewers.\",\"kind\":\"grammar\",\"why\":\"Singular subject 'Each' requires singular verb 'was'.\"},{\"id\":5,\"text\":\"The new policy will affect everyone who works remotely.\",\"kind\":\"word\",\"why\":\"Use 'affect' as a verb meaning to influence.\"},{\"id\":7,\"text\":\"We went to the station to meet them.\",\"kind\":\"word\",\"why\":\"Removed repeated word 'the'.\"},{\"id\":8,\"text\":\"The results were surprising; the team decided to repeat the test.\",\"kind\":\"punctuation\",\"why\":\"Fixed comma splice with a semicolon.\"},{\"id\":10,\"text\":\"If I had known, I would have come earlier.\",\"kind\":\"grammar\",\"why\":\"Correct conditional structure uses 'had known'.\"},{\"id\":12,\"text\":\"They were waiting outside when the rain started.\",\"kind\":\"grammar\",\"why\":\"Plural subject 'They' requires 'were'.\"},{\"id\":13,\"text\":\"The report, which was long, covered every region.\",\"kind\":\"grammar\",\"why\":\"Removed redundant pronoun 'it'.\"},{\"id\":15,\"text\":\"Please send the files to ⟦1⟧ when you're ready.\",\"kind\":\"grammar\",\"why\":\"Use 'you're' as a contraction of 'you are'.\"},{\"id\":16,\"text\":\"He doesn't think the plan will work.\",\"kind\":\"grammar\",\"why\":\"Third-person singular subject requires 'doesn't'.\"},{\"id\":19,\"text\":\"The library was closed so we studied at the cafe.\",\"kind\":\"grammar\",\"why\":\"Verb tense consistency.\"},{\"id\":20,\"text\":\"They're going to announce the winners tomorrow.\",\"kind\":\"word\",\"why\":\"Use 'they're' as a contraction of 'they are'.\"}]}"
+    },
+    {
+      "member": "gemini:gemma-4-26b-a4b-it",
+      "format": "A",
+      "ok": true,
+      "ms": 9515.7566,
+      "inputTokens": 676,
+      "outputTokens": 418,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Tense consistency for past events."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "Singular subject 'Each' requires singular verb 'was'."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "Use 'affect' as a verb meaning to influence."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "word",
+          "why": "Removed repeated word 'the'."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "punctuation",
+          "why": "Fixed comma splice with a semicolon."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional structure uses 'had known'."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Plural subject 'They' requires 'were'."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun 'it'."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "grammar",
+          "why": "Use 'you're' as a contraction of 'you are'."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Third-person singular subject requires 'doesn't'."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Verb tense consistency."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Use 'they're' as a contraction of 'they are'."
+        }
+      ],
+      "text": "{\"fixes\":[{\"id\":1,\"text\":\"The committee reviewed the proposal last week and approved it.\",\"kind\":\"grammar\",\"why\":\"Tense consistency for past events.\"},{\"id\":3,\"text\":\"Each of the reports was checked by two reviewers.\",\"kind\":\"grammar\",\"why\":\"Singular subject 'Each' requires singular verb 'was'.\"},{\"id\":5,\"text\":\"The new policy will affect everyone who works remotely.\",\"kind\":\"word\",\"why\":\"Use 'affect' as a verb meaning to influence.\"},{\"id\":7,\"text\":\"We went to the station to meet them.\",\"kind\":\"word\",\"why\":\"Removed repeated word 'the'.\"},{\"id\":8,\"text\":\"The results were surprising; the team decided to repeat the test.\",\"kind\":\"punctuation\",\"why\":\"Fixed comma splice with a semicolon.\"},{\"id\":10,\"text\":\"If I had known, I would have come earlier.\",\"kind\":\"grammar\",\"why\":\"Correct conditional structure uses 'had known'.\"},{\"id\":12,\"text\":\"They were waiting outside when the rain started.\",\"kind\":\"grammar\",\"why\":\"Plural subject 'They' requires 'were'.\"},{\"id\":13,\"text\":\"The report, which was long, covered every region.\",\"kind\":\"grammar\",\"why\":\"Removed redundant pronoun 'it'.\"},{\"id\":15,\"text\":\"Please send the files to ⟦1⟧ when you're ready.\",\"kind\":\"grammar\",\"why\":\"Use 'you're' as a contraction of 'you are'.\"},{\"id\":16,\"text\":\"He doesn't think the plan will work.\",\"kind\":\"grammar\",\"why\":\"Third-person singular subject requires 'doesn't'.\"},{\"id\":19,\"text\":\"The library was closed so we studied at the cafe.\",\"kind\":\"grammar\",\"why\":\"Verb tense consistency.\"},{\"id\":20,\"text\":\"They're going to announce the winners tomorrow.\",\"kind\":\"word\",\"why\":\"Use 'they're' as a contraction of 'they are'.\"}]}"
+    },
+    {
+      "member": "gemini:gemma-4-26b-a4b-it",
+      "format": "B",
+      "ok": true,
+      "ms": 9426.707199999997,
+      "inputTokens": 729,
+      "outputTokens": 418,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Tense consistency for a past event."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "Subject \"Each\" is singular."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "Use \"affect\" as a verb."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "word",
+          "why": "Removed repeated word."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "punctuation",
+          "why": "Fixed comma splice."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional tense."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Plural subject requires \"were\"."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun \"it\"."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "word",
+          "why": "Used contraction for \"you are\"."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Subject-verb agreement."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Added missing verb/fixed tense."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Used contraction for \"they are\"."
+        }
+      ],
+      "text": "<fix id=\"1\" kind=\"grammar\">The committee reviewed the proposal last week and approved it.</fix><why>Tense consistency for a past event.</why>\n<fix id=\"3\" kind=\"grammar\">Each of the reports was checked by two reviewers.</fix><why>Subject \"Each\" is singular.</why>\n<fix id=\"5\" kind=\"word\">The new policy will affect everyone who works remotely.</fix><why>Use \"affect\" as a verb.</why>\n<fix id=\"7\" kind=\"word\">We went to the station to meet them.</fix><why>Removed repeated word.</why>\n<fix id=\"8\" kind=\"punctuation\">The results were surprising; the team decided to repeat the test.</fix><why>Fixed comma splice.</why>\n<fix id=\"10\" kind=\"grammar\">If I had known, I would have come earlier.</fix><why>Correct conditional tense.</why>\n<fix id=\"12\" kind=\"grammar\">They were waiting outside when the rain started.</fix><why>Plural subject requires \"were\".</why>\n<fix id=\"13\" kind=\"grammar\">The report, which was long, covered every region.</fix><why>Removed redundant pronoun \"it\".</why>\n<fix id=\"15\" kind=\"word\">Please send the files to ⟦1⟧ when you're ready.</fix><why>Used contraction for \"you are\".</why>\n<fix id=\"16\" kind=\"grammar\">He doesn't think the plan will work.</fix><why>Subject-verb agreement.</why>\n<fix id=\"19\" kind=\"grammar\">The library was closed so we studied at the cafe.</fix><why>Added missing verb/fixed tense.</why>\n<fix id=\"20\" kind=\"word\">They're going to announce the winners tomorrow.</fix><why>Used contraction for \"they are\".</why>"
+    },
+    {
+      "member": "gemini:gemma-4-26b-a4b-it",
+      "format": "B",
+      "ok": true,
+      "ms": 9469.040499999996,
+      "inputTokens": 729,
+      "outputTokens": 418,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Tense consistency for a past event."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "Subject \"Each\" is singular."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "Use \"affect\" as a verb."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "word",
+          "why": "Removed repeated word."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "punctuation",
+          "why": "Fixed comma splice."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional tense."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Plural subject requires \"were\"."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun \"it\"."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "word",
+          "why": "Used contraction for \"you are\"."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Subject-verb agreement."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Added missing verb/fixed tense."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Used contraction for \"they are\"."
+        }
+      ],
+      "text": "<fix id=\"1\" kind=\"grammar\">The committee reviewed the proposal last week and approved it.</fix><why>Tense consistency for a past event.</why>\n<fix id=\"3\" kind=\"grammar\">Each of the reports was checked by two reviewers.</fix><why>Subject \"Each\" is singular.</why>\n<fix id=\"5\" kind=\"word\">The new policy will affect everyone who works remotely.</fix><why>Use \"affect\" as a verb.</why>\n<fix id=\"7\" kind=\"word\">We went to the station to meet them.</fix><why>Removed repeated word.</why>\n<fix id=\"8\" kind=\"punctuation\">The results were surprising; the team decided to repeat the test.</fix><why>Fixed comma splice.</why>\n<fix id=\"10\" kind=\"grammar\">If I had known, I would have come earlier.</fix><why>Correct conditional tense.</why>\n<fix id=\"12\" kind=\"grammar\">They were waiting outside when the rain started.</fix><why>Plural subject requires \"were\".</why>\n<fix id=\"13\" kind=\"grammar\">The report, which was long, covered every region.</fix><why>Removed redundant pronoun \"it\".</why>\n<fix id=\"15\" kind=\"word\">Please send the files to ⟦1⟧ when you're ready.</fix><why>Used contraction for \"you are\".</why>\n<fix id=\"16\" kind=\"grammar\">He doesn't think the plan will work.</fix><why>Subject-verb agreement.</why>\n<fix id=\"19\" kind=\"grammar\">The library was closed so we studied at the cafe.</fix><why>Added missing verb/fixed tense.</why>\n<fix id=\"20\" kind=\"word\">They're going to announce the winners tomorrow.</fix><why>Used contraction for \"they are\".</why>"
+    },
+    {
+      "member": "gemini:gemma-4-26b-a4b-it",
+      "format": "B",
+      "ok": true,
+      "ms": 9476.8439,
+      "inputTokens": 729,
+      "outputTokens": 418,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Tense consistency for a past event."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "Subject \"Each\" is singular."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "Use \"affect\" as a verb."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "word",
+          "why": "Removed repeated word."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "punctuation",
+          "why": "Fixed comma splice."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional tense."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Plural subject requires \"were\"."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun \"it\"."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "word",
+          "why": "Used contraction for \"you are\"."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Subject-verb agreement."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Added missing verb/fixed tense."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Used contraction for \"they are\"."
+        }
+      ],
+      "text": "<fix id=\"1\" kind=\"grammar\">The committee reviewed the proposal last week and approved it.</fix><why>Tense consistency for a past event.</why>\n<fix id=\"3\" kind=\"grammar\">Each of the reports was checked by two reviewers.</fix><why>Subject \"Each\" is singular.</why>\n<fix id=\"5\" kind=\"word\">The new policy will affect everyone who works remotely.</fix><why>Use \"affect\" as a verb.</why>\n<fix id=\"7\" kind=\"word\">We went to the station to meet them.</fix><why>Removed repeated word.</why>\n<fix id=\"8\" kind=\"punctuation\">The results were surprising; the team decided to repeat the test.</fix><why>Fixed comma splice.</why>\n<fix id=\"10\" kind=\"grammar\">If I had known, I would have come earlier.</fix><why>Correct conditional tense.</why>\n<fix id=\"12\" kind=\"grammar\">They were waiting outside when the rain started.</fix><why>Plural subject requires \"were\".</why>\n<fix id=\"13\" kind=\"grammar\">The report, which was long, covered every region.</fix><why>Removed redundant pronoun \"it\".</why>\n<fix id=\"15\" kind=\"word\">Please send the files to ⟦1⟧ when you're ready.</fix><why>Used contraction for \"you are\".</why>\n<fix id=\"16\" kind=\"grammar\">He doesn't think the plan will work.</fix><why>Subject-verb agreement.</why>\n<fix id=\"19\" kind=\"grammar\">The library was closed so we studied at the cafe.</fix><why>Added missing verb/fixed tense.</why>\n<fix id=\"20\" kind=\"word\">They're going to announce the winners tomorrow.</fix><why>Used contraction for \"they are\".</why>"
+    },
+    {
+      "member": "gemini:gemma-4-31b-it",
+      "format": "A",
+      "ok": true,
+      "ms": 40468.154899999994,
+      "inputTokens": 676,
+      "outputTokens": 384,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Past tense consistency for completed actions."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "'Each' is a singular subject."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "'Affect' is the verb meaning to influence."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "punctuation",
+          "why": "Removed repeated word."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "grammar",
+          "why": "Fixed comma splice."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional structure."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Plural subject takes plural verb."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "word",
+          "why": "Used contraction for 'you are'."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Third person singular subject takes 'doesn't'."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Tense consistency."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Used contraction for 'they are'."
+        }
+      ],
+      "text": "{\"fixes\":[{\"id\":1,\"text\":\"The committee reviewed the proposal last week and approved it.\",\"kind\":\"grammar\",\"why\":\"Past tense consistency for completed actions.\"},{\"id\":3,\"text\":\"Each of the reports was checked by two reviewers.\",\"kind\":\"grammar\",\"why\":\"'Each' is a singular subject.\"},{\"id\":5,\"text\":\"The new policy will affect everyone who works remotely.\",\"kind\":\"word\",\"why\":\"'Affect' is the verb meaning to influence.\"},{\"id\":7,\"text\":\"We went to the station to meet them.\",\"kind\":\"punctuation\",\"why\":\"Removed repeated word.\"},{\"id\":8,\"text\":\"The results were surprising; the team decided to repeat the test.\",\"kind\":\"grammar\",\"why\":\"Fixed comma splice.\"},{\"id\":10,\"text\":\"If I had known, I would have come earlier.\",\"kind\":\"grammar\",\"why\":\"Correct conditional structure.\"},{\"id\":12,\"text\":\"They were waiting outside when the rain started.\",\"kind\":\"grammar\",\"why\":\"Plural subject takes plural verb.\"},{\"id\":13,\"text\":\"The report, which was long, covered every region.\",\"kind\":\"grammar\",\"why\":\"Removed redundant pronoun.\"},{\"id\":15,\"text\":\"Please send the files to ⟦1⟧ when you're ready.\",\"kind\":\"word\",\"why\":\"Used contraction for 'you are'.\"},{\"id\":16,\"text\":\"He doesn't think the plan will work.\",\"kind\":\"grammar\",\"why\":\"Third person singular subject takes 'doesn't'.\"},{\"id\":19,\"text\":\"The library was closed so we studied at the cafe.\",\"kind\":\"grammar\",\"why\":\"Tense consistency.\"},{\"id\":20,\"text\":\"They're going to announce the winners tomorrow.\",\"kind\":\"word\",\"why\":\"Used contraction for 'they are'.\"}]}"
+    },
+    {
+      "member": "gemini:gemma-4-31b-it",
+      "format": "A",
+      "ok": true,
+      "ms": 42199.6027,
+      "inputTokens": 676,
+      "outputTokens": 384,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Past tense consistency for completed actions."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "'Each' is a singular subject."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "'Affect' is the verb meaning to influence."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "punctuation",
+          "why": "Removed repeated word."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "grammar",
+          "why": "Fixed comma splice."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional structure."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Plural subject takes plural verb."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "word",
+          "why": "Used contraction for 'you are'."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Third person singular subject takes 'doesn't'."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Tense consistency."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Used contraction for 'they are'."
+        }
+      ],
+      "text": "{\"fixes\":[{\"id\":1,\"text\":\"The committee reviewed the proposal last week and approved it.\",\"kind\":\"grammar\",\"why\":\"Past tense consistency for completed actions.\"},{\"id\":3,\"text\":\"Each of the reports was checked by two reviewers.\",\"kind\":\"grammar\",\"why\":\"'Each' is a singular subject.\"},{\"id\":5,\"text\":\"The new policy will affect everyone who works remotely.\",\"kind\":\"word\",\"why\":\"'Affect' is the verb meaning to influence.\"},{\"id\":7,\"text\":\"We went to the station to meet them.\",\"kind\":\"punctuation\",\"why\":\"Removed repeated word.\"},{\"id\":8,\"text\":\"The results were surprising; the team decided to repeat the test.\",\"kind\":\"grammar\",\"why\":\"Fixed comma splice.\"},{\"id\":10,\"text\":\"If I had known, I would have come earlier.\",\"kind\":\"grammar\",\"why\":\"Correct conditional structure.\"},{\"id\":12,\"text\":\"They were waiting outside when the rain started.\",\"kind\":\"grammar\",\"why\":\"Plural subject takes plural verb.\"},{\"id\":13,\"text\":\"The report, which was long, covered every region.\",\"kind\":\"grammar\",\"why\":\"Removed redundant pronoun.\"},{\"id\":15,\"text\":\"Please send the files to ⟦1⟧ when you're ready.\",\"kind\":\"word\",\"why\":\"Used contraction for 'you are'.\"},{\"id\":16,\"text\":\"He doesn't think the plan will work.\",\"kind\":\"grammar\",\"why\":\"Third person singular subject takes 'doesn't'.\"},{\"id\":19,\"text\":\"The library was closed so we studied at the cafe.\",\"kind\":\"grammar\",\"why\":\"Tense consistency.\"},{\"id\":20,\"text\":\"They're going to announce the winners tomorrow.\",\"kind\":\"word\",\"why\":\"Used contraction for 'they are'.\"}]}"
+    },
+    {
+      "member": "gemini:gemma-4-31b-it",
+      "format": "A",
+      "ok": true,
+      "ms": 23070.364100000006,
+      "inputTokens": 676,
+      "outputTokens": 384,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Past tense consistency for completed actions."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "'Each' is a singular subject."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "'Affect' is the verb meaning to influence."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "punctuation",
+          "why": "Removed repeated word."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "grammar",
+          "why": "Fixed comma splice."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional structure."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Plural subject takes plural verb."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "word",
+          "why": "Used contraction for 'you are'."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Third person singular subject takes 'doesn't'."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Tense consistency."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Used contraction for 'they are'."
+        }
+      ],
+      "text": "{\"fixes\":[{\"id\":1,\"text\":\"The committee reviewed the proposal last week and approved it.\",\"kind\":\"grammar\",\"why\":\"Past tense consistency for completed actions.\"},{\"id\":3,\"text\":\"Each of the reports was checked by two reviewers.\",\"kind\":\"grammar\",\"why\":\"'Each' is a singular subject.\"},{\"id\":5,\"text\":\"The new policy will affect everyone who works remotely.\",\"kind\":\"word\",\"why\":\"'Affect' is the verb meaning to influence.\"},{\"id\":7,\"text\":\"We went to the station to meet them.\",\"kind\":\"punctuation\",\"why\":\"Removed repeated word.\"},{\"id\":8,\"text\":\"The results were surprising; the team decided to repeat the test.\",\"kind\":\"grammar\",\"why\":\"Fixed comma splice.\"},{\"id\":10,\"text\":\"If I had known, I would have come earlier.\",\"kind\":\"grammar\",\"why\":\"Correct conditional structure.\"},{\"id\":12,\"text\":\"They were waiting outside when the rain started.\",\"kind\":\"grammar\",\"why\":\"Plural subject takes plural verb.\"},{\"id\":13,\"text\":\"The report, which was long, covered every region.\",\"kind\":\"grammar\",\"why\":\"Removed redundant pronoun.\"},{\"id\":15,\"text\":\"Please send the files to ⟦1⟧ when you're ready.\",\"kind\":\"word\",\"why\":\"Used contraction for 'you are'.\"},{\"id\":16,\"text\":\"He doesn't think the plan will work.\",\"kind\":\"grammar\",\"why\":\"Third person singular subject takes 'doesn't'.\"},{\"id\":19,\"text\":\"The library was closed so we studied at the cafe.\",\"kind\":\"grammar\",\"why\":\"Tense consistency.\"},{\"id\":20,\"text\":\"They're going to announce the winners tomorrow.\",\"kind\":\"word\",\"why\":\"Used contraction for 'they are'.\"}]}"
+    },
+    {
+      "member": "gemini:gemma-4-31b-it",
+      "format": "B",
+      "ok": true,
+      "ms": 68119.88020000001,
+      "inputTokens": 729,
+      "outputTokens": 422,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Past tense consistency for completed actions."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "\"Each\" is a singular subject."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "\"Affect\" is the verb for influence."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "grammar",
+          "why": "Removed repeated word \"the\"."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "punctuation",
+          "why": "Fixed comma splice."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional tense."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Subject-verb agreement."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun \"it\"."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "word",
+          "why": "Used \"you're\" instead of \"your\"."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Subject-verb agreement."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Tense consistency."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Used \"they're\" instead of \"their\"."
+        }
+      ],
+      "text": "<fix id=\"1\" kind=\"grammar\">The committee reviewed the proposal last week and approved it.</fix><why>Past tense consistency for completed actions.</why>\n<fix id=\"3\" kind=\"grammar\">Each of the reports was checked by two reviewers.</fix><why>\"Each\" is a singular subject.</why>\n<fix id=\"5\" kind=\"word\">The new policy will affect everyone who works remotely.</fix><why>\"Affect\" is the verb for influence.</why>\n<fix id=\"7\" kind=\"grammar\">We went to the station to meet them.</fix><why>Removed repeated word \"the\".</why>\n<fix id=\"8\" kind=\"punctuation\">The results were surprising; the team decided to repeat the test.</fix><why>Fixed comma splice.</why>\n<fix id=\"10\" kind=\"grammar\">If I had known, I would have come earlier.</fix><why>Correct conditional tense.</why>\n<fix id=\"12\" kind=\"grammar\">They were waiting outside when the rain started.</fix><why>Subject-verb agreement.</why>\n<fix id=\"13\" kind=\"grammar\">The report, which was long, covered every region.</fix><why>Removed redundant pronoun \"it\".</why>\n<fix id=\"15\" kind=\"word\">Please send the files to ⟦1⟧ when you're ready.</fix><why>Used \"you're\" instead of \"your\".</why>\n<fix id=\"16\" kind=\"grammar\">He doesn't think the plan will work.</fix><why>Subject-verb agreement.</why>\n<fix id=\"19\" kind=\"grammar\">The library was closed so we studied at the cafe.</fix><why>Tense consistency.</why>\n<fix id=\"20\" kind=\"word\">They're going to announce the winners tomorrow.</fix><why>Used \"they're\" instead of \"their\".</why>"
+    },
+    {
+      "member": "gemini:gemma-4-31b-it",
+      "format": "B",
+      "ok": true,
+      "ms": 23641.360199999996,
+      "inputTokens": 729,
+      "outputTokens": 429,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Past tense consistency for completed actions."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "\"Each\" is a singular subject."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "\"Affect\" is the verb; \"effect\" is usually a noun."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "grammar",
+          "why": "Removed repeated word \"the\"."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "punctuation",
+          "why": "Fixed comma splice."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional tense."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Subject-verb agreement."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun \"it\"."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "word",
+          "why": "Used \"you're\" instead of \"your\"."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Subject-verb agreement."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Corrected verb tense."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Used \"they're\" instead of \"their\"."
+        }
+      ],
+      "text": "<fix id=\"1\" kind=\"grammar\">The committee reviewed the proposal last week and approved it.</fix><why>Past tense consistency for completed actions.</why>\n<fix id=\"3\" kind=\"grammar\">Each of the reports was checked by two reviewers.</fix><why>\"Each\" is a singular subject.</why>\n<fix id=\"5\" kind=\"word\">The new policy will affect everyone who works remotely.</fix><why>\"Affect\" is the verb; \"effect\" is usually a noun.</why>\n<fix id=\"7\" kind=\"grammar\">We went to the station to meet them.</fix><why>Removed repeated word \"the\".</why>\n<fix id=\"8\" kind=\"punctuation\">The results were surprising; the team decided to repeat the test.</fix><why>Fixed comma splice.</why>\n<fix id=\"10\" kind=\"grammar\">If I had known, I would have come earlier.</fix><why>Correct conditional tense.</why>\n<fix id=\"12\" kind=\"grammar\">They were waiting outside when the rain started.</fix><why>Subject-verb agreement.</why>\n<fix id=\"13\" kind=\"grammar\">The report, which was long, covered every region.</fix><why>Removed redundant pronoun \"it\".</why>\n<fix id=\"15\" kind=\"word\">Please send the files to ⟦1⟧ when you're ready.</fix><why>Used \"you're\" instead of \"your\".</why>\n<fix id=\"16\" kind=\"grammar\">He doesn't think the plan will work.</fix><why>Subject-verb agreement.</why>\n<fix id=\"19\" kind=\"grammar\">The library was closed so we studied at the cafe.</fix><why>Corrected verb tense.</why>\n<fix id=\"20\" kind=\"word\">They're going to announce the winners tomorrow.</fix><why>Used \"they're\" instead of \"their\".</why>"
+    },
+    {
+      "member": "gemini:gemma-4-31b-it",
+      "format": "B",
+      "ok": true,
+      "ms": 39476.5889,
+      "inputTokens": 729,
+      "outputTokens": 429,
+      "reasoningTokens": 0,
+      "fixes": [
+        {
+          "id": 1,
+          "text": "The committee reviewed the proposal last week and approved it.",
+          "kind": "grammar",
+          "why": "Past tense consistency for completed actions."
+        },
+        {
+          "id": 3,
+          "text": "Each of the reports was checked by two reviewers.",
+          "kind": "grammar",
+          "why": "\"Each\" is a singular subject."
+        },
+        {
+          "id": 5,
+          "text": "The new policy will affect everyone who works remotely.",
+          "kind": "word",
+          "why": "\"Affect\" is the verb; \"effect\" is usually a noun."
+        },
+        {
+          "id": 7,
+          "text": "We went to the station to meet them.",
+          "kind": "grammar",
+          "why": "Removed repeated word \"the\"."
+        },
+        {
+          "id": 8,
+          "text": "The results were surprising; the team decided to repeat the test.",
+          "kind": "punctuation",
+          "why": "Fixed comma splice."
+        },
+        {
+          "id": 10,
+          "text": "If I had known, I would have come earlier.",
+          "kind": "grammar",
+          "why": "Correct conditional tense."
+        },
+        {
+          "id": 12,
+          "text": "They were waiting outside when the rain started.",
+          "kind": "grammar",
+          "why": "Subject-verb agreement."
+        },
+        {
+          "id": 13,
+          "text": "The report, which was long, covered every region.",
+          "kind": "grammar",
+          "why": "Removed redundant pronoun \"it\"."
+        },
+        {
+          "id": 15,
+          "text": "Please send the files to ⟦1⟧ when you're ready.",
+          "kind": "word",
+          "why": "Used \"you're\" instead of \"your\"."
+        },
+        {
+          "id": 16,
+          "text": "He doesn't think the plan will work.",
+          "kind": "grammar",
+          "why": "Subject-verb agreement."
+        },
+        {
+          "id": 19,
+          "text": "The library was closed so we studied at the cafe.",
+          "kind": "grammar",
+          "why": "Corrected verb tense."
+        },
+        {
+          "id": 20,
+          "text": "They're going to announce the winners tomorrow.",
+          "kind": "word",
+          "why": "Used \"they're\" instead of \"their\"."
+        }
+      ],
+      "text": "<fix id=\"1\" kind=\"grammar\">The committee reviewed the proposal last week and approved it.</fix><why>Past tense consistency for completed actions.</why>\n<fix id=\"3\" kind=\"grammar\">Each of the reports was checked by two reviewers.</fix><why>\"Each\" is a singular subject.</why>\n<fix id=\"5\" kind=\"word\">The new policy will affect everyone who works remotely.</fix><why>\"Affect\" is the verb; \"effect\" is usually a noun.</why>\n<fix id=\"7\" kind=\"grammar\">We went to the station to meet them.</fix><why>Removed repeated word \"the\".</why>\n<fix id=\"8\" kind=\"punctuation\">The results were surprising; the team decided to repeat the test.</fix><why>Fixed comma splice.</why>\n<fix id=\"10\" kind=\"grammar\">If I had known, I would have come earlier.</fix><why>Correct conditional tense.</why>\n<fix id=\"12\" kind=\"grammar\">They were waiting outside when the rain started.</fix><why>Subject-verb agreement.</why>\n<fix id=\"13\" kind=\"grammar\">The report, which was long, covered every region.</fix><why>Removed redundant pronoun \"it\".</why>\n<fix id=\"15\" kind=\"word\">Please send the files to ⟦1⟧ when you're ready.</fix><why>Used \"you're\" instead of \"your\".</why>\n<fix id=\"16\" kind=\"grammar\">He doesn't think the plan will work.</fix><why>Subject-verb agreement.</why>\n<fix id=\"19\" kind=\"grammar\">The library was closed so we studied at the cafe.</fix><why>Corrected verb tense.</why>\n<fix id=\"20\" kind=\"word\">They're going to announce the winners tomorrow.</fix><why>Used \"they're\" instead of \"their\".</why>"
+    }
+  ]
+}

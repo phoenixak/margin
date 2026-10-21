@@ -2,6 +2,29 @@
 
 Newest first. Each entry: the decision, why, and what it changed.
 
+## 2026-10-21: Format spike results (hosted stand-ins)
+
+No local model server yet (limited bandwidth), so the spike ran the **same open-weight models hosted by Google's Gemini API**: Gemma 4 26B A4B and Gemma 4 31B. 20 synthetic sentences (12 with errors), 3 runs per model and format. Raw data: `spike/format/results/2026-10-21.{json,md}`.
+
+| model | format | parsed | errors fixed | exact wording | correct sentences changed | placeholder violations | p50 (hosted) |
+|---|---|---|---|---|---|---|---|
+| Gemma 4 26B A4B | A / B | 3/3 / 3/3 | 12/12 every run | 10/12 | 0 | 0 | ~9.5 s |
+| Gemma 4 31B | A / B | 3/3 / 3/3 | 12/12 every run | 10/12 | 0 | 0 | ~40 s |
+
+The two "inexact" fixes are acceptable: a comma splice fixed with `;` instead of `, so`, and a tense fix without adding the comma before "so" (comma style is Harper's job). The eval must score acceptable alternatives, not exact strings.
+
+**Findings**
+- **Gemma 4 thinks by default** on the Gemini API (245 hidden tokens for a 2-sentence prompt). On the full batch that used up `maxOutputTokens` and returned empty text. `thinkingConfig: { thinkingLevel: 'minimal' }` → 0 reasoning tokens (`thinkingBudget` is rejected for Gemma). Locally the same applies: thinking must be off for Gemma 4 in Ollama / LM Studio. **Verify the local switch** when a server is available.
+- Gemma on the Gemini API rejects system instructions, so the spike folds the system prompt into the user prompt for it.
+- An empty reply must count as a parse failure, not "no fixes" (the first run hid the thinking problem that way; parser fixed).
+- OpenRouter's free Gemma 4 endpoints were "rate-limited upstream" for every call (Google capacity), so no data from there. The OpenRouter key is free tier (50 requests/day, no credit), so paid stand-ins (Qwen 3.5 9B, Qwen3 14B, gpt-oss-20b) couldn't run. The Groq key was rejected as invalid.
+- Gemma 4 12B and E4B aren't hosted anywhere we have access to, so they're **untested**.
+
+**Decisions (provisional until a local run)**
+- **Format: A (structured output)** for local servers (Ollama and LM Studio enforce JSON schemas with constrained decoding). Keep the B parser as the fallback for models or servers without schema support. Both formats tied on quality here.
+- **Default model on 16 GB: Gemma 4 26B A4B QAT** (`gemma4:26b-a4b-it-qat`), if it fits with a small context (about 14.4 GB of weights). Otherwise Gemma 4 12B QAT, which still needs measuring. 31B was no better and much slower.
+- **Precision looks promising** (0 false positives on 8 clean sentences, including style and negation bait), but 20 synthetic sentences is a smoke test, not the Phase 4 eval.
+
 ## 2026-10-21: Phase 0
 
 ### Answers to PLAN §11 (from Phoenix)
@@ -41,4 +64,4 @@ AI SDK 7 requires Node 22+. CLAUDE.md and the root `package.json` updated. VS Co
 
 ### Pending (Phase 0 not finished)
 
-- **Output format (A vs B), capability tags and starting members:** wait on the format spike. `spike/format/run.ts` and its synthetic fixture are ready. It needs a local server (Ollama is not installed on the dev machine yet). Cloud runs need Phoenix's OK and keys, after quotas reset.
+- Format and default model: decided provisionally above (2026-10-21 spike). A local confirmation run is still pending.

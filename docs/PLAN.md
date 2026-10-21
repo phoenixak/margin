@@ -446,8 +446,8 @@ Keep prompts in `packages/core/src/prompts/`, versioned with `PROMPT_VERSION` an
 
 - [x] Clone Automattic/harper to `../../harper` and write `docs/HARPER-NOTES.md` (checklist in §4).
 - [x] Read `../../ai-sdk-quota`: README, PHASE0.md, public types, store interface, limits registry and probe. Write `docs/QUOTA-NOTES.md` answering §6.6, with small tests where possible.
-- [ ] Run the format spike: send one synthetic 20-sentence fixture to each candidate local model, once with format A and once with format B. Record parse success, latency p50/p95, tokens, and the edits made. Commit the results as JSON plus a table.
-- [ ] Decide the format and the default local model, and record them in `docs/DECISIONS.md`.
+- [x] Run the format spike (hosted copies of Gemma 4 26B/31B, 2026-10-21; a local confirmation run is pending): send one synthetic 20-sentence fixture to each candidate local model, once with format A and once with format B. Record parse success, latency p50/p95, tokens, and the edits made. Commit the results as JSON plus a table.
+- [x] Decide the format and the default local model (provisional: format A, Gemma 4 26B A4B QAT), and record them in `docs/DECISIONS.md`.
 
 **Done when** the notes and decisions exist, and every open question has an answer or an UPSTREAM entry.
 
