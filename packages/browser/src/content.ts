@@ -16,6 +16,9 @@ declare global {
 }
 
 const MIN_CHARS = 15;
+/** Above this, only the text around the caret is checked (free tiers have per-minute limits). */
+const LONG_FIELD = 6000;
+const AROUND_CARET = 2000;
 const WARNINGS: Record<string, string> = {
   placeholders: 'code, links or URLs may have changed',
   negation: 'a “not”/“never” was added or removed',
@@ -109,7 +112,9 @@ async function runCheck(field: Field) {
   const id = crypto.randomUUID();
   s.requestId = id;
   setBadge(field, { kind: 'checking' });
-  const res = await send<CheckResponse>({ type: 'check', id, text });
+  const caret = caretIn(field) ?? 0;
+  const ranges = text.length > LONG_FIELD ? [{ start: Math.max(0, caret - AROUND_CARET), end: caret + AROUND_CARET }] : undefined;
+  const res = await send<CheckResponse>({ type: 'check', id, text, ...(ranges ? { ranges } : {}) });
   if (s.requestId !== id) return;
   s.requestId = undefined;
   if (!res.ok) {
@@ -244,7 +249,8 @@ async function rewriteSelection(preset: RewritePreset | undefined) {
   const start = (instruction?: string) => {
     const port = chrome.runtime.connect({ name: 'rewrite' });
     let result: { text: string } | undefined;
-    const card = showCard(anchor, (b) => (b.textContent = '…'), [{ label: 'Cancel', onClick: () => (port.disconnect(), card.close()) }]);
+    const label = preset === 'custom' ? 'custom' : REWRITE_PRESETS[preset].label;
+    const card = showCard(anchor, (b) => (b.textContent = `Rewriting (${label})…`), [{ label: 'Cancel', onClick: () => (port.disconnect(), card.close()) }]);
     port.onMessage.addListener((m: RewritePortOut) => {
       if (m.type === 'delta') card.body.textContent = m.text;
       if (m.type === 'error') {

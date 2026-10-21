@@ -37,7 +37,7 @@ export async function saveSettings(patch: Partial<Settings>): Promise<Settings> 
 
 /** Messages from content scripts, the popup and the options page to the background. */
 export type Request =
-  | { type: 'check'; id: string; text: string }
+  | { type: 'check'; id: string; text: string; ranges?: { start: number; end: number }[] }
   | { type: 'cancel'; id: string }
   | { type: 'ignore'; original: string; fixed: string }
   | { type: 'status' }

@@ -66,7 +66,7 @@ async function harperRanges(text: string, dialect: Settings['dialect']): Promise
   }
 }
 
-async function handleCheck(id: string, text: string): Promise<CheckResponse> {
+async function handleCheck(id: string, text: string, ranges?: Range[]): Promise<CheckResponse> {
   const settings = await loadSettings();
   const model = modelFor(settings);
   if ('problem' in model) return { ok: false, error: model.problem, setup: model.setup };
@@ -85,6 +85,7 @@ async function handleCheck(id: string, text: string): Promise<CheckResponse> {
       signal: controller.signal,
       batch: { maxSentences: 8 },
       concurrency: model.parallel,
+      ...(ranges ? { ranges } : {}),
     });
     return { ok: true, suggestions: result.suggestions, model: model.id };
   } catch (error) {
@@ -105,7 +106,7 @@ async function status(): Promise<StatusResponse> {
 async function handle(req: Request): Promise<unknown> {
   switch (req.type) {
     case 'check':
-      return handleCheck(req.id, req.text);
+      return handleCheck(req.id, req.text, req.ranges);
     case 'cancel':
       controllers.get(req.id)?.abort();
       return { ok: true };
