@@ -9,7 +9,8 @@ export interface GuardOptions {
 const NEGATION = /\b(?:not|no|never|none|nobody|nothing|nowhere|neither|nor|cannot)\b|n['’]t\b/gi;
 const NUMBER = /\d+(?:[.,:/]\d+)*/g;
 const QUOTED = /"[^"\n]*"|“[^”\n]*”/g;
-const MARKDOWN = /[*_~`]/g;
+// Markup characters a grammar fix never needs to add or remove (models sometimes leak stray `[]` or `*`).
+const MARKDOWN = /[*_~`[\]<>|#]/g;
 
 const all = (re: RegExp, s: string) => s.match(re) ?? [];
 const sameList = (a: string[], b: string[]) => a.length === b.length && a.every((x, i) => x === b[i]);

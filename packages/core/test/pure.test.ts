@@ -136,6 +136,7 @@ describe('guardFix', () => {
   it('rejects rewrites above the edit ratio', () =>
     expect(g('The meeting could have been an email.', 'That gathering might simply have been a message.')).toBe('edit-ratio'));
   it('rejects broken Markdown emphasis', () => expect(g('This is **very** bad.', 'This is very bad.')).toBe('markdown'));
+  it('rejects leaked markup characters', () => expect(g("Don't loose the backup drive.", "Don't lose the[]backup drive.")).toBe('markdown'));
 });
 
 describe('overlaps', () => {
