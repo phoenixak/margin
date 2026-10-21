@@ -4,7 +4,7 @@
 
 Margin is an independent project. It is not made by or affiliated with Harper or Automattic.
 
-> **Status: early.** Working: the core, a CLI, a VS Code extension and a Chrome/Firefox extension. Planned: a language server (Neovim, Helix, Emacs, Sublime, Zed) and an Obsidian plugin ([docs/PLAN.md](docs/PLAN.md)).
+> **Status: early.** Built: the core, a CLI, a VS Code extension, a Chrome/Firefox extension, a language server ([margin-ls](packages/ls/README.md): Neovim, Helix, Sublime, Emacs) and an [Obsidian plugin](packages/obsidian/README.md). Tested in real apps so far: VS Code, Chrome. See [docs/PLAN.md](docs/PLAN.md).
 
 ## What's tested, honestly
 

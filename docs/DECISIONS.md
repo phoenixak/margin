@@ -2,6 +2,14 @@
 
 Newest first. Each entry: the decision, why, and what it changed.
 
+## 2026-10-21: Language server and Obsidian
+
+- The check engine moved from the VS Code package into `core`; margin-ls and the Obsidian plugin reuse it. `harperRanges` may now be async (harper.js lints asynchronously).
+- margin-ls reads the Gemini key only from `GEMINI_API_KEY`: editors have no secret store, and keys in LSP settings would end up in dotfiles. Rewrite is offered as code actions on selections of a few words or more and applied with `workspace/applyEdit` (works in Neovim, Helix, Sublime, lsp-mode).
+- Eglot runs one server per buffer, so Emacs users need lsp-mode or a multiplexer to run harper-ls and margin-ls together; documented rather than worked around (margin-ls won't render Harper's lints).
+- Obsidian: own decorations instead of `@codemirror/lint` (Harper's plugin uses it, and two lint sources could clash depending on the version Obsidian ships); network via `requestUrl`, which also removes the CORS / OLLAMA_ORIGINS step for local models; key in `app.secretStorage`, so minAppVersion is 1.11.4.
+- Zed is not supported yet: it needs an extension built with a Rust → WASM toolchain.
+
 ## 2026-10-21: Browser, after the first real Chrome run
 
 - Margin no longer treats `spellcheck="false"` as "don't check": Grammarly sets it on every field it manages. Opt-outs are now structural (CodeMirror, Monaco, Ace) or explicit (`data-gramm="false"`, `data-enable-grammarly="false"`, `data-margin="false"`).

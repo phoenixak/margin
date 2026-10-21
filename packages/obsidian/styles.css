@@ -1,0 +1,13 @@
+/* Margin: purple wavy underlines, distinct from Harper's. */
+.margin-suggestion { text-decoration: underline wavy #7c3aed; text-decoration-thickness: 1.5px; text-underline-offset: 3px; cursor: pointer; }
+.margin-card { padding: 8px 10px; max-width: 360px; font-size: var(--font-ui-small); }
+.margin-card-title { font-weight: 600; color: #7c3aed; margin-bottom: 4px; }
+.margin-card-change del { color: var(--text-error); }
+.margin-card-change ins { color: var(--text-success); text-decoration: none; font-weight: 600; }
+.margin-card-why { color: var(--text-muted); margin-top: 4px; }
+.margin-card-row { display: flex; gap: 6px; justify-content: flex-end; margin-top: 8px; }
+.margin-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.margin-custom { width: 100%; }
+.margin-rewrite { white-space: pre-wrap; padding: 8px; border: 1px solid var(--background-modifier-border); border-radius: 6px; max-height: 50vh; overflow: auto; }
+.margin-warn { color: var(--text-warning); margin-top: 6px; }
+.margin-status { cursor: pointer; }

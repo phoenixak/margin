@@ -262,8 +262,8 @@ Rewrite: keep the language, dialect, meaning, Markdown and placeholders; output 
 
 - [x] `margin-ls` over `core` (the engine moved from VS Code into core): diagnostics, quick fixes (apply / sentence / ignore), rewrite presets on a selection via `workspace/applyEdit`, hash-only cache and ignore list on disk, key from `GEMINI_API_KEY` only. Tested in-process over the protocol with a mock model, and over real stdio with hosted Gemma + Harper dedup.
 - [x] Setup docs (`packages/ls/README.md`) for Neovim, Helix, Sublime, Emacs (lsp-mode; Eglot runs one server per buffer, said plainly). Not tried in each editor yet.
-- [ ] Zed extension (Zed needs one to launch a custom server).
-- [ ] Obsidian plugin: `WorkerLinter` dedup, `app.secretStorage`, network via `requestUrl` (doesn't stream; **verify**) or CORS for local servers.
+- [x] Obsidian plugin (`packages/obsidian`): its own CodeMirror decorations + hover card (Apply / Ignore), so it can't clash with Harper's `@codemirror/lint` source; the shared engine; rewrite modal (command + editor menu); settings tab with local first and **Find models**; Gemini key in `app.secretStorage` (min app 1.11.4); all network via `requestUrl`, so no CORS / OLLAMA_ORIGINS setup. harper.js `slimBinaryInlined` for dedup (main.js ≈ 28 MB, like Harper's plugin). Bundle verified to load; **not yet run inside Obsidian** (not installed here).
+- [ ] Zed extension: needs a Rust → WASM toolchain (not installed; skipped for bandwidth).
 
 ### Phase 7: Release and community
 

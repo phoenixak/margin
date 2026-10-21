@@ -1,0 +1,26 @@
+{
+  "name": "@margin/obsidian",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Margin for Obsidian: an AI second pass for Harper.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc -p . --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@margin/core": "workspace:*",
+    "harper.js": "^2.13.0"
+  },
+  "devDependencies": {
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "@types/node": "^26.6.5",
+    "esbuild": "^0.28.2",
+    "obsidian": "^1.14.4",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  }
+}
