@@ -150,9 +150,6 @@ importers:
       '@margin/core':
         specifier: workspace:*
         version: link:../core
-      harper.js:
-        specifier: ^2.13.0
-        version: 2.13.0
     devDependencies:
       '@codemirror/state':
         specifier: ^6.7.6

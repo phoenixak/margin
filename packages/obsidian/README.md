@@ -16,6 +16,10 @@ Copy `packages/obsidian/dist/` (main.js, manifest.json, styles.css) to `<your va
 - **Gemini API**: sent to Google with your key; on the free tier Google may use it to improve its products. The key is kept in Obsidian's secret storage (device-local, not synced, never in `data.json`); needs Obsidian 1.11.4+.
 - Nothing is sent until you choose. Folders listed under "Never check these folders" are never sent.
 
+## Works with Harper's plugin
+
+Margin asks Harper's own Obsidian plugin what it already flags and skips those, so install and enable **Harper** too. (Margin doesn't bundle a second copy of Harper; that keeps it about 1 MB.)
+
 ## Honest status
 
-Built and its bundle loads, but it hasn't been run inside Obsidian yet. `main.js` is about 28 MB because Harper's engine (for dedup) has to be inlined: Obsidian installs only main.js, manifest.json and styles.css. Harper's own Obsidian plugin is the same size for the same reason.
+Tested in Obsidian 1.14.4 on Windows (desktop): underlines, hover card, Apply, rewrite, and dedup through Harper's plugin, with the local-provider code path against a mock server. Desktop only for now.

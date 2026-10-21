@@ -20,8 +20,6 @@ import {
   type Suggestion,
 } from '@margin/core';
 import type { EditorView } from '@codemirror/view';
-import { Dialect as HarperDialect, LocalLinter } from 'harper.js';
-import { slimBinaryInlined } from 'harper.js/slimBinaryInlined';
 import { type App, type Editor, editorInfoField, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import { marginEditor, removeSuggestions, setSuggestions } from './editor.js';
 import { obsidianFetch } from './fetch.js';
@@ -56,13 +54,18 @@ const DEFAULTS: Settings = {
 /** The key lives in Obsidian's secret storage (device-local, not synced), never in data.json. */
 const SECRET_ID = 'margin-gemini-key';
 
+/** The part of harper.js's Linter that Margin uses (from Harper's Obsidian plugin). */
+interface HarperLinter {
+  lint(text: string, options?: { language?: string }): Promise<{ span(): { start: number; end: number } }[]>;
+}
+
 export default class MarginPlugin extends Plugin {
   settings: Settings = { ...DEFAULTS };
   private engine!: Engine;
   private status!: HTMLElement;
   private readonly views = new Map<string, EditorView>();
   private readonly versions = new WeakMap<EditorView, number>();
-  private linter?: { dialect: Dialect; linter: LocalLinter };
+  private harperNoticeShown = false;
 
   async onload() {
     this.settings = { ...DEFAULTS, ...((await this.loadData()) as Partial<Settings> | null) };
@@ -162,20 +165,29 @@ export default class MarginPlugin extends Plugin {
     return { ok: true, model: createModel({ provider: 'local', baseURL: s.localBaseUrl, fetch: obsidianFetch, ...(s.model ? { model: s.model } : {}) }) };
   }
 
-  /** Harper's lint ranges for dedup (Margin can't read Harper's plugin). */
+  /**
+   * Harper's lint ranges for dedup, from Harper's own Obsidian plugin (id `harper`):
+   * the same linter, settings and dictionary the user sees, and no second copy of
+   * Harper's 20 MB engine in main.js (Obsidian Sync Standard can't sync files over 5 MB).
+   * `state.harper` is internal to Harper's plugin; if it moves, Margin checks without dedup.
+   */
   private async harperRanges(text: string): Promise<Span[]> {
-    try {
-      if (this.linter?.dialect !== this.settings.dialect) {
-        await this.linter?.linter.dispose();
-        this.linter = { dialect: this.settings.dialect, linter: new LocalLinter({ binary: slimBinaryInlined, dialect: HarperDialect[this.settings.dialect] }) };
+    const plugins = (this.app as App & { plugins?: { plugins?: Record<string, unknown> } }).plugins?.plugins;
+    const linter = (plugins?.harper as { state?: { harper?: HarperLinter } } | undefined)?.state?.harper;
+    if (!linter?.lint) {
+      if (!this.harperNoticeShown) {
+        this.harperNoticeShown = true;
+        new Notice('Margin works alongside Harper. Install and enable the Harper plugin so Margin can skip what Harper already flags.');
       }
-      return (await this.linter.linter.lint(text, { language: 'markdown' })).map((l) => {
+      return [];
+    }
+    try {
+      return (await linter.lint(text, { language: 'markdown' })).map((l) => {
         const span = l.span();
         return { start: span.start, end: span.end };
       });
     } catch {
-      this.linter = undefined;
-      return [];
+      return []; // dedup is best-effort
     }
   }
 
