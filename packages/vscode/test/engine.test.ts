@@ -1,10 +1,11 @@
 import { APICallError } from '@ai-sdk/provider';
 import { type CheckInput, type CheckResult, lruCache, type MarginModel, type Suggestion } from '@margin/core';
 import { describe, expect, it, vi } from 'vitest';
+import { explainError as explain } from '@margin/core';
 import { Engine, type EngineHost, type EngineSettings, type Status } from '../src/engine.js';
 import { shiftSuggestions } from '../src/shift.js';
 
-const model: MarginModel = { id: 'mock:m', model: {} as MarginModel['model'], foldSystem: false, structured: true, tested: true };
+const model: MarginModel = { id: 'mock:m', model: {} as MarginModel['model'], foldSystem: false, structured: true, tested: true, parallel: 1, provider: 'local' as const, modelId: 'mock' };
 
 function suggestion(start: number, end: number, sentence = { start: 0, end: 20 }): Suggestion {
   return {
@@ -175,6 +176,17 @@ describe('Engine', () => {
     const t = setup();
     await t.engine.checkNow('a');
     expect(t.logs.join('\n')).not.toContain('They was late');
+  });
+});
+
+describe('explain', () => {
+  const local: MarginModel = { ...model, id: 'local:gemma4:26b-a4b-it-qat', provider: 'local', modelId: 'gemma4:26b-a4b-it-qat' };
+  it('says when the local server is down or lacks the model', () => {
+    expect(explain(new APICallError({ message: 'Cannot connect to API: fetch failed', url: 'x', requestBodyValues: {} }), local)).toContain('Is Ollama or LM Studio running');
+    expect(explain(new APICallError({ message: 'model not found', url: 'x', requestBodyValues: {}, statusCode: 404 }), local)).toContain('ollama pull gemma4:26b-a4b-it-qat');
+  });
+  it('says when a key is rejected', () => {
+    expect(explain(new APICallError({ message: 'API key not valid', url: 'x', requestBodyValues: {}, statusCode: 400 }), model)).toContain('rejected the API key');
   });
 });
 

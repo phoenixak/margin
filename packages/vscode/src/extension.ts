@@ -1,4 +1,4 @@
-import { createModel, type Dialect, ignoreKey, type MarginModel, type Range as Span, type StoredCache, storedCache, type Suggestion } from '@margin/core';
+import { createModel, DEFAULT_LOCAL_MODEL, DEFAULT_LOCAL_URLS, type Dialect, detectLocalServers, ignoreKey, type MarginModel, modelAdvice, modelInfo, type Range as Span, type StoredCache, storedCache, type Suggestion } from '@margin/core';
 import * as vscode from 'vscode';
 import { Engine, type ModelState, type Status } from './engine.js';
 import { registerRewrite } from './rewrite.js';
@@ -171,8 +171,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   async function chooseProvider() {
     const pick = await vscode.window.showQuickPick(
       [
+        { label: 'Local model (Ollama / LM Studio)', description: 'text stays on your machine · not yet tested by the maintainers', id: 'local' },
         { label: 'Gemini API (Gemma 4)', description: 'tested · sends text to Google · needs your API key', id: 'gemini' },
-        { label: 'Local server (Ollama / LM Studio)', description: 'untested · text stays on your machine', id: 'local' },
         { label: 'Off', description: 'send nothing', id: 'off' },
       ],
       { title: 'Margin: where should text be checked?' },
@@ -183,18 +183,51 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       if (ok !== 'I understand') return;
       if (!geminiKey && !(await setGeminiKey())) return;
     }
-    if (pick.id === 'local') {
-      const url = await vscode.window.showInputBox({
-        title: 'Local server URL (OpenAI-compatible)',
-        value: config().get<string>('local.baseUrl', 'http://localhost:11434/v1'),
-      });
-      if (!url) return;
-      await config().update('local.baseUrl', url, vscode.ConfigurationTarget.Global);
-      void vscode.window.showInformationMessage(
-        "Margin's local path is implemented but untested by its maintainers. If you try it, please report how it went.",
+    if (pick.id === 'local' && !(await chooseLocalModel())) return;
+    await config().update('provider', pick.id, vscode.ConfigurationTarget.Global);
+  }
+
+  /** Finds Ollama / LM Studio, lets the user pick a model, and says honestly what's tested. */
+  async function chooseLocalModel(): Promise<boolean> {
+    const configured = config().get<string>('local.baseUrl', 'http://localhost:11434/v1');
+    const probes = await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: 'Margin: looking for local model servers…' }, () =>
+      detectLocalServers({ urls: [...new Set([configured, ...DEFAULT_LOCAL_URLS])] }),
+    );
+    type Item = vscode.QuickPickItem & { baseURL?: string; model?: string; manual?: boolean };
+    const items: Item[] = [];
+    for (const p of probes) {
+      if (!p.server) continue;
+      const server = p.server.kind === 'ollama' ? 'Ollama' : p.server.kind === 'lmstudio' ? 'LM Studio' : 'local server';
+      // Recommended (evaluated weights) first.
+      const sorted = [...p.server.models].sort((a, b) => Number(modelInfo('local', b)?.autoCheck ?? false) - Number(modelInfo('local', a)?.autoCheck ?? false));
+      for (const model of sorted) {
+        const recommended = modelInfo('local', model)?.autoCheck;
+        items.push({ label: model, description: `${server}${recommended ? ' · recommended' : ''}`, detail: p.server.baseURL, baseURL: p.server.baseURL, model });
+      }
+    }
+    items.push({ label: '$(edit) Enter a server URL and model id…', manual: true });
+    if (items.length === 1) {
+      void vscode.window.showWarningMessage(
+        `Margin found no local model server at ${probes.map((p) => p.url).join(' or ')}. Start Ollama or LM Studio's server (e.g. \`ollama pull ${DEFAULT_LOCAL_MODEL}\`), or enter the URL yourself.`,
       );
     }
-    await config().update('provider', pick.id, vscode.ConfigurationTarget.Global);
+    const choice = await vscode.window.showQuickPick(items, { title: 'Margin: choose a local model', matchOnDetail: true });
+    if (!choice) return false;
+    let baseURL = choice.baseURL;
+    let model = choice.model;
+    if (choice.manual) {
+      baseURL = await vscode.window.showInputBox({ title: 'Local server URL (OpenAI-compatible)', value: configured });
+      if (!baseURL) return false;
+      model = await vscode.window.showInputBox({ title: 'Model id', value: config().get<string>('model', '') || DEFAULT_LOCAL_MODEL });
+      if (!model) return false;
+    }
+    await config().update('local.baseUrl', baseURL, vscode.ConfigurationTarget.Global);
+    await config().update('model', model, vscode.ConfigurationTarget.Global);
+    const advice = modelAdvice('local', model!);
+    void vscode.window.showInformationMessage(
+      `Margin will use ${model} on ${baseURL}. Text stays on your machine. Honest status: Margin's local path is implemented but hasn't been tested by its maintainers yet. ${advice.note ?? ''} Please report how it goes.`,
+    );
+    return true;
   }
 
   async function setGeminiKey(): Promise<boolean> {

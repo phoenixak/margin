@@ -1,5 +1,5 @@
 import { APICallError } from '@ai-sdk/provider';
-import { type CheckCache, type CheckResult, check, type Dialect, type MarginModel, type Range, type Suggestion } from '@margin/core';
+import { type CheckCache, type CheckResult, check, type Dialect, explainError, type MarginModel, type Range, type Suggestion } from '@margin/core';
 
 /**
  * Scheduling, cancellation and staleness for checks, independent of VS Code so it can
@@ -130,9 +130,9 @@ export class Engine {
         existing: host.harperRanges(key),
         ignored: this.opts.ignored(),
         cache: this.opts.cache,
-        // Eval 2026-10-21: batch 8 with 2 calls in parallel was best (batch 15 lost recall).
+        // Eval 2026-10-21: batch 8 was best (batch 15 lost recall). Hosted: 2 calls at once; a local GPU: 1.
         batch: { maxSentences: 8 },
-        concurrency: 2,
+        concurrency: m.model.parallel,
         signal: controller.signal,
         ...(ranges ? { ranges } : {}),
       });
@@ -151,11 +151,11 @@ export class Engine {
       if (isBusy(error)) {
         const retryInMs = this.opts.busyRetryMs ?? 30_000;
         host.status({ state: 'busy', model: m.model.id, retryInMs });
-        host.log(`provider busy (${statusOf(error)}); retrying in ${retryInMs} ms`);
+        host.log(`provider busy; retrying in ${retryInMs} ms`);
         this.schedule(key, retryInMs);
         return undefined;
       }
-      const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+      const message = explainError(error, m.model);
       host.status({ state: 'error', message });
       host.log(`check failed: ${message}`);
       return undefined;
@@ -195,14 +195,10 @@ export class Engine {
   }
 }
 
-function statusOf(error: unknown): number | undefined {
-  return APICallError.isInstance(error) ? error.statusCode : undefined;
-}
-
 /** Rate limits and "high demand" errors: wait and retry rather than report a failure. */
 function isBusy(error: unknown): boolean {
   const cause = (error as { lastError?: unknown })?.lastError ?? error; // AI SDK RetryError wraps the last attempt
-  const status = statusOf(cause);
+  const status = APICallError.isInstance(cause) ? cause.statusCode : undefined;
   return status === 429 || status === 503 || /high demand|overloaded|rate.?limit/i.test(String((cause as Error)?.message ?? ''));
 }
 

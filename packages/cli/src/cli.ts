@@ -1,7 +1,21 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
-import { check, createModel, type Dialect, type MarginModel, REWRITE_PRESETS, type RewritePreset, rewrite } from '@margin/core';
+import {
+  check,
+  createModel,
+  explainError,
+  DEFAULT_LOCAL_URLS,
+  type Dialect,
+  detectLocalServers,
+  localSetupHelp,
+  type MarginModel,
+  modelAdvice,
+  modelInfo,
+  REWRITE_PRESETS,
+  type RewritePreset,
+  rewrite,
+} from '@margin/core';
 import { formatSuggestion, lineCol } from './format.js';
 import { harperRanges } from './harper.js';
 
@@ -9,10 +23,13 @@ const HELP = `margin: an AI second pass for Harper
 
 Usage:
   margin check <file> [options]
+  margin models [--base-url <url>]          find local servers (Ollama, LM Studio) and their models
   margin rewrite <file> --preset <${[...Object.keys(REWRITE_PRESETS), 'custom'].join('|')}> [--instruction "…"] [--lines a-b]
 
 Options:
-  --provider gemini|local   Default gemini (tested). local = Ollama / LM Studio (untested).
+  --provider local|gemini   local = Ollama / LM Studio (text stays here; not yet tested by the
+                            maintainers). gemini = Google Gemini API (tested; sends text to Google).
+                            Default: gemini if GEMINI_API_KEY is set, otherwise local.
   --model <id>              Default gemma-4-26b-a4b-it (gemini) or gemma4:26b-a4b-it-qat (local)
   --base-url <url>          Local server, default http://localhost:11434/v1
   --dialect <name>          American (default), British, Australian, Canadian, Indian
@@ -30,7 +47,7 @@ async function main(argv: string[]): Promise<number> {
     args: argv,
     allowPositionals: true,
     options: {
-      provider: { type: 'string', default: 'gemini' },
+      provider: { type: 'string' },
       model: { type: 'string' },
       'base-url': { type: 'string' },
       dialect: { type: 'string', default: 'American' },
@@ -44,6 +61,12 @@ async function main(argv: string[]): Promise<number> {
     },
   });
   const [command, file] = positionals;
+  try {
+    process.loadEnvFile();
+  } catch {
+    // no .env here
+  }
+  if (command === 'models') return listModels(values['base-url']);
   if (values.help || !command || !file || !['check', 'rewrite'].includes(command)) {
     console.log(HELP);
     return values.help ? 0 : 2;
@@ -51,12 +74,8 @@ async function main(argv: string[]): Promise<number> {
   const dialect = values.dialect as Dialect;
   if (!DIALECTS.includes(dialect)) throw new Error(`unknown dialect "${values.dialect}"`);
 
-  try {
-    process.loadEnvFile();
-  } catch {
-    // no .env here
-  }
-  const model = makeModel(values.provider!, values.model, values['base-url']);
+  const model = makeModel(values.provider ?? (process.env.GEMINI_API_KEY ? 'gemini' : 'local'), values.model, values['base-url']);
+  activeModel = model;
   const text = readFileSync(file, 'utf8');
   const language = values.plaintext ? 'plaintext' : 'markdown';
 
@@ -66,7 +85,7 @@ async function main(argv: string[]): Promise<number> {
   if (command === 'check') {
     const existing = values['no-harper'] ? [] : await harperRanges(text, dialect, language);
     const started = performance.now();
-    const r = await check({ text, model, dialect, language, existing, signal: ctl.signal, batch: { maxSentences: 8 }, concurrency: 2 });
+    const r = await check({ text, model, dialect, language, existing, signal: ctl.signal, batch: { maxSentences: 8 }, concurrency: model.parallel });
     if (values.json) {
       console.log(JSON.stringify(r.suggestions.map((s) => ({ ...lineCol(text, s.range.start), ...s })), null, 2));
     } else {
@@ -93,6 +112,23 @@ async function main(argv: string[]): Promise<number> {
   return 0;
 }
 
+async function listModels(baseURL: string | undefined): Promise<number> {
+  const probes = await detectLocalServers({ urls: [...new Set([...(baseURL ? [baseURL] : []), ...DEFAULT_LOCAL_URLS])] });
+  let found = false;
+  for (const p of probes) {
+    if (p.server) {
+      found = true;
+      console.log(`${p.server.kind} at ${p.server.baseURL}`);
+      for (const m of p.server.models) console.log(`  ${m}${modelInfo('local', m)?.autoCheck ? '   (recommended)' : ''}`);
+    } else {
+      console.log(`${p.url}: ${p.problem}`);
+    }
+  }
+  if (!found) console.log(`
+${localSetupHelp('unreachable', undefined, 'linux')}`);
+  return found ? 0 : 1;
+}
+
 function makeModel(provider: string, modelId: string | undefined, baseURL: string | undefined): MarginModel {
   if (provider === 'gemini') {
     const apiKey = process.env.GEMINI_API_KEY;
@@ -103,16 +139,19 @@ function makeModel(provider: string, modelId: string | undefined, baseURL: strin
   }
   if (provider === 'local') {
     const m = createModel({ provider: 'local', ...(modelId ? { model: modelId } : {}), ...(baseURL ? { baseURL } : {}) });
-    console.error(`Using a local server (${m.id}). Note: the local path is untested by Margin's maintainers.`);
+    const advice = modelAdvice('local', m.modelId);
+    console.error(`Using a local server (${m.id}); text stays on this machine. Margin's local path is not yet tested by its maintainers.${advice.note ? ` ${advice.note}` : ''}`);
     return m;
   }
   throw new Error(`unknown provider "${provider}"`);
 }
 
+let activeModel: MarginModel | undefined;
+
 main(process.argv.slice(2)).then(
   (code) => process.exit(code),
   (error: unknown) => {
-    console.error(`margin: ${error instanceof Error ? error.message : String(error)}`);
+    console.error(`margin: ${activeModel ? explainError(error, activeModel) : error instanceof Error ? error.message : String(error)}`);
     process.exit(1);
   },
 );

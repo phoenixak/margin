@@ -15,6 +15,11 @@ export interface MarginModel {
   providerOptions?: Record<string, Record<string, unknown>>;
   /** Whether this path has been tested end to end by the maintainers (shown in status UI). */
   tested: boolean;
+  /** Calls to run at once: 1 for a local GPU (it serves one request well), 2 for hosted. */
+  parallel: number;
+  provider: 'gemini' | 'local';
+  /** The model id without the provider prefix. */
+  modelId: string;
 }
 
 export const DEFAULT_GEMINI_MODEL = 'gemma-4-26b-a4b-it';
@@ -37,6 +42,9 @@ export function createModel(config: ModelConfig): MarginModel {
       // `thinkingBudget` is rejected for Gemma; `thinkingLevel: 'minimal'` gives 0 reasoning tokens (tested 2026-10-21).
       providerOptions: { google: { thinkingConfig: { thinkingLevel: 'minimal' } } },
       tested: modelId.startsWith('gemma-4'),
+      parallel: 2,
+      provider: 'gemini',
+      modelId,
     };
   }
   const modelId = config.model ?? DEFAULT_LOCAL_MODEL;
@@ -51,8 +59,12 @@ export function createModel(config: ModelConfig): MarginModel {
     model: local(modelId),
     foldSystem: false,
     structured: true,
-    // UNTESTED: whether Ollama / LM Studio honour `reasoning_effort: 'none'` for Gemma 4 is unverified.
+    // Ollama's OpenAI-compatible API maps reasoning_effort "none" to thinking off (docs.ollama.com, checked 2026-10-21).
+    // UNTESTED by Margin's maintainers, as is LM Studio's handling of it.
     providerOptions: { local: { reasoningEffort: 'none' } },
     tested: false,
+    parallel: 1,
+    provider: 'local',
+    modelId,
   };
 }

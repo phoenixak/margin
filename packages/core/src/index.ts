@@ -4,9 +4,11 @@ export { type CachedResult, type CheckCache, lruCache, sha256 } from './cache.js
 export { type CacheStorage, type StoredCache, type StoredCacheOptions, storedCache } from './stored-cache.js';
 export { type CheckInput, type CheckResult, check, ignoreKey, MarginParseError } from './check.js';
 export { applyHunks, toHunks } from './diff.js';
+export { explainError } from './errors.js';
 export { type GuardOptions, guardFix, overlaps } from './guards.js';
 export { type Masked, mask, unmask } from './mask.js';
-export { MODELS, type ModelInfo, modelInfo } from './models.js';
+export { DEFAULT_LOCAL_URLS, detectLocalServers, type LocalProbe, type LocalProblem, type LocalServer, type LocalServerKind, localSetupHelp } from './local.js';
+export { MODELS, type ModelInfo, modelAdvice, modelInfo } from './models.js';
 export { createModel, DEFAULT_GEMINI_MODEL, DEFAULT_LOCAL_MODEL, type MarginModel, type ModelConfig } from './model.js';
 export { Fix, Fixes, parseJsonLenient, parseTags } from './parse.js';
 export { checkSystemPrompt, checkUserPrompt, type OutputFormat, PROMPT_VERSION } from './prompts/check.js';

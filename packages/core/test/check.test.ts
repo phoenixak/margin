@@ -37,7 +37,7 @@ function fixer(corrections: Record<string, string>, opts: { format?: 'json' | 't
       return reply(JSON.stringify({ fixes }));
     },
   });
-  const model: MarginModel = { id: 'mock:fixer', model: mock, foldSystem: opts.foldSystem ?? false, structured: opts.format !== 'tags', tested: true };
+  const model: MarginModel = { id: 'mock:fixer', model: mock, foldSystem: opts.foldSystem ?? false, structured: opts.format !== 'tags', tested: true, parallel: 1, provider: 'local', modelId: 'mock' };
   return { model, calls, mock };
 }
 
@@ -149,7 +149,7 @@ describe('check', () => {
       },
     });
     const text = Array.from({ length: 9 }, (_, i) => `Sentence number ${i} is fine.`).join(' ');
-    const r = await check({ text, model: { id: 'mock:c', model: mock, foldSystem: false, structured: true, tested: true }, batch: { maxSentences: 2 }, concurrency: 2 });
+    const r = await check({ text, model: { id: 'mock:c', model: mock, foldSystem: false, structured: true, tested: true, parallel: 1, provider: 'local' as const, modelId: 'mock' }, batch: { maxSentences: 2 }, concurrency: 2 });
     expect(r.modelCalls).toBe(5);
     expect(peak).toBe(2);
   });
@@ -161,7 +161,7 @@ describe('check', () => {
       modelId: 'x',
       doGenerate: async () => reply(n++ === 0 ? 'Sure! Here are the fixes.' : '<fix id="1" kind="grammar">They were late.</fix><why>Agreement.</why>'),
     });
-    const r = await check({ text: 'They was late.', model: { id: 'mock:x', model: mock, foldSystem: false, structured: true, tested: true } });
+    const r = await check({ text: 'They was late.', model: { id: 'mock:x', model: mock, foldSystem: false, structured: true, tested: true, parallel: 1, provider: 'local' as const, modelId: 'mock' } });
     expect(r.suggestions.map((s) => s.replacement)).toEqual(['were']);
   });
 
@@ -210,7 +210,7 @@ describe('rewrite', () => {
         }),
       }),
     });
-    const r = rewrite({ text: "Run `make` and it doesn't fail.", preset: 'concise', model: { id: 'mock:w', model: mock, foldSystem: false, structured: true, tested: true } });
+    const r = rewrite({ text: "Run `make` and it doesn't fail.", preset: 'concise', model: { id: 'mock:w', model: mock, foldSystem: false, structured: true, tested: true, parallel: 1, provider: 'local' as const, modelId: 'mock' } });
     let streamed = '';
     for await (const part of r.textStream) streamed += part;
     expect(streamed).toBe('Run `make` and it works.');
