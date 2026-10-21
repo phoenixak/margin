@@ -225,7 +225,8 @@ Rewrite: keep the language, dialect, meaning, Markdown and placeholders; output 
 - [x] Harper dedup via `getDiagnostics` (also re-filtered when Harper re-lints); dialect from Harper's `harper.dialect`.
 - [x] Status bar: model (+ "untested path"), checking, busy with retry, no key, set up, error.
 - [x] Underlines move with edits until the next check (`shift.ts`); edited sentences drop theirs.
-- [ ] **Manual run in real VS Code with Harper installed** (not done by the agent: it needs Harper downloaded into a profile). Install with `code --install-extension packages/vscode/margin-0.0.1.vsix`.
+- [x] **Manual run in real VS Code** (1.142, Harper 2.13.0), 2026-10-21 by Phoenix: a 5,288-char document, 62 sentences, 8 calls, 5 suggestions, 0 rejected, 15.3 s on hosted Gemma 4 26B A4B. Install: `code --install-extension packages/vscode/margin-0.0.1.vsix`.
+- [ ] Speed up the first check: 2 calls in parallel and/or ~12 sentences per batch (measure in the Phase 4 eval).
 
 **Done when** suggestions appear a few seconds after a pause with hosted Gemma, typing never stutters, and tests cover the engine (debounce, abort, staleness, busy retry, concurrency, triggers). The VS Code glue (`extension.ts`) is covered only by the manual run.
 
