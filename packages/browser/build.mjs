@@ -16,7 +16,8 @@ const base = {
   // Local servers (any port) and the Gemini API. Sites are optional and asked for one at a time.
   host_permissions: ['http://localhost/*', 'http://127.0.0.1/*', 'https://generativelanguage.googleapis.com/*'],
   optional_host_permissions: ['https://*/*', 'http://*/*'],
-  action: { default_popup: 'popup.html', default_title: 'Margin' },
+  icons: { 16: 'icons/icon-16.png', 32: 'icons/icon-32.png', 48: 'icons/icon-48.png', 128: 'icons/icon-128.png' },
+  action: { default_popup: 'popup.html', default_title: 'Margin', default_icon: { 16: 'icons/icon-16.png', 32: 'icons/icon-32.png' } },
   options_ui: { page: 'options.html', open_in_tab: true },
   commands: { rewrite: { suggested_key: { default: 'Alt+Shift+R' }, description: 'Rewrite the selected text (Margin)' } },
   // Harper's WASM needs wasm-unsafe-eval; nothing else is loaded from outside the extension.
@@ -58,6 +59,8 @@ for (const [name, manifest] of Object.entries(targets)) {
     logLevel: 'warning',
   });
   for (const f of ['options.html', 'popup.html', 'ui.css']) copyFileSync(join('static', f), join(out, f));
+  mkdirSync(join(out, 'icons'), { recursive: true });
+  for (const s of [16, 32, 48, 128]) copyFileSync(join('static', 'icons', `icon-${s}.png`), join(out, 'icons', `icon-${s}.png`));
   copyFileSync(join(harperDist, 'harper_wasm_slim_bg.wasm'), join(out, 'harper_wasm_slim_bg.wasm'));
   copyFileSync('../../LICENSE', join(out, 'LICENSE'));
   writeFileSync(join(out, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
