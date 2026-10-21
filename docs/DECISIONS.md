@@ -109,3 +109,7 @@ AI SDK 7 requires Node 22+. CLAUDE.md and the root `package.json` updated. VS Co
 ### Pending (Phase 0 not finished)
 
 - Format and default model: decided provisionally above (2026-10-21 spike). A local confirmation run is still pending.
+
+## 2026-10-22: Obsidian plugin id `margin-ai-proofreader`
+
+The community directory bound `margin-proofreader` to the monorepo (phoenixak/margin) on the first submission, and deleting the draft and resubmitting phoenixak/margin-obsidian brought the same entry back, still pointing at the monorepo; the listing editor can't change the repository. Nothing was public yet, so the plugin moved to a new id, `margin-ai-proofreader` (0.1.2), submitted from margin-obsidian only. `margin-ai` is taken (MarginAI).

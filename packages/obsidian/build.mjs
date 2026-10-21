@@ -22,7 +22,7 @@ await build({
 const manifest = `${JSON.stringify(
   {
     // "Margin" alone is taken in Obsidian's plugin list.
-    id: 'margin-proofreader',
+    id: 'margin-ai-proofreader',
     name: 'Margin Proofreader',
     version: pkg.version,
     minAppVersion: '1.11.4',
