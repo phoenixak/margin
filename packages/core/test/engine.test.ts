@@ -1,8 +1,6 @@
 import { APICallError } from '@ai-sdk/provider';
-import { type CheckInput, type CheckResult, lruCache, type MarginModel, type Suggestion } from '@margin/core';
 import { describe, expect, it, vi } from 'vitest';
-import { diffText, explainError as explain, shiftSuggestions } from '@margin/core';
-import { Engine, type EngineHost, type EngineSettings, type Status } from '../src/engine.js';
+import { type CheckInput, type CheckResult, diffText, Engine, type EngineHost, type EngineSettings, explainError as explain, lruCache, type MarginModel, shiftSuggestions, type Status, type Suggestion } from '../src/index.js';
 
 const model: MarginModel = { id: 'mock:m', model: {} as MarginModel['model'], foldSystem: false, structured: true, tested: true, parallel: 1, provider: 'local' as const, modelId: 'mock' };
 

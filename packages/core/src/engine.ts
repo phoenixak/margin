@@ -1,5 +1,9 @@
 import { APICallError } from '@ai-sdk/provider';
-import { type CheckCache, type CheckResult, check, type Dialect, explainError, type MarginModel, type Range, type Suggestion } from '@margin/core';
+import type { CheckCache } from './cache.js';
+import { type CheckResult, check } from './check.js';
+import { explainError } from './errors.js';
+import type { MarginModel } from './model.js';
+import type { Dialect, Range, Suggestion } from './types.js';
 
 /**
  * Scheduling, cancellation and staleness for checks, independent of VS Code so it can

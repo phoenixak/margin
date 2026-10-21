@@ -4,6 +4,7 @@ export { type CachedResult, type CheckCache, lruCache, sha256 } from './cache.js
 export { type CacheStorage, type StoredCache, type StoredCacheOptions, storedCache } from './stored-cache.js';
 export { type CheckInput, type CheckResult, check, ignoreKey, MarginParseError } from './check.js';
 export { applyHunks, toHunks } from './diff.js';
+export { type DocSnapshot, Engine, type EngineHost, type EngineOptions, type EngineSettings, type ModelState, type Status } from './engine.js';
 export { explainError } from './errors.js';
 export { type GuardOptions, guardFix, overlaps } from './guards.js';
 export { type Masked, mask, unmask } from './mask.js';

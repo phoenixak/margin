@@ -1,6 +1,5 @@
-import { type Dialect, REWRITE_PRESETS, type RewritePreset, rewrite } from '@margin/core';
+import { type Dialect, type ModelState, REWRITE_PRESETS, type RewritePreset, rewrite } from '@margin/core';
 import * as vscode from 'vscode';
-import type { ModelState } from './engine.js';
 
 const SCHEME = 'margin-rewrite';
 const WARNINGS: Record<string, string> = {

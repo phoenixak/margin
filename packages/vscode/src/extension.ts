@@ -1,6 +1,5 @@
-import { createModel, DEFAULT_LOCAL_MODEL, shiftSuggestions, withoutHarperOverlaps, DEFAULT_LOCAL_URLS, type Dialect, detectLocalServers, ignoreKey, type MarginModel, modelAdvice, modelInfo, type Range as Span, type StoredCache, storedCache, type Suggestion } from '@margin/core';
+import { createModel, DEFAULT_LOCAL_MODEL, Engine, type ModelState, type Status, shiftSuggestions, withoutHarperOverlaps, DEFAULT_LOCAL_URLS, type Dialect, detectLocalServers, ignoreKey, type MarginModel, modelAdvice, modelInfo, type Range as Span, type StoredCache, storedCache, type Suggestion } from '@margin/core';
 import * as vscode from 'vscode';
-import { Engine, type ModelState, type Status } from './engine.js';
 import { registerRewrite } from './rewrite.js';
 
 let persistentCache: StoredCache | undefined;
