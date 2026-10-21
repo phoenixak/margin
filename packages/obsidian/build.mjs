@@ -36,7 +36,7 @@ const manifest = `${JSON.stringify(
   2,
 )}\n`;
 writeFileSync('dist/manifest.json', manifest);
-// Obsidian's community list reads manifest.json from the repository root.
-writeFileSync('../../manifest.json', manifest);
+// The standalone repo (phoenixak/margin-obsidian) carries manifest.json at its root;
+// this monorepo must not, or Obsidian's directory ties the plugin id to it.
 copyFileSync('styles.css', 'dist/styles.css');
 console.log('built dist/main.js');

@@ -87,8 +87,10 @@ writeFileSync(
 // The build script: the monorepo's, minus the alias to core's source.
 const build = readFileSync(join(plugin, 'build.mjs'), 'utf8')
   .replace(/\s*\/\/ Build from core's source modules[^\n]*\n\s*alias: \{[^}]*\},\n/, '\n')
-  .replace("writeFileSync('../../manifest.json', manifest);", "writeFileSync('manifest.json', manifest);")
-  .replace("// Obsidian's community list reads manifest.json from the repository root.", "// The directory reads manifest.json from the repository root.")
+  .replace(
+    /\/\/ The standalone repo \(phoenixak\/margin-obsidian\)[^\n]*\n\/\/ this monorepo must not[^\n]*/,
+    "// The directory reads manifest.json from the repository root.\nwriteFileSync('manifest.json', manifest);",
+  )
   .replace(/^import \{ resolve \} from 'node:path';\n/m, '');
 if (build.includes('alias:')) throw new Error('export: could not remove the core alias from build.mjs');
 writeFileSync(join(target, 'build.mjs'), build);
