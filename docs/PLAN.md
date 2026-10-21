@@ -270,7 +270,8 @@ Rewrite: keep the language, dialect, meaning, Markdown and placeholders; output 
 - [ ] README: what it is, "Where your text goes", "What's tested" (hosted yes, local no, and why), how to help test locally.
 - [x] Public GitHub repo: https://github.com/phoenixak/margin (2026-10-21).
 - [x] VS Code Marketplace: `phoenixak.margin-ai` 0.1.0 (2026-10-21). The id `margin` was taken by another publisher; the product name stays "Margin".
-- [ ] Open VSX, Chrome Web Store, Firefox Add-ons, Obsidian community plugins, npm (`@phoenixak/margin-*`).
+- [x] Chrome Web Store: 0.1.0 submitted for review (2026-10-21).
+- [ ] Open VSX, Firefox Add-ons, Obsidian community plugins, npm (`@phoenixak/margin-*`).
 - [ ] An issue template for "local model report" (model, hardware, results of `margin eval --quick`).
 - [ ] Reply to Harper issue #2622 once there's something real to show.
 

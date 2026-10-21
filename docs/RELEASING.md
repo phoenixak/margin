@@ -7,7 +7,7 @@ Build everything with `pnpm build`. Release files go in `release/` (gitignored).
 | GitHub repo | ✅ https://github.com/phoenixak/margin | |
 | VS Code Marketplace | ✅ `phoenixak.margin-ai` 0.1.0 | Next version: `npx @vscode/vsce publish --no-dependencies` in `packages/vscode`. Global Azure DevOps tokens stop working on 2026-12-01; after that use vsce's Entra ID sign-in. |
 | Open VSX (VSCodium, Cursor, Windsurf) | Not yet | Free account at open-vsx.org (signs in with GitHub), create the `phoenixak` namespace, make a token, then `npx ovsx publish release/margin-ai-0.1.0.vsix -p <token>` |
-| Chrome Web Store | Not yet | Developer account ($5 one-time). Upload `release/margin-chrome-0.1.0.zip`; listing text and permission reasons below. Review usually takes days. |
+| Chrome Web Store | ⏳ 0.1.0 submitted for review 2026-10-21 | Store assets in `release/store/` (screenshots from `http://localhost:5173/demo`). Privacy policy: `PRIVACY.md`. |
 | Firefox Add-ons | Not yet | Account at addons.mozilla.org. Upload `release/margin-firefox-0.1.0.zip`. It's minified, so AMO asks for source: upload a zip of the repo and point to `pnpm install && pnpm -F @margin/browser build`. |
 | Obsidian community plugins | Not yet | First run it inside Obsidian once. Then make a GitHub release whose tag is exactly `0.1.0` with `main.js`, `manifest.json`, `styles.css` attached, and open a PR to `obsidianmd/obsidian-releases` adding Margin to `community-plugins.json`. Obsidian requires `manifest.json` at the repo root for the plugin; copy `packages/obsidian/dist/manifest.json` there before the PR. |
 | npm (`@phoenixak/margin-*`) | Not yet | Only worth it once margin-ls has users; `npm publish --access public` per package. |
