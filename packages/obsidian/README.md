@@ -22,4 +22,4 @@ Margin asks Harper's own Obsidian plugin what it already flags and skips those, 
 
 ## Honest status
 
-Tested in Obsidian 1.14.4 on Windows (desktop): underlines, hover card, Apply, rewrite, and dedup through Harper's plugin, with the local-provider code path against a mock server. Desktop only for now.
+Tested in Obsidian 1.14.4 on Windows (desktop): underlines, hover card, Apply and rewrite, with the local-provider code path against a mock server. Dedup was verified against a stand-in for Harper's plugin (same `lint()` interface), not yet with Harper's plugin itself. Desktop only for now.
