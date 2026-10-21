@@ -1,0 +1,42 @@
+name: Release
+
+# Push a tag equal to the manifest version (e.g. 0.1.1): builds the plugin from that
+# commit, attests the files' provenance, and publishes the release Obsidian installs from.
+on:
+  push:
+    tags: ['[0-9]+.[0-9]+.[0-9]+']
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      - name: Check the tag matches the manifest version
+        run: |
+          v=$(node -p "require('./manifest.json').version")
+          test "$v" = "${GITHUB_REF_NAME}" || { echo "manifest version $v != tag ${GITHUB_REF_NAME}"; exit 1; }
+      - uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            dist/main.js
+            dist/manifest.json
+            dist/styles.css
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" dist/main.js dist/manifest.json dist/styles.css \
+            --title "Margin Proofreader ${GITHUB_REF_NAME}" \
+            --notes-file RELEASE_NOTES.md

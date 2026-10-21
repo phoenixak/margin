@@ -96,8 +96,7 @@ export function marginEditor(hooks: EditorHooks): Extension {
       end: Math.max(x.to, x.from + 1),
       above: true, // Harper's plugin shows its card below
       create: () => {
-        const dom = document.createElement('div');
-        dom.className = 'margin-card';
+        const dom = createDiv({ cls: 'margin-card' }); // Obsidian's DOM helper
         dom.createDiv({ cls: 'margin-card-title', text: 'Margin' });
         const change = dom.createDiv({ cls: 'margin-card-change' });
         if (x.before) change.createEl('del', { text: x.before });
