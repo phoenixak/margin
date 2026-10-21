@@ -1,0 +1,17 @@
+name: Bug
+description: Something in Margin doesn't work as it should.
+body:
+  - type: dropdown
+    id: where
+    attributes: { label: Where, options: [VS Code, Browser (Chrome), Browser (Firefox), margin-ls, Obsidian, CLI, Core] }
+    validations: { required: true }
+  - type: dropdown
+    id: provider
+    attributes: { label: Provider, options: [Local model, Gemini API] }
+  - type: textarea
+    id: what
+    attributes: { label: What happened, description: "Steps, what you expected, what you saw. Please use made-up text, not your own documents." }
+    validations: { required: true }
+  - type: textarea
+    id: log
+    attributes: { label: Log, description: "VS Code: Output → Margin. Browser: the page console. It contains counts and timings, never your text.", render: text }

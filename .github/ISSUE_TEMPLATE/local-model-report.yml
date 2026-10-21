@@ -1,0 +1,32 @@
+name: Local model report
+description: You ran Margin with a local model (Ollama / LM Studio). Thank you! The maintainer couldn't test this path.
+labels: [local-model]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Margin's local path is implemented but untested by the maintainer. Your report tells everyone whether it works.
+        **Please don't paste your own documents.** Use the eval (synthetic sentences) or the test files in the repo.
+  - type: input
+    id: model
+    attributes: { label: Model, placeholder: "gemma4:26b-a4b-it-qat" }
+    validations: { required: true }
+  - type: dropdown
+    id: server
+    attributes: { label: Server, options: [Ollama, LM Studio, Other OpenAI-compatible] }
+    validations: { required: true }
+  - type: input
+    id: hardware
+    attributes: { label: Hardware, placeholder: "RTX 4070 12 GB / M3 Pro 36 GB / CPU only" }
+  - type: dropdown
+    id: where
+    attributes: { label: Where you used it, multiple: true, options: [CLI, VS Code, Browser extension, margin-ls, Obsidian, Eval] }
+  - type: textarea
+    id: eval
+    attributes:
+      label: Eval result
+      description: "Run `node packages/eval/src/run.ts --provider local --model <model> --label local` and paste the table (or results/*.md)."
+      render: markdown
+  - type: textarea
+    id: notes
+    attributes: { label: What worked, what didn't, description: "Speed, wrong suggestions, thinking not switched off, errors…" }

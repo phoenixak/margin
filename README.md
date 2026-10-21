@@ -8,11 +8,17 @@ Margin is an independent project. It is not made by or affiliated with Harper or
 
 ## What's tested, honestly
 
-| Path | Status |
-|---|---|
-| **Hosted Gemma 4 26B A4B** through Google's Gemini API, with your own key | **Tested.** On Margin's eval (137 synthetic items) it scored 100% precision and 82% recall, and changed **0 of 70** correct sentences. See [the eval report](packages/eval/results/README.md). |
-| **Local models** (Ollama / LM Studio, e.g. `gemma4:26b-a4b-it-qat`) | **Implemented, not tested.** The maintainer couldn't download the multi-GB weights. It should behave like the hosted model, but nobody has checked. Turning Gemma 4's "thinking" off locally is unverified. If you try it, please open an issue with your model, hardware and results. |
-| Small models (under ~9B) | Research shows they over-correct noticeably. Margin will only allow automatic checking for models that pass its eval. |
+| | Hosted Gemma 4 26B A4B (Gemini API) | Local model (Ollama / LM Studio) |
+|---|---|---|
+| Check quality | **Eval: 100% precision, 82% recall, 0 of 70 correct sentences changed** on 137 synthetic items ([report](packages/eval/results/README.md)) | Not run. Same weights as the hosted model, so it should be close. Please [report](.github/ISSUE_TEMPLATE/local-model-report.yml) |
+| CLI | Tested | Error handling tested (no server); a real run is not |
+| VS Code | Tested in VS Code 1.142 (check, quick fixes, rewrite) | Model picker built; not run |
+| Chrome | Tested alongside Grammarly (check, Apply, rewrite, undo) | Not run |
+| Firefox | Built, not run | Not run |
+| margin-ls | Protocol tests + a real stdio run; editor configs written from docs, not tried | Not run |
+| Obsidian | Bundle loads; not run inside Obsidian | Not run |
+
+Small models (under ~9B) tend to over-correct, according to research and the eval's design. Margin only lets models that pass its eval check automatically while you type.
 
 ## Where your text goes
 
