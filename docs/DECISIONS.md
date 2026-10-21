@@ -2,6 +2,14 @@
 
 Newest first. Each entry: the decision, why, and what it changed.
 
+## 2026-10-21: Hosted-first, full scope, open-source starting point
+
+- **Hosted Gemma 4 26B A4B (Gemini API, user's key) is the tested path** for development, tests, the eval and demos. Local (Ollama / LM Studio) is implemented but **untested**: Phoenix has limited bandwidth (multi-GB weights) and Margin is a showpiece first. The README says this plainly and invites local testers.
+- This replaces "local-only v1" (earlier the same day). Consent before the first send, a "Where your text goes" section, and keys in secret stores come back. ai-sdk-quota stays out: one provider needs no pool.
+- **Full scope, in order:** core + CLI → VS Code → rewrite/tone → eval → browser (Chrome + Firefox) → language server + Obsidian → release. PLAN.md rewritten around it (old plan: git `2a626d8`).
+- **Weak models:** research (arXiv 2609.10810, 2506.13148) shows prompted models under ~9B over-correct noticeably (Qwen3-8B precision ~72% even with an optimized prompt). The model registry gets an `autoCheck` flag, set from eval results; models without it get on-demand checking only.
+- **Browser dedup:** extensions can't read Harper's extension, so Margin's browser extension bundles harper.js for dedup only.
+
 ## 2026-10-21: Format spike results (hosted stand-ins)
 
 No local model server yet (limited bandwidth), so the spike ran the **same open-weight models hosted by Google's Gemini API**: Gemma 4 26B A4B and Gemma 4 31B. 20 synthetic sentences (12 with errors), 3 runs per model and format. Raw data: `spike/format/results/2026-10-21.{json,md}`.
