@@ -111,6 +111,37 @@ export class Mirror {
   }
 }
 
+// Shadow DOM is built with DOM calls and fixed stylesheets: no innerHTML anywhere.
+const el = (tag: string, cls: string) => {
+  const e = document.createElement(tag);
+  e.className = cls;
+  return e;
+};
+
+const CARD_CSS = `
+  .card{position:fixed;max-width:380px;min-width:240px;background:#fff;color:#1f2937;border:1px solid #e5e7eb;border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,.15);font:13px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;padding:10px 12px}
+  .title{font-weight:600;color:${COLOR};margin-bottom:4px;font-size:12px;letter-spacing:.02em}
+  .body{white-space:pre-wrap;word-break:break-word;max-height:240px;overflow:auto}
+  .why{color:#6b7280;margin-top:4px}
+  .warn{color:#b45309;margin-top:6px}
+  del{color:#b91c1c} ins{color:#047857;text-decoration:none;font-weight:600}
+  .row{display:flex;gap:6px;justify-content:flex-end;margin-top:8px;flex-wrap:wrap}
+  button{font:inherit;border:1px solid #d1d5db;background:#fff;border-radius:6px;padding:3px 10px;cursor:pointer}
+  button.primary{background:${COLOR};border-color:${COLOR};color:#fff}
+  input{font:inherit;width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:6px;padding:4px 6px}
+  @media (prefers-color-scheme: dark){.card{background:#1f2937;color:#f3f4f6;border-color:#374151}button{background:#111827;color:#f3f4f6;border-color:#4b5563}.why{color:#9ca3af}}
+`;
+
+const BADGE_CSS = `
+  button{all:initial;position:absolute;min-width:16px;height:16px;padding:0 4px;box-sizing:border-box;border-radius:8px;
+    font:600 10px/16px system-ui,sans-serif;color:#fff;background:${COLOR};text-align:center;cursor:pointer;
+    box-shadow:0 1px 3px rgba(0,0,0,.25);opacity:.9}
+  button.checking{animation:pulse 1s ease-in-out infinite;width:10px;min-width:10px;height:10px;padding:0}
+  button.error{background:#d97706}
+  @keyframes pulse{50%{opacity:.35}}
+`;
+
 export interface CardButton {
   label: string;
   primary?: boolean;
@@ -127,23 +158,17 @@ export function showCard(
   const host = document.createElement('div');
   host.style.cssText = `position:fixed;z-index:${Z};top:0;left:0`;
   const shadow = host.attachShadow({ mode: 'closed' });
-  shadow.innerHTML = `<style>
-    .card{position:fixed;max-width:380px;min-width:240px;background:#fff;color:#1f2937;border:1px solid #e5e7eb;border-radius:10px;
-      box-shadow:0 8px 24px rgba(0,0,0,.15);font:13px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;padding:10px 12px}
-    .title{font-weight:600;color:${COLOR};margin-bottom:4px;font-size:12px;letter-spacing:.02em}
-    .body{white-space:pre-wrap;word-break:break-word;max-height:240px;overflow:auto}
-    .why{color:#6b7280;margin-top:4px}
-    .warn{color:#b45309;margin-top:6px}
-    del{color:#b91c1c} ins{color:#047857;text-decoration:none;font-weight:600}
-    .row{display:flex;gap:6px;justify-content:flex-end;margin-top:8px;flex-wrap:wrap}
-    button{font:inherit;border:1px solid #d1d5db;background:#fff;border-radius:6px;padding:3px 10px;cursor:pointer}
-    button.primary{background:${COLOR};border-color:${COLOR};color:#fff}
-    input{font:inherit;width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:6px;padding:4px 6px}
-    @media (prefers-color-scheme: dark){.card{background:#1f2937;color:#f3f4f6;border-color:#374151}button{background:#111827;color:#f3f4f6;border-color:#4b5563}.why{color:#9ca3af}}
-  </style><div class="card" role="dialog" aria-label="Margin"><div class="title">Margin</div><div class="body"></div><div class="row"></div></div>`;
-  const card = shadow.querySelector('.card') as HTMLElement;
-  const body = shadow.querySelector('.body') as HTMLElement;
-  const row = shadow.querySelector('.row') as HTMLElement;
+  const style = document.createElement('style');
+  style.textContent = CARD_CSS;
+  const card = el('div', 'card');
+  card.setAttribute('role', 'dialog');
+  card.setAttribute('aria-label', 'Margin');
+  const title = el('div', 'title');
+  title.textContent = 'Margin';
+  const body = el('div', 'body');
+  const row = el('div', 'row');
+  card.append(title, body, row);
+  shadow.append(style, card);
   build(body);
   const setButtons = (list: CardButton[]) => {
     row.replaceChildren(
@@ -221,15 +246,12 @@ export class Badge {
   ) {
     this.host.style.cssText = `position:absolute;top:0;left:0;z-index:${Z}`;
     const shadow = this.host.attachShadow({ mode: 'closed' });
-    shadow.innerHTML = `<style>
-      button{all:initial;position:absolute;min-width:16px;height:16px;padding:0 4px;box-sizing:border-box;border-radius:8px;
-        font:600 10px/16px system-ui,sans-serif;color:#fff;background:${COLOR};text-align:center;cursor:pointer;
-        box-shadow:0 1px 3px rgba(0,0,0,.25);opacity:.9}
-      button.checking{animation:pulse 1s ease-in-out infinite;width:10px;min-width:10px;height:10px;padding:0}
-      button.error{background:#d97706}
-      @keyframes pulse{50%{opacity:.35}}
-    </style><button type="button" aria-label="Margin"></button>`;
-    this.dot = shadow.querySelector('button')!;
+    const style = document.createElement('style');
+    style.textContent = BADGE_CSS;
+    this.dot = document.createElement('button');
+    this.dot.type = 'button';
+    this.dot.setAttribute('aria-label', 'Margin');
+    shadow.append(style, this.dot);
     this.dot.addEventListener('mousedown', (e) => e.preventDefault()); // keep the field's focus
     this.dot.addEventListener('click', () => onClick(this.state, this.dot.getBoundingClientRect()));
     document.documentElement.append(this.host);
