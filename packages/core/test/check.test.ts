@@ -135,6 +135,25 @@ describe('check', () => {
     expect(calls).toHaveLength(3);
   });
 
+  it('runs batches concurrently up to `concurrency`', async () => {
+    let active = 0;
+    let peak = 0;
+    const mock = new MockLanguageModelV4({
+      provider: 'mock',
+      modelId: 'c',
+      doGenerate: async () => {
+        peak = Math.max(peak, ++active);
+        await new Promise((r) => setTimeout(r, 5));
+        active--;
+        return reply('{"fixes":[]}');
+      },
+    });
+    const text = Array.from({ length: 9 }, (_, i) => `Sentence number ${i} is fine.`).join(' ');
+    const r = await check({ text, model: { id: 'mock:c', model: mock, foldSystem: false, structured: true, tested: true }, batch: { maxSentences: 2 }, concurrency: 2 });
+    expect(r.modelCalls).toBe(5);
+    expect(peak).toBe(2);
+  });
+
   it('falls back to the tag protocol when JSON is unreadable', async () => {
     let n = 0;
     const mock = new MockLanguageModelV4({

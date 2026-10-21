@@ -64,6 +64,25 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5(@types/node@26.6.5)(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.2))
 
+  packages/eval:
+    dependencies:
+      '@margin/core':
+        specifier: workspace:*
+        version: link:../core
+      harper.js:
+        specifier: ^2.13.0
+        version: 2.13.0
+    devDependencies:
+      '@types/node':
+        specifier: ^26.6.5
+        version: 26.6.5
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.0.5
+        version: 5.0.5(@types/node@26.6.5)(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.2))
+
   packages/vscode:
     dependencies:
       '@ai-sdk/provider':

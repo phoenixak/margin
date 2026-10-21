@@ -26,6 +26,8 @@ export interface CheckInput {
   cache?: CheckCache;
   batch?: BatchOptions;
   guard?: GuardOptions;
+  /** Model calls in flight at once. Default 1 (a local GPU serves one request well; free tiers rate-limit). */
+  concurrency?: number;
 }
 
 export interface CheckResult {
@@ -89,18 +91,21 @@ export async function check(input: CheckInput): Promise<CheckResult> {
     } else misses.push(p);
   }
 
-  // One call at a time: a local GPU runs one request well, and hosted free tiers rate-limit.
-  for (const batch of batches(misses.map((p) => ({ p, text: p.masked })), input.batch)) {
-    input.signal?.throwIfAborted();
-    const fixes = await callModel(model, dialect, batch.map((b, i) => ({ id: i + 1, text: b.text })), input.signal);
-    result.modelCalls++;
-    for (const [i, { p }] of batch.entries()) {
-      const fix = fixes.get(i + 1);
-      const answer: CachedResult = fix ? { fixed: fix.text, kind: fix.kind, why: fix.why } : { fixed: null };
-      answers.set(p, answer);
-      await input.cache?.set(p.key, answer);
+  const queue = batches(misses.map((p) => ({ p, text: p.masked })), input.batch);
+  const worker = async () => {
+    for (let batch = queue.shift(); batch; batch = queue.shift()) {
+      input.signal?.throwIfAborted();
+      const fixes = await callModel(model, dialect, batch.map((b, i) => ({ id: i + 1, text: b.text })), input.signal);
+      result.modelCalls++;
+      for (const [i, { p }] of batch.entries()) {
+        const fix = fixes.get(i + 1);
+        const answer: CachedResult = fix ? { fixed: fix.text, kind: fix.kind, why: fix.why } : { fixed: null };
+        answers.set(p, answer);
+        await input.cache?.set(p.key, answer);
+      }
     }
-  }
+  };
+  await Promise.all(Array.from({ length: Math.max(1, Math.min(input.concurrency ?? 1, queue.length)) }, worker));
 
   for (const p of prepared) {
     const answer = answers.get(p);

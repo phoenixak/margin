@@ -1,0 +1,15 @@
+{
+  "note": "Synthetic Markdown cases (MIT): protected spans must survive, and fixes must land on the right words. accept = [] means the sentence is correct and must stay unchanged.",
+  "items": [
+    { "id": "m01", "text": "Run `pnpm test` before you open a pull request, and see [the guide](https://example.com/guide) when your ready.", "accept": ["Run `pnpm test` before you open a pull request, and see [the guide](https://example.com/guide) when you're ready.", "Run `pnpm test` before you open a pull request, and see [the guide](https://example.com/guide) when you are ready."] },
+    { "id": "m02", "text": "The `config.they_was` key are read at startup.", "accept": ["The `config.they_was` key is read at startup."] },
+    { "id": "m03", "text": "Email ops@example.com or visit https://status.example.com if the site are down.", "accept": ["Email ops@example.com or visit https://status.example.com if the site is down."] },
+    { "id": "m04", "text": "See [[Release Checklist]] and the footnote[^1] for details.", "accept": [] },
+    { "id": "m05", "text": "The formula $E = mc^2$ were derived in 1905.", "accept": ["The formula $E = mc^2$ was derived in 1905."] },
+    { "id": "m06", "text": "Press <kbd>Ctrl</kbd>+<kbd>S</kbd> to save the file.", "accept": [] },
+    { "id": "m07", "text": "This is **very** important, and the team know it.", "accept": ["This is **very** important, and the team knows it."], "debatable": true },
+    { "id": "m08", "text": "😀 The emoji at the start dont matter, but the grammar do.", "accept": ["😀 The emoji at the start dont matter, but the grammar does.", "😀 The emoji at the start don't matter, but the grammar does.", "😀 The emoji at the start doesn't matter, but the grammar does."] },
+    { "id": "m09", "text": "日本語のメモ: the translation were finished yesterday.", "accept": ["日本語のメモ: the translation was finished yesterday."] },
+    { "id": "m10", "text": "Use the [settings page](https://example.com/a_b-c?x=1&y=2) to change you're password.", "accept": ["Use the [settings page](https://example.com/a_b-c?x=1&y=2) to change your password."] }
+  ]
+}

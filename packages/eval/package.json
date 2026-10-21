@@ -1,0 +1,22 @@
+{
+  "name": "@margin/eval",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Margin's eval: precision-first scoring of check mode on synthetic fixtures (dev only, never shipped).",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "eval": "node --experimental-strip-types src/run.ts",
+    "typecheck": "tsc -p . --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@margin/core": "workspace:*",
+    "harper.js": "^2.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  }
+}

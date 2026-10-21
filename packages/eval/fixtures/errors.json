@@ -1,0 +1,508 @@
+{
+  "note": "Synthetic sentences written for Margin's eval (MIT). Each has exactly one intended error class; `accept` lists every minimal fix we consider correct. Matching ignores whitespace and straight/curly quote differences.",
+  "items": [
+    {
+      "id": "e01",
+      "type": "agreement",
+      "text": "Each of the reports were checked by two reviewers.",
+      "accept": [
+        "Each of the reports was checked by two reviewers."
+      ]
+    },
+    {
+      "id": "e02",
+      "type": "agreement",
+      "text": "The list of open issues are longer than it was last month.",
+      "accept": [
+        "The list of open issues is longer than it was last month."
+      ]
+    },
+    {
+      "id": "e03",
+      "type": "agreement",
+      "text": "Neither the manager nor the engineers was told about the change.",
+      "accept": [
+        "Neither the manager nor the engineers were told about the change."
+      ]
+    },
+    {
+      "id": "e04",
+      "type": "agreement",
+      "text": "The results of the survey shows a clear preference for remote work.",
+      "accept": [
+        "The results of the survey show a clear preference for remote work."
+      ]
+    },
+    {
+      "id": "e05",
+      "type": "agreement",
+      "text": "They was waiting outside when the rain started.",
+      "accept": [
+        "They were waiting outside when the rain started."
+      ]
+    },
+    {
+      "id": "e06",
+      "type": "agreement",
+      "text": "He don't think the plan will work.",
+      "accept": [
+        "He doesn't think the plan will work.",
+        "He does not think the plan will work."
+      ]
+    },
+    {
+      "id": "e07",
+      "type": "agreement",
+      "text": "One of the servers in the cluster have failed twice this week.",
+      "accept": [
+        "One of the servers in the cluster has failed twice this week."
+      ]
+    },
+    {
+      "id": "e08",
+      "type": "agreement",
+      "text": "The quality of the images depend on the camera settings.",
+      "accept": [
+        "The quality of the images depends on the camera settings."
+      ]
+    },
+    {
+      "id": "e09",
+      "type": "agreement",
+      "text": "Every student in both classes have submitted the assignment.",
+      "accept": [
+        "Every student in both classes has submitted the assignment."
+      ]
+    },
+    {
+      "id": "e10",
+      "type": "agreement",
+      "text": "The documents that she sent yesterday was missing a signature.",
+      "accept": [
+        "The documents that she sent yesterday were missing a signature."
+      ]
+    },
+    {
+      "id": "e11",
+      "type": "tense",
+      "text": "Yesterday we meet the client and agreed on the timeline.",
+      "accept": [
+        "Yesterday we met the client and agreed on the timeline."
+      ]
+    },
+    {
+      "id": "e12",
+      "type": "tense",
+      "text": "Last year the company opens two new offices in Asia.",
+      "accept": [
+        "Last year the company opened two new offices in Asia."
+      ]
+    },
+    {
+      "id": "e13",
+      "type": "tense",
+      "text": "She has finished the report last Friday.",
+      "accept": [
+        "She finished the report last Friday."
+      ]
+    },
+    {
+      "id": "e14",
+      "type": "tense",
+      "text": "When I arrived, the meeting already starts.",
+      "accept": [
+        "When I arrived, the meeting had already started.",
+        "When I arrived, the meeting already started.",
+        "When I arrived, the meeting was already starting."
+      ]
+    },
+    {
+      "id": "e15",
+      "type": "tense",
+      "text": "If I would have known, I would have come earlier.",
+      "accept": [
+        "If I had known, I would have come earlier."
+      ]
+    },
+    {
+      "id": "e16",
+      "type": "tense",
+      "text": "The team was tired because they work all night.",
+      "accept": [
+        "The team was tired because they had worked all night.",
+        "The team was tired because they worked all night.",
+        "The team was tired because they had been working all night."
+      ]
+    },
+    {
+      "id": "e17",
+      "type": "verb-form",
+      "text": "The library was closed, so we studying at the cafe.",
+      "accept": [
+        "The library was closed, so we studied at the cafe.",
+        "The library was closed, so we were studying at the cafe."
+      ]
+    },
+    {
+      "id": "e18",
+      "type": "verb-form",
+      "text": "She has went to the office every day this week.",
+      "accept": [
+        "She has gone to the office every day this week.",
+        "She went to the office every day this week."
+      ]
+    },
+    {
+      "id": "e19",
+      "type": "verb-form",
+      "text": "The package should have arrive by now.",
+      "accept": [
+        "The package should have arrived by now."
+      ]
+    },
+    {
+      "id": "e20",
+      "type": "verb-form",
+      "text": "We are looking forward to meet you next week.",
+      "accept": [
+        "We are looking forward to meeting you next week."
+      ]
+    },
+    {
+      "id": "e21",
+      "type": "wrong-word",
+      "text": "The new policy will effect everyone who works remotely.",
+      "accept": [
+        "The new policy will affect everyone who works remotely."
+      ]
+    },
+    {
+      "id": "e22",
+      "type": "wrong-word",
+      "text": "This approach is faster then the old one.",
+      "accept": [
+        "This approach is faster than the old one."
+      ]
+    },
+    {
+      "id": "e23",
+      "type": "wrong-word",
+      "text": "Make sure you don't loose the backup drive.",
+      "accept": [
+        "Make sure you don't lose the backup drive."
+      ]
+    },
+    {
+      "id": "e24",
+      "type": "wrong-word",
+      "text": "The company changed it's logo in the spring.",
+      "accept": [
+        "The company changed its logo in the spring."
+      ]
+    },
+    {
+      "id": "e25",
+      "type": "wrong-word",
+      "text": "Their going to announce the winners tomorrow.",
+      "accept": [
+        "They're going to announce the winners tomorrow.",
+        "They are going to announce the winners tomorrow."
+      ]
+    },
+    {
+      "id": "e26",
+      "type": "wrong-word",
+      "text": "Please send the files when your ready.",
+      "accept": [
+        "Please send the files when you're ready.",
+        "Please send the files when you are ready."
+      ]
+    },
+    {
+      "id": "e27",
+      "type": "wrong-word",
+      "text": "The weather didn't stop us; we went anyway, weather it rained or not.",
+      "accept": [
+        "The weather didn't stop us; we went anyway, whether it rained or not."
+      ]
+    },
+    {
+      "id": "e28",
+      "type": "wrong-word",
+      "text": "I could care less about the color of the button.",
+      "accept": [
+        "I couldn't care less about the color of the button.",
+        "I could not care less about the color of the button."
+      ]
+    },
+    {
+      "id": "e29",
+      "type": "wrong-word",
+      "text": "We need to get the principle stakeholders in one room.",
+      "accept": [
+        "We need to get the principal stakeholders in one room."
+      ]
+    },
+    {
+      "id": "e30",
+      "type": "wrong-word",
+      "text": "The two teams compliment each other well.",
+      "accept": [
+        "The two teams complement each other well."
+      ]
+    },
+    {
+      "id": "e31",
+      "type": "missing-word",
+      "text": "We decided to postpone launch until next quarter.",
+      "accept": [
+        "We decided to postpone the launch until next quarter."
+      ]
+    },
+    {
+      "id": "e32",
+      "type": "missing-word",
+      "text": "She asked me to send her the slides before meeting.",
+      "accept": [
+        "She asked me to send her the slides before the meeting."
+      ]
+    },
+    {
+      "id": "e33",
+      "type": "missing-word",
+      "text": "The test failed because the server was not running at time.",
+      "accept": [
+        "The test failed because the server was not running at the time."
+      ]
+    },
+    {
+      "id": "e34",
+      "type": "missing-word",
+      "text": "I will be able attend the workshop on Monday.",
+      "accept": [
+        "I will be able to attend the workshop on Monday."
+      ]
+    },
+    {
+      "id": "e35",
+      "type": "missing-word",
+      "text": "The report is due end of the month.",
+      "accept": [
+        "The report is due at the end of the month.",
+        "The report is due by the end of the month."
+      ]
+    },
+    {
+      "id": "e36",
+      "type": "repeated-word",
+      "text": "We went to the the station to meet them.",
+      "accept": [
+        "We went to the station to meet them."
+      ]
+    },
+    {
+      "id": "e37",
+      "type": "repeated-word",
+      "text": "The update is is scheduled for tonight.",
+      "accept": [
+        "The update is scheduled for tonight."
+      ]
+    },
+    {
+      "id": "e38",
+      "type": "extra-word",
+      "text": "The report, which was long, it covered every region.",
+      "accept": [
+        "The report, which was long, covered every region."
+      ]
+    },
+    {
+      "id": "e39",
+      "type": "extra-word",
+      "text": "Where are you going to?",
+      "accept": [
+        "Where are you going?"
+      ],
+      "debatable": true
+    },
+    {
+      "id": "e40",
+      "type": "extra-word",
+      "text": "The reason why is because the cache was empty.",
+      "accept": [
+        "The reason is that the cache was empty.",
+        "The reason why is that the cache was empty."
+      ]
+    },
+    {
+      "id": "e41",
+      "type": "comma-splice",
+      "text": "The results were surprising, the team decided to repeat the test.",
+      "accept": [
+        "The results were surprising, so the team decided to repeat the test.",
+        "The results were surprising; the team decided to repeat the test.",
+        "The results were surprising. The team decided to repeat the test."
+      ]
+    },
+    {
+      "id": "e42",
+      "type": "comma-splice",
+      "text": "It was late, everyone had already gone home.",
+      "accept": [
+        "It was late; everyone had already gone home.",
+        "It was late, and everyone had already gone home.",
+        "It was late. Everyone had already gone home.",
+        "It was late, so everyone had already gone home."
+      ]
+    },
+    {
+      "id": "e43",
+      "type": "comma-splice",
+      "text": "The build passed, we merged the branch.",
+      "accept": [
+        "The build passed, so we merged the branch.",
+        "The build passed; we merged the branch.",
+        "The build passed, and we merged the branch.",
+        "The build passed. We merged the branch."
+      ]
+    },
+    {
+      "id": "e44",
+      "type": "run-on",
+      "text": "I wanted to call you I didn't have your number.",
+      "accept": [
+        "I wanted to call you, but I didn't have your number.",
+        "I wanted to call you; I didn't have your number.",
+        "I wanted to call you. I didn't have your number."
+      ]
+    },
+    {
+      "id": "e45",
+      "type": "pronoun",
+      "text": "Me and Sarah will review the draft tomorrow.",
+      "accept": [
+        "Sarah and I will review the draft tomorrow."
+      ]
+    },
+    {
+      "id": "e46",
+      "type": "pronoun",
+      "text": "Between you and I, the deadline is unrealistic.",
+      "accept": [
+        "Between you and me, the deadline is unrealistic."
+      ]
+    },
+    {
+      "id": "e47",
+      "type": "pronoun",
+      "text": "The committee gave their approval, and then it adjourned, but they later reversed itself.",
+      "accept": [
+        "The committee gave its approval, and then it adjourned, but it later reversed itself.",
+        "The committee gave their approval, and then they adjourned, but they later reversed themselves."
+      ],
+      "debatable": true
+    },
+    {
+      "id": "e48",
+      "type": "preposition",
+      "text": "She is very good in solving hard problems.",
+      "accept": [
+        "She is very good at solving hard problems."
+      ]
+    },
+    {
+      "id": "e49",
+      "type": "preposition",
+      "text": "We discussed about the budget for an hour.",
+      "accept": [
+        "We discussed the budget for an hour."
+      ]
+    },
+    {
+      "id": "e50",
+      "type": "comparative",
+      "text": "This laptop is more faster than my old one.",
+      "accept": [
+        "This laptop is faster than my old one.",
+        "This laptop is much faster than my old one."
+      ]
+    },
+    {
+      "id": "e51",
+      "type": "comparative",
+      "text": "Of the two options, the second is the best.",
+      "accept": [
+        "Of the two options, the second is the better.",
+        "Of the two options, the second is better.",
+        "Of the two options, the second is the better one."
+      ],
+      "debatable": true
+    },
+    {
+      "id": "e52",
+      "type": "article",
+      "text": "It was an useful meeting overall.",
+      "accept": [
+        "It was a useful meeting overall."
+      ]
+    },
+    {
+      "id": "e53",
+      "type": "article",
+      "text": "This is a example of how to use the tool.",
+      "accept": [
+        "This is an example of how to use the tool."
+      ]
+    },
+    {
+      "id": "e54",
+      "type": "verb-form",
+      "text": "You should of told me about the outage.",
+      "accept": [
+        "You should have told me about the outage.",
+        "You should've told me about the outage."
+      ]
+    },
+    {
+      "id": "e55",
+      "type": "agreement",
+      "text": "There is many reasons to update the library.",
+      "accept": [
+        "There are many reasons to update the library."
+      ]
+    },
+    {
+      "id": "e56",
+      "type": "agreement",
+      "text": "Here's the files you asked for.",
+      "accept": [
+        "Here are the files you asked for."
+      ]
+    },
+    {
+      "id": "e57",
+      "type": "tense",
+      "text": "The committee have reviewed the proposal last week and approve it.",
+      "accept": [
+        "The committee reviewed the proposal last week and approved it."
+      ]
+    },
+    {
+      "id": "e58",
+      "type": "wrong-word",
+      "text": "The meeting was moved to accommodate less people than expected.",
+      "accept": [
+        "The meeting was moved to accommodate fewer people than expected."
+      ],
+      "debatable": true
+    },
+    {
+      "id": "e60",
+      "type": "agreement",
+      "text": "A number of users has reported the same bug.",
+      "accept": [
+        "A number of users have reported the same bug."
+      ]
+    }
+  ]
+}
