@@ -78,6 +78,12 @@ node packages/cli/dist/cli.js rewrite fixtures/sample.md --preset concise --line
 node packages/cli/dist/cli.js check notes.md --provider local   # untested path
 ```
 
+## Roadmap and support
+
+Margin's focus is the local-model experience (Ollama, LM Studio) with Harper. More providers (OpenAI, Anthropic, …) are added when people ask for them: 👍 the [provider requests](https://github.com/phoenixak/margin/issues?q=is%3Aissue+label%3A%22gathering+interest%22) you'd use, or send a PR. Gemini (`packages/core/src/model.ts`) shows the pattern.
+
+If Margin helps you, you can support it on [GitHub Sponsors](https://github.com/sponsors/phoenixak) or [Ko-fi](https://ko-fi.com/phoenixak).
+
 ## License
 
 MIT
