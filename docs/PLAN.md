@@ -260,7 +260,9 @@ Rewrite: keep the language, dialect, meaning, Markdown and placeholders; output 
 
 ### Phase 6: Language server and Obsidian
 
-- [ ] `margin-ls` over `core`: diagnostics + code actions; docs for Neovim, Helix, Emacs (Eglot), Sublime (LSP); a small Zed extension.
+- [x] `margin-ls` over `core` (the engine moved from VS Code into core): diagnostics, quick fixes (apply / sentence / ignore), rewrite presets on a selection via `workspace/applyEdit`, hash-only cache and ignore list on disk, key from `GEMINI_API_KEY` only. Tested in-process over the protocol with a mock model, and over real stdio with hosted Gemma + Harper dedup.
+- [x] Setup docs (`packages/ls/README.md`) for Neovim, Helix, Sublime, Emacs (lsp-mode; Eglot runs one server per buffer, said plainly). Not tried in each editor yet.
+- [ ] Zed extension (Zed needs one to launch a custom server).
 - [ ] Obsidian plugin: `WorkerLinter` dedup, `app.secretStorage`, network via `requestUrl` (doesn't stream; **verify**) or CORS for local servers.
 
 ### Phase 7: Release and community
