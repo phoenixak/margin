@@ -6,7 +6,7 @@ Newest first. Each entry: the decision, why, and what it changed.
 
 - Hosted Gemma 4 26B A4B on 137 synthetic items: **precision 100%, recall 82.3%, 0 of 70 correct sentences changed** (two identical runs at batch 8). Report: `packages/eval/results/README.md`.
 - Defaults: **batch 8, 2 calls in parallel** (VS Code engine and CLI). Batch 15 lost recall (82% → 69%); batch 4 was slower with no gain.
-- The guard now rejects fixes that add or remove `[ ] < > | #` as well as `* _ ~ \``: the model occasionally leaked stray characters in big batches.
+- The guard now rejects fixes that add or remove `[ ] < > | #` as well as `*`, `_`, `~` and backticks: the model occasionally leaked stray characters in big batches.
 - Gemini's per-minute quota for Gemma is the practical limit; the VS Code engine's 30 s wait on 429 is the right behavior.
 - `MODELS` registry: hosted Gemma 4 26B A4B gets `autoCheck: true`; the local model has the same weights but is `autoCheck: false` until someone evaluates the local path.
 

@@ -8,7 +8,7 @@ Scoring: **precision** = correct fixes / every change Margin made (wrong fixes a
 
 | run | batch | parallel calls | precision | recall | F0.5 | correct sentences changed | correct / wrong / missed | + Harper recall | calls | time |
 |---|---|---|---|---|---|---|---|---|---|---|
-| baseline (commit 8a58e91)  | 8 | 2 | 98.1% | 82.3% | 0.944 | 0 / 70 | 51 / 1 / 10 | 85.5% | 18 | 30.7 s |
+| baseline (8a58e91) | 8 | 2 | 98.1% | 82.3% | 0.944 | 0 / 70 | 51 / 1 / 10 | 85.5% | 18 | 30.7 s |
 | b8-c2 #1 (07fc072) | 8 | 2 | **100%** | **82.3%** | **0.959** | **0 / 70** | 51 / 0 / 11 | 85.5% | 18 | 31.9 s |
 | b8-c2 #2 (07fc072) | 8 | 2 | 100% | 82.3% | 0.959 | 0 / 70 | 51 / 0 / 11 | 85.5% | 18 | 30.5 s |
 | b4-c2 (07fc072) | 4 | 2 | 98.1% | 82.3% | 0.944 | 0 / 70 | 51 / 1 / 10 | 85.5% | 35 | 44.9 s |
