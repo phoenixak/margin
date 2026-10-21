@@ -111,8 +111,10 @@ describe('check', () => {
 
   it('honours the ignore list', async () => {
     const { model } = fixer({ 'They was late.': 'They were late.' });
-    const ignored = new Set([await ignoreKey('They was late.', 'They were late.')]);
-    const r = await check({ text: 'They was late.', model, ignored });
+    const first = await check({ text: 'They was late.', model });
+    const { original, fixed } = first.suggestions[0]!.sentence;
+    const ignored = new Set([await ignoreKey(original, fixed)]);
+    const r = await check({ text: 'They  was\nlate.', model, ignored });
     expect(r.rejected.map((x) => x.reason)).toEqual(['ignored']);
   });
 

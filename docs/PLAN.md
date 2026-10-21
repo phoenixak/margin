@@ -217,15 +217,17 @@ Rewrite: keep the language, dialect, meaning, Markdown and placeholders; output 
 
 ### Phase 2: VS Code extension, check mode
 
-- [ ] esbuild → CJS; activates on Markdown and plaintext; `extensionDependencies` on Harper.
-- [ ] First-run: choose provider (Gemini key → SecretStorage, or local URL + model) with the consent notice.
-- [ ] Settings: provider, model, trigger, idle delay, local URL, excludeGlobs, severity.
-- [ ] Commands: Check document, Check selection, Set Gemini key, Clear cache, Show status, Toggle.
-- [ ] DiagnosticCollection `margin` (message = reason, source = `Margin`); code actions: apply hunk, apply sentence, ignore.
-- [ ] Harper dedup via `getDiagnostics`; dialect from Harper's settings.
-- [ ] Status bar: model, busy, "Gemini busy", no key, server unreachable.
+- [x] esbuild → CJS; activates on Markdown and plaintext; `extensionDependencies` on Harper.
+- [x] First-run: choose provider (Gemini key → SecretStorage, or local URL + model) with the consent notice.
+- [x] Settings: provider, model, trigger, idle delay, local URL, excludeGlobs, severity.
+- [x] Commands: Check document, Check selection, Set Gemini key, Clear cache, Clear ignored, Show status, Toggle.
+- [x] DiagnosticCollection `margin` (message = reason, source = `Margin`); code actions: apply hunk, apply sentence, ignore.
+- [x] Harper dedup via `getDiagnostics` (also re-filtered when Harper re-lints); dialect from Harper's `harper.dialect`.
+- [x] Status bar: model (+ "untested path"), checking, busy with retry, no key, set up, error.
+- [x] Underlines move with edits until the next check (`shift.ts`); edited sentences drop theirs.
+- [ ] **Manual run in real VS Code with Harper installed** (not done by the agent: it needs Harper downloaded into a profile). Install with `code --install-extension packages/vscode/margin-0.0.1.vsix`.
 
-**Done when** suggestions appear a few seconds after a pause with hosted Gemma, typing never stutters, and an integration test (mock model) covers diagnostics + code actions.
+**Done when** suggestions appear a few seconds after a pause with hosted Gemma, typing never stutters, and tests cover the engine (debounce, abort, staleness, busy retry, concurrency, triggers). The VS Code glue (`extension.ts`) is covered only by the manual run.
 
 ### Phase 3: Rewrite, tone and persistence (VS Code)
 

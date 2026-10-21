@@ -56,8 +56,11 @@ interface Prepared {
   key: string;
 }
 
-/** Key for the ignore list: one fix to one sentence. */
-export const ignoreKey = (sentence: string, fixed: string) => sha256(`${sentence.replace(/\s+/g, ' ').trim()}\u0000${fixed}`);
+/** Key for the ignore list: one fix to one sentence (`Suggestion.sentence.original` / `.fixed`). Whitespace-insensitive. */
+export const ignoreKey = (sentence: string, fixed: string) => {
+  const norm = (s: string) => s.replace(/\s+/g, ' ').trim();
+  return sha256(`${norm(sentence)}\u0000${norm(fixed)}`);
+};
 
 export async function check(input: CheckInput): Promise<CheckResult> {
   const { text, model } = input;
@@ -125,9 +128,8 @@ async function evaluate(p: Prepared, answer: CachedResult, input: CheckInput, re
   });
   const kept = hunks.filter((h) => !(input.existing ?? []).some((r) => overlaps(h, r)));
   if (!kept.length) return reject('harper-overlap');
-  if (input.ignored?.size && input.ignored.has(await ignoreKey(p.source, fixed))) return reject('ignored');
-
   const sentenceFixed = applyHunks(p.source, hunks.map((h) => ({ ...h, start: h.start - p.range.start, end: h.end - p.range.start })));
+  if (input.ignored?.size && input.ignored.has(await ignoreKey(p.source, sentenceFixed))) return reject('ignored');
   for (const h of kept) {
     result.suggestions.push({
       range: { start: h.start, end: h.end },

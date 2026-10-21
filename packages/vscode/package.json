@@ -1,0 +1,190 @@
+{
+  "name": "margin",
+  "displayName": "Margin: AI second pass for Harper",
+  "description": "Catches what Harper's rules can't: agreement across clauses, tense, wrong-but-real words, run-ons. Optional; works alongside Harper. Not affiliated with Harper or Automattic.",
+  "version": "0.0.1",
+  "publisher": "phoenixak",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phoenixak/margin"
+  },
+  "engines": {
+    "vscode": "^1.101.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "harper",
+    "grammar",
+    "proofreading",
+    "writing",
+    "llm",
+    "gemma",
+    "markdown"
+  ],
+  "main": "./dist/extension.cjs",
+  "activationEvents": [
+    "onLanguage:markdown",
+    "onLanguage:plaintext"
+  ],
+  "extensionDependencies": [
+    "elijah-potter.harper"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "Margin sends text to a model; it stays off in untrusted workspaces."
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "margin.checkDocument",
+        "title": "Check document",
+        "category": "Margin"
+      },
+      {
+        "command": "margin.checkSelection",
+        "title": "Check selection",
+        "category": "Margin"
+      },
+      {
+        "command": "margin.chooseProvider",
+        "title": "Choose where text is checked\u2026",
+        "category": "Margin"
+      },
+      {
+        "command": "margin.setGeminiKey",
+        "title": "Set Gemini API key\u2026",
+        "category": "Margin"
+      },
+      {
+        "command": "margin.clearCache",
+        "title": "Clear cache",
+        "category": "Margin"
+      },
+      {
+        "command": "margin.clearIgnored",
+        "title": "Clear ignored suggestions",
+        "category": "Margin"
+      },
+      {
+        "command": "margin.toggle",
+        "title": "Turn on/off",
+        "category": "Margin"
+      },
+      {
+        "command": "margin.showStatus",
+        "title": "Show status",
+        "category": "Margin"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "margin.checkSelection",
+          "when": "editorHasSelection"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Margin",
+      "properties": {
+        "margin.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Turn Margin on or off."
+        },
+        "margin.provider": {
+          "type": "string",
+          "enum": [
+            "off",
+            "gemini",
+            "local"
+          ],
+          "enumDescriptions": [
+            "Send nothing (default until you choose).",
+            "Google Gemini API with Gemma 4 (tested). Sends the checked sentences to Google.",
+            "An OpenAI-compatible local server such as Ollama or LM Studio (implemented, untested)."
+          ],
+          "default": "off",
+          "scope": "application",
+          "markdownDescription": "Where text is checked. Use **Margin: Choose where text is checked\u2026** to set this up."
+        },
+        "margin.model": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Model id. Empty: `gemma-4-26b-a4b-it` (Gemini) or `gemma4:26b-a4b-it-qat` (local)."
+        },
+        "margin.local.baseUrl": {
+          "type": "string",
+          "default": "http://localhost:11434/v1",
+          "description": "OpenAI-compatible endpoint of the local server (Ollama: http://localhost:11434/v1, LM Studio: http://localhost:1234/v1)."
+        },
+        "margin.trigger": {
+          "type": "string",
+          "enum": [
+            "idle",
+            "save",
+            "manual"
+          ],
+          "default": "idle",
+          "description": "When to check: after a pause in typing, on save, or only on command."
+        },
+        "margin.idleDelayMs": {
+          "type": "number",
+          "default": 2000,
+          "minimum": 500,
+          "description": "Pause before an idle check, in milliseconds."
+        },
+        "margin.excludeGlobs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/.env*",
+            "**/secrets/**",
+            "**/*.pem",
+            "**/*.key"
+          ],
+          "description": "Files matching these globs are never sent."
+        },
+        "margin.severity": {
+          "type": "string",
+          "enum": [
+            "error",
+            "warning",
+            "information",
+            "hint"
+          ],
+          "default": "information",
+          "description": "How Margin's suggestions appear."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "typecheck": "tsc -p . --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ai-sdk/provider": "^4.0.31",
+    "@margin/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/vscode": "~1.101.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  }
+}
