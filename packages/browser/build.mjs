@@ -32,7 +32,7 @@ const targets = {
     browser_specific_settings: {
       gecko: {
         id: 'margin@phoenixak.dev',
-        strict_min_version: '128.0',
+        strict_min_version: '140.0',
         // Text leaves the device only if the user picks Gemini; asked for then (src/firefox.ts).
         data_collection_permissions: { required: ['none'], optional: ['websiteContent'] },
       },
@@ -49,7 +49,7 @@ for (const [name, manifest] of Object.entries(targets)) {
     outdir: out,
     bundle: true,
     format: 'iife',
-    target: name === 'chrome' ? 'chrome120' : 'firefox128',
+    target: name === 'chrome' ? 'chrome120' : 'firefox140',
     minify: true,
     legalComments: 'linked',
     // harper.js reads its .wasm with `fs` only under Node; browsers load it by URL.
