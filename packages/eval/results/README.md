@@ -13,6 +13,9 @@ Scoring: **precision** = correct fixes / every change Margin made (wrong fixes a
 | b8-c2 #2 (07fc072) | 8 | 2 | 100% | 82.3% | 0.959 | 0 / 70 | 51 / 0 / 11 | 85.5% | 18 | 30.5 s |
 | b4-c2 (07fc072) | 4 | 2 | 98.1% | 82.3% | 0.944 | 0 / 70 | 51 / 1 / 10 | 85.5% | 35 | 44.9 s |
 | b15-c1 (07fc072) | 15 | 1 | 100% | 69.4% | 0.919 | 0 / 70 | 43 / 0 / 19 | 75.8% | 10 | 75.5 s |
+| prompt v2 + echo retry (bbb1cdd) | 8 | 1 | **100%** | 80.6% | 0.954 | **0 / 70** | 50 / 0 / 12 | **87.1%** | 22 | 78.4 s |
+
+**Prompt v2 (2026-10-21, found in Firefox testing):** sentences starting lowercase were merged into the previous one, and the model sometimes diagnosed an error but returned the sentence unchanged ("how was you"). Fixes: split before a lowercase start; retry an echoed sentence alone once; the prompt says to fix grammar even when capitalization is also off. Precision unchanged; Harper-combined recall up. Fixtures e61, e62 (debatable) and c69 (the model once suggested "open it" → "open them") were added after this run.
 
 **Decisions:** batch 8, 2 calls in parallel. Larger batches cost recall (matching arXiv 2609.10810); smaller ones cost time with no gain.
 

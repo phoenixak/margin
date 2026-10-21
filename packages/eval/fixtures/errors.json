@@ -503,6 +503,23 @@
       "accept": [
         "A number of users have reported the same bug."
       ]
+    },
+    {
+      "id": "e61",
+      "type": "agreement",
+      "text": "Hey, how was you?",
+      "accept": [
+        "Hey, how were you?"
+      ]
+    },
+    {
+      "id": "e62",
+      "type": "agreement",
+      "text": "Please let me know if anything is missing. how was you doing after the launch?",
+      "accept": [
+        "Please let me know if anything is missing. how were you doing after the launch?"
+      ],
+      "debatable": true
     }
   ]
 }

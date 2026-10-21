@@ -1,73 +1,350 @@
 {
   "note": "Synthetic correct sentences written for Margin's eval (MIT). Check mode must leave every one unchanged. Many are bait: informal but correct style, negation, numbers, quotes, constructions that prescriptive editors like to 'fix'.",
   "items": [
-    { "id": "c01", "type": "plain", "text": "Our team ships a new release every two weeks." },
-    { "id": "c02", "type": "negation", "text": "She said she would call back, but she never did." },
-    { "id": "c03", "type": "style-bait", "text": "Honestly, the meeting could have been an email." },
-    { "id": "c04", "type": "numbers", "text": "The server restarts at 3:00 and takes about 40 seconds." },
-    { "id": "c05", "type": "style-bait", "text": "Data from the sensors is stored for thirty days." },
-    { "id": "c06", "type": "plain", "text": "The quick fix worked, though nobody is sure why." },
-    { "id": "c07", "type": "plain", "text": "We need to decide by Friday whether to continue." },
-    { "id": "c08", "type": "preposition-end", "text": "That's the tool I was telling you about." },
-    { "id": "c09", "type": "split-infinitive", "text": "We want to really understand why the test fails." },
-    { "id": "c10", "type": "singular-they", "text": "If a user forgets their password, they can reset it from the login page." },
-    { "id": "c11", "type": "conjunction-start", "text": "And that's exactly what happened next." },
-    { "id": "c12", "type": "conjunction-start", "text": "But the second attempt went much better." },
-    { "id": "c13", "type": "passive", "text": "The decision was made after a long discussion." },
-    { "id": "c14", "type": "quotes", "text": "He wrote \"we was right\" in the chat, quoting the old meme." },
-    { "id": "c15", "type": "negation", "text": "Nobody expected the migration to finish in under an hour." },
-    { "id": "c16", "type": "negation", "text": "We can't ship this until the tests pass." },
-    { "id": "c17", "type": "numbers", "text": "Version 2.4.1 fixed 17 bugs and added 3 features." },
-    { "id": "c18", "type": "long", "text": "Although the first prototype was slow, the team learned enough from it to design a second version that was both faster and easier to maintain." },
-    { "id": "c19", "type": "informal", "text": "Yeah, that's fine by me." },
-    { "id": "c20", "type": "informal", "text": "Turns out the bug was a typo in the config file." },
-    { "id": "c21", "type": "fragment-ok", "text": "Not great, but not terrible either." },
-    { "id": "c22", "type": "style-bait", "text": "In order to keep things simple, we use a single database." },
-    { "id": "c23", "type": "style-bait", "text": "There are a lot of reasons to prefer plain text." },
-    { "id": "c24", "type": "british", "text": "The colour of the logo was changed after the review." },
-    { "id": "c25", "type": "british", "text": "We organised the workshop at the centre of town." },
-    { "id": "c26", "type": "collective", "text": "The team is meeting at noon to plan the sprint." },
-    { "id": "c27", "type": "data-are", "text": "The data are consistent with the earlier measurements." },
-    { "id": "c28", "type": "plain", "text": "Each reviewer reads the draft before the meeting." },
-    { "id": "c29", "type": "subjunctive", "text": "If I were in charge, I would cancel the release." },
-    { "id": "c30", "type": "plain", "text": "Neither option is perfect, but the second is cheaper." },
-    { "id": "c31", "type": "plain", "text": "The files you asked for are in the shared folder." },
-    { "id": "c32", "type": "semicolon", "text": "It was late; everyone had already gone home." },
-    { "id": "c33", "type": "plain", "text": "The build passed, so we merged the branch." },
-    { "id": "c34", "type": "question", "text": "Where did you put the backup drive?" },
-    { "id": "c35", "type": "exclamation", "text": "What a relief that the outage is over!" },
-    { "id": "c36", "type": "technical", "text": "The function returns null when the cache misses." },
-    { "id": "c37", "type": "technical", "text": "Set the timeout to 30 s and retry with exponential backoff." },
-    { "id": "c38", "type": "names", "text": "Priya and Tomás reviewed the pull request on Tuesday." },
-    { "id": "c39", "type": "plain", "text": "Fewer people attended than we expected." },
-    { "id": "c40", "type": "who-whom", "text": "Who did you send the invitation to?" },
-    { "id": "c41", "type": "plain", "text": "I couldn't care less about the color of the button." },
-    { "id": "c42", "type": "plain", "text": "The principal stakeholders were all in the room." },
-    { "id": "c43", "type": "plain", "text": "Its battery lasts longer than the old model's." },
-    { "id": "c44", "type": "plain", "text": "They're going to announce the winners tomorrow." },
-    { "id": "c45", "type": "plain", "text": "Make sure the screws aren't loose before you start." },
-    { "id": "c46", "type": "plain", "text": "The new policy affects everyone who works remotely." },
-    { "id": "c47", "type": "plain", "text": "The effect of the change was smaller than expected." },
-    { "id": "c48", "type": "long", "text": "When the network went down, the service kept serving cached pages, which meant most users never noticed the problem." },
-    { "id": "c49", "type": "parenthetical", "text": "The cache (which we added last year) saves about half of all requests." },
-    { "id": "c50", "type": "dash", "text": "The fix was simple — we just restarted the worker." },
-    { "id": "c51", "type": "list", "text": "We tested Chrome, Firefox and Safari." },
-    { "id": "c52", "type": "list", "text": "We tested Chrome, Firefox, and Safari." },
-    { "id": "c53", "type": "ellipsis", "text": "And then… nothing happened." },
-    { "id": "c54", "type": "imperative", "text": "Run the tests again before you push." },
-    { "id": "c55", "type": "plain", "text": "The meeting has been moved to Thursday afternoon." },
-    { "id": "c56", "type": "plain", "text": "She has finished the report and sent it to the client." },
-    { "id": "c57", "type": "plain", "text": "We met the client yesterday and agreed on the timeline." },
-    { "id": "c58", "type": "plain", "text": "One of the servers in the cluster has failed twice this week." },
-    { "id": "c59", "type": "plain", "text": "A number of users have reported the same bug." },
-    { "id": "c60", "type": "style-bait", "text": "Basically, the script just copies files from one folder to another." },
-    { "id": "c61", "type": "style-bait", "text": "It's kind of hard to explain without a diagram." },
-    { "id": "c62", "type": "plain", "text": "Between you and me, the deadline is tight." },
-    { "id": "c63", "type": "plain", "text": "We look forward to meeting you next week." },
-    { "id": "c64", "type": "plain", "text": "The package should have arrived by now." },
-    { "id": "c65", "type": "numbers", "text": "About 12% of requests took longer than 2 seconds." },
-    { "id": "c66", "type": "negation", "text": "None of the alerts were real." },
-    { "id": "c67", "type": "plain", "text": "Sarah and I will review the draft tomorrow." },
-    { "id": "c68", "type": "plain", "text": "Me too." }
+    {
+      "id": "c01",
+      "type": "plain",
+      "text": "Our team ships a new release every two weeks."
+    },
+    {
+      "id": "c02",
+      "type": "negation",
+      "text": "She said she would call back, but she never did."
+    },
+    {
+      "id": "c03",
+      "type": "style-bait",
+      "text": "Honestly, the meeting could have been an email."
+    },
+    {
+      "id": "c04",
+      "type": "numbers",
+      "text": "The server restarts at 3:00 and takes about 40 seconds."
+    },
+    {
+      "id": "c05",
+      "type": "style-bait",
+      "text": "Data from the sensors is stored for thirty days."
+    },
+    {
+      "id": "c06",
+      "type": "plain",
+      "text": "The quick fix worked, though nobody is sure why."
+    },
+    {
+      "id": "c07",
+      "type": "plain",
+      "text": "We need to decide by Friday whether to continue."
+    },
+    {
+      "id": "c08",
+      "type": "preposition-end",
+      "text": "That's the tool I was telling you about."
+    },
+    {
+      "id": "c09",
+      "type": "split-infinitive",
+      "text": "We want to really understand why the test fails."
+    },
+    {
+      "id": "c10",
+      "type": "singular-they",
+      "text": "If a user forgets their password, they can reset it from the login page."
+    },
+    {
+      "id": "c11",
+      "type": "conjunction-start",
+      "text": "And that's exactly what happened next."
+    },
+    {
+      "id": "c12",
+      "type": "conjunction-start",
+      "text": "But the second attempt went much better."
+    },
+    {
+      "id": "c13",
+      "type": "passive",
+      "text": "The decision was made after a long discussion."
+    },
+    {
+      "id": "c14",
+      "type": "quotes",
+      "text": "He wrote \"we was right\" in the chat, quoting the old meme."
+    },
+    {
+      "id": "c15",
+      "type": "negation",
+      "text": "Nobody expected the migration to finish in under an hour."
+    },
+    {
+      "id": "c16",
+      "type": "negation",
+      "text": "We can't ship this until the tests pass."
+    },
+    {
+      "id": "c17",
+      "type": "numbers",
+      "text": "Version 2.4.1 fixed 17 bugs and added 3 features."
+    },
+    {
+      "id": "c18",
+      "type": "long",
+      "text": "Although the first prototype was slow, the team learned enough from it to design a second version that was both faster and easier to maintain."
+    },
+    {
+      "id": "c19",
+      "type": "informal",
+      "text": "Yeah, that's fine by me."
+    },
+    {
+      "id": "c20",
+      "type": "informal",
+      "text": "Turns out the bug was a typo in the config file."
+    },
+    {
+      "id": "c21",
+      "type": "fragment-ok",
+      "text": "Not great, but not terrible either."
+    },
+    {
+      "id": "c22",
+      "type": "style-bait",
+      "text": "In order to keep things simple, we use a single database."
+    },
+    {
+      "id": "c23",
+      "type": "style-bait",
+      "text": "There are a lot of reasons to prefer plain text."
+    },
+    {
+      "id": "c24",
+      "type": "british",
+      "text": "The colour of the logo was changed after the review."
+    },
+    {
+      "id": "c25",
+      "type": "british",
+      "text": "We organised the workshop at the centre of town."
+    },
+    {
+      "id": "c26",
+      "type": "collective",
+      "text": "The team is meeting at noon to plan the sprint."
+    },
+    {
+      "id": "c27",
+      "type": "data-are",
+      "text": "The data are consistent with the earlier measurements."
+    },
+    {
+      "id": "c28",
+      "type": "plain",
+      "text": "Each reviewer reads the draft before the meeting."
+    },
+    {
+      "id": "c29",
+      "type": "subjunctive",
+      "text": "If I were in charge, I would cancel the release."
+    },
+    {
+      "id": "c30",
+      "type": "plain",
+      "text": "Neither option is perfect, but the second is cheaper."
+    },
+    {
+      "id": "c31",
+      "type": "plain",
+      "text": "The files you asked for are in the shared folder."
+    },
+    {
+      "id": "c32",
+      "type": "semicolon",
+      "text": "It was late; everyone had already gone home."
+    },
+    {
+      "id": "c33",
+      "type": "plain",
+      "text": "The build passed, so we merged the branch."
+    },
+    {
+      "id": "c34",
+      "type": "question",
+      "text": "Where did you put the backup drive?"
+    },
+    {
+      "id": "c35",
+      "type": "exclamation",
+      "text": "What a relief that the outage is over!"
+    },
+    {
+      "id": "c36",
+      "type": "technical",
+      "text": "The function returns null when the cache misses."
+    },
+    {
+      "id": "c37",
+      "type": "technical",
+      "text": "Set the timeout to 30 s and retry with exponential backoff."
+    },
+    {
+      "id": "c38",
+      "type": "names",
+      "text": "Priya and Tomás reviewed the pull request on Tuesday."
+    },
+    {
+      "id": "c39",
+      "type": "plain",
+      "text": "Fewer people attended than we expected."
+    },
+    {
+      "id": "c40",
+      "type": "who-whom",
+      "text": "Who did you send the invitation to?"
+    },
+    {
+      "id": "c41",
+      "type": "plain",
+      "text": "I couldn't care less about the color of the button."
+    },
+    {
+      "id": "c42",
+      "type": "plain",
+      "text": "The principal stakeholders were all in the room."
+    },
+    {
+      "id": "c43",
+      "type": "plain",
+      "text": "Its battery lasts longer than the old model's."
+    },
+    {
+      "id": "c44",
+      "type": "plain",
+      "text": "They're going to announce the winners tomorrow."
+    },
+    {
+      "id": "c45",
+      "type": "plain",
+      "text": "Make sure the screws aren't loose before you start."
+    },
+    {
+      "id": "c46",
+      "type": "plain",
+      "text": "The new policy affects everyone who works remotely."
+    },
+    {
+      "id": "c47",
+      "type": "plain",
+      "text": "The effect of the change was smaller than expected."
+    },
+    {
+      "id": "c48",
+      "type": "long",
+      "text": "When the network went down, the service kept serving cached pages, which meant most users never noticed the problem."
+    },
+    {
+      "id": "c49",
+      "type": "parenthetical",
+      "text": "The cache (which we added last year) saves about half of all requests."
+    },
+    {
+      "id": "c50",
+      "type": "dash",
+      "text": "The fix was simple — we just restarted the worker."
+    },
+    {
+      "id": "c51",
+      "type": "list",
+      "text": "We tested Chrome, Firefox and Safari."
+    },
+    {
+      "id": "c52",
+      "type": "list",
+      "text": "We tested Chrome, Firefox, and Safari."
+    },
+    {
+      "id": "c53",
+      "type": "ellipsis",
+      "text": "And then… nothing happened."
+    },
+    {
+      "id": "c54",
+      "type": "imperative",
+      "text": "Run the tests again before you push."
+    },
+    {
+      "id": "c55",
+      "type": "plain",
+      "text": "The meeting has been moved to Thursday afternoon."
+    },
+    {
+      "id": "c56",
+      "type": "plain",
+      "text": "She has finished the report and sent it to the client."
+    },
+    {
+      "id": "c57",
+      "type": "plain",
+      "text": "We met the client yesterday and agreed on the timeline."
+    },
+    {
+      "id": "c58",
+      "type": "plain",
+      "text": "One of the servers in the cluster has failed twice this week."
+    },
+    {
+      "id": "c59",
+      "type": "plain",
+      "text": "A number of users have reported the same bug."
+    },
+    {
+      "id": "c60",
+      "type": "style-bait",
+      "text": "Basically, the script just copies files from one folder to another."
+    },
+    {
+      "id": "c61",
+      "type": "style-bait",
+      "text": "It's kind of hard to explain without a diagram."
+    },
+    {
+      "id": "c62",
+      "type": "plain",
+      "text": "Between you and me, the deadline is tight."
+    },
+    {
+      "id": "c63",
+      "type": "plain",
+      "text": "We look forward to meeting you next week."
+    },
+    {
+      "id": "c64",
+      "type": "plain",
+      "text": "The package should have arrived by now."
+    },
+    {
+      "id": "c65",
+      "type": "numbers",
+      "text": "About 12% of requests took longer than 2 seconds."
+    },
+    {
+      "id": "c66",
+      "type": "negation",
+      "text": "None of the alerts were real."
+    },
+    {
+      "id": "c67",
+      "type": "plain",
+      "text": "Sarah and I will review the draft tomorrow."
+    },
+    {
+      "id": "c68",
+      "type": "plain",
+      "text": "Me too."
+    },
+    {
+      "id": "c69",
+      "type": "pronoun-bait",
+      "text": "The beta results were better than expected, so we decided to open it to everyone next week."
+    }
   ]
 }
