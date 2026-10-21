@@ -232,8 +232,9 @@ Rewrite: keep the language, dialect, meaning, Markdown and placeholders; output 
 
 ### Phase 3: Rewrite, tone and persistence (VS Code)
 
-- [ ] Rewrite/tone: preset QuickPick → stream into a virtual document → diff editor → Accept/Reject (only if the selection is unchanged).
-- [ ] Persistent cache with TTL, the ignore list, Clear cache.
+- [x] Rewrite/tone: preset QuickPick (+ Custom) → stream into a virtual document → diff editor → Accept/Reject (only if the selection is unchanged); warnings for changed negation, numbers or protected spans; editor context menu.
+- [x] Persistent cache with TTL (`core/stored-cache.ts`: only "no change" hashes go to disk, never text), the ignore list (globalState), Clear cache.
+- [ ] Manual run of rewrite in real VS Code.
 
 ### Phase 4: Eval
 

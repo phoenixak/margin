@@ -1,6 +1,7 @@
 export { type BatchOptions, batches } from './batch.js';
 export { type Block, type Language, splitBlocks } from './blocks.js';
 export { type CachedResult, type CheckCache, lruCache, sha256 } from './cache.js';
+export { type CacheStorage, type StoredCache, type StoredCacheOptions, storedCache } from './stored-cache.js';
 export { type CheckInput, type CheckResult, check, ignoreKey, MarginParseError } from './check.js';
 export { applyHunks, toHunks } from './diff.js';
 export { type GuardOptions, guardFix, overlaps } from './guards.js';

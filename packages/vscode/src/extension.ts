@@ -1,7 +1,10 @@
-import { createModel, type Dialect, ignoreKey, lruCache, type MarginModel, type Range as Span, type Suggestion } from '@margin/core';
+import { createModel, type Dialect, ignoreKey, type MarginModel, type Range as Span, type StoredCache, storedCache, type Suggestion } from '@margin/core';
 import * as vscode from 'vscode';
 import { Engine, type ModelState, type Status } from './engine.js';
+import { registerRewrite } from './rewrite.js';
 import { shiftSuggestions, withoutHarperOverlaps } from './shift.js';
+
+let persistentCache: StoredCache | undefined;
 
 const LANGUAGES = ['markdown', 'plaintext'];
 const IGNORED_KEY = 'margin.ignored';
@@ -24,7 +27,22 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   const status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
   status.command = 'margin.showStatus';
   const entries = new Map<string, Entry[]>();
-  const cache = lruCache();
+  // "No change" answers survive restarts (hashes only, no text); see core/stored-cache.ts.
+  const cacheFile = vscode.Uri.joinPath(context.globalStorageUri, 'check-cache.json');
+  const cache = await storedCache({
+    read: async () => {
+      try {
+        return new TextDecoder().decode(await vscode.workspace.fs.readFile(cacheFile));
+      } catch {
+        return undefined;
+      }
+    },
+    write: async (data) => {
+      await vscode.workspace.fs.createDirectory(context.globalStorageUri);
+      await vscode.workspace.fs.writeFile(cacheFile, new TextEncoder().encode(data));
+    },
+  });
+  persistentCache = cache;
   let ignored = new Set<string>(context.globalState.get<string[]>(IGNORED_KEY, []));
   let geminiKey = await context.secrets.get(SECRET_GEMINI);
   let cachedModel: { sig: string; model: MarginModel } | undefined;
@@ -302,9 +320,16 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       }
     }),
     vscode.commands.registerCommand('margin.chooseProvider', chooseProvider),
+    ...registerRewrite({
+      model: modelState,
+      dialect: (doc) => vscode.workspace.getConfiguration('harper', doc.uri).get<Dialect>('dialect', 'American'),
+      isProse,
+      setup: chooseProvider,
+      log: (line) => output.appendLine(`[${new Date().toISOString()}] ${line}`),
+    }),
     vscode.commands.registerCommand('margin.setGeminiKey', setGeminiKey),
-    vscode.commands.registerCommand('margin.clearCache', () => {
-      cache.clear();
+    vscode.commands.registerCommand('margin.clearCache', async () => {
+      await cache.clear();
       void vscode.window.showInformationMessage('Margin: cache cleared.');
     }),
     vscode.commands.registerCommand('margin.clearIgnored', async () => {
@@ -323,6 +348,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       const s = lastStatus;
       const items = [
         { label: '$(play) Check this document', id: 'check' },
+        { label: '$(edit) Rewrite selection…', id: 'rewrite' },
         { label: '$(server) Choose where text is checked…', id: 'provider' },
         { label: '$(key) Set Gemini API key…', id: 'key' },
         { label: config().get<boolean>('enabled', true) ? '$(circle-slash) Turn Margin off' : '$(check) Turn Margin on', id: 'toggle' },
@@ -332,6 +358,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       const pick = await vscode.window.showQuickPick(items, { title: `Margin: ${s.state}${'model' in s ? ` · ${s.model}` : ''}` });
       const commands: Record<string, string> = {
         check: 'margin.checkDocument',
+        rewrite: 'margin.rewriteSelection',
         provider: 'margin.chooseProvider',
         key: 'margin.setGeminiKey',
         toggle: 'margin.toggle',
@@ -355,7 +382,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   recheckVisible();
 }
 
-export function deactivate(): void {}
+export async function deactivate(): Promise<void> {
+  await persistentCache?.flush();
+}
 
 const SEVERITY: Record<string, vscode.DiagnosticSeverity> = {
   error: vscode.DiagnosticSeverity.Error,

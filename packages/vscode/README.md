@@ -17,6 +17,10 @@ Nothing is sent until you choose. Files matching `margin.excludeGlobs` are never
 
 Suggestions appear as underlines a couple of seconds after you stop typing (`margin.trigger`: idle, save or manual). The quick fix (Ctrl+.) offers: apply the change, fix the whole sentence, or ignore.
 
+**Rewrite selection** (right-click, or the command palette): Improve, Concise, Formal, Friendly, Fix only, or your own instruction. The result streams into a side-by-side diff; accept or reject it. Margin warns you if a rewrite changed numbers, negation or code/links.
+
+**Cache.** To avoid re-sending text, Margin remembers which sentences needed no change: only a hash and a date, stored in VS Code's extension storage, kept for 30 days. Fixes are kept in memory only. **Margin: Clear cache** removes it.
+
 ## Honest status
 
 Early. Tested with hosted Gemma 4 26B A4B on synthetic text. The local path is untested. Margin has no telemetry and never logs your text.
