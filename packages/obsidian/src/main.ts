@@ -100,7 +100,7 @@ export default class MarginPlugin extends Plugin {
           if (view && (this.versions.get(view) ?? 0) === version) view.dispatch({ effects: setSuggestions.of(suggestions) });
         },
         status: (s) => this.showStatus(s),
-        log: (line) => console.debug(`[Margin] ${line}`),
+        log: () => {}, // Obsidian's guidelines: no console logging in release builds
       },
     });
     this.register(() => this.engine.dispose());

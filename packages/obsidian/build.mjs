@@ -19,21 +19,24 @@ await build({
   alias: { '@margin/core': resolve('../core/src/index.ts') },
   logLevel: 'warning',
 });
-writeFileSync(
-  'dist/manifest.json',
-  `${JSON.stringify(
-    {
-      id: 'margin',
-      name: 'Margin',
-      version: pkg.version,
-      minAppVersion: '1.11.4',
-      description: "An AI second pass for Harper: catches what rules can't, rewrites on request. Local model or Gemini.",
-      author: 'Ahmed Khaled',
-      isDesktopOnly: false,
-    },
-    null,
-    2,
-  )}\n`,
-);
+const manifest = `${JSON.stringify(
+  {
+    // "Margin" alone is taken in Obsidian's plugin list.
+    id: 'margin-proofreader',
+    name: 'Margin Proofreader',
+    version: pkg.version,
+    minAppVersion: '1.11.4',
+    description: "An AI second pass after Harper: catches what grammar rules can't and rewrites on request. Local model or Gemini.",
+    author: 'Ahmed Khaled',
+    authorUrl: 'https://github.com/phoenixak',
+    fundingUrl: { 'GitHub Sponsors': 'https://github.com/sponsors/phoenixak', 'Ko-fi': 'https://ko-fi.com/phoenixak' },
+    isDesktopOnly: true, // not tested on mobile yet
+  },
+  null,
+  2,
+)}\n`;
+writeFileSync('dist/manifest.json', manifest);
+// Obsidian's community list reads manifest.json from the repository root.
+writeFileSync('../../manifest.json', manifest);
 copyFileSync('styles.css', 'dist/styles.css');
 console.log('built dist/main.js');

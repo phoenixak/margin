@@ -8,7 +8,7 @@ An AI second pass for [Harper](https://writewithharper.com) in Obsidian: purple 
 pnpm install && pnpm -F @margin/obsidian build
 ```
 
-Copy `packages/obsidian/dist/` (main.js, manifest.json, styles.css) to `<your vault>/.obsidian/plugins/margin/`, then enable **Margin** under Settings → Community plugins.
+Copy `packages/obsidian/dist/` (main.js, manifest.json, styles.css) to `<your vault>/.obsidian/plugins/margin-proofreader/`, then enable **Margin Proofreader** under Settings → Community plugins. (In Obsidian it's called "Margin Proofreader" because another plugin already uses "Margin".)
 
 ## Where your text goes
 

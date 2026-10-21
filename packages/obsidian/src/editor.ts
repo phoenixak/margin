@@ -22,6 +22,16 @@ interface Stored {
   from: number;
   to: number;
   before: string;
+  /** Where the underline starts: short edits (a comma, one letter) extend back over the previous word so they're visible. */
+  shown: number;
+}
+
+function shownFrom(text: string, from: number, to: number): number {
+  if (to - from >= 3) return from;
+  let start = from;
+  while (start > 0 && /\s/.test(text[start - 1]!)) start--;
+  while (start > 0 && /\S/.test(text[start - 1]!)) start--;
+  return start;
 }
 
 export const setSuggestions = StateEffect.define<Suggestion[]>();
@@ -32,7 +42,8 @@ const field = StateField.define<Stored[]>({
     for (const e of tr.effects) {
       if (e.is(setSuggestions)) {
         const doc = tr.state.doc;
-        return e.value.map((s) => ({ s, from: s.range.start, to: s.range.end, before: doc.sliceString(s.range.start, s.range.end) }));
+        const text = doc.toString();
+        return e.value.map((s) => ({ s, from: s.range.start, to: s.range.end, before: doc.sliceString(s.range.start, s.range.end), shown: shownFrom(text, s.range.start, s.range.end) }));
       }
     }
     if (!tr.docChanged) return value;
@@ -43,14 +54,14 @@ const field = StateField.define<Stored[]>({
         if (fromA <= x.to && toA >= x.from) touched = true;
       });
       if (touched) return [];
-      return [{ ...x, from: tr.changes.mapPos(x.from, 1), to: tr.changes.mapPos(x.to, -1) }];
+      return [{ ...x, from: tr.changes.mapPos(x.from, 1), to: tr.changes.mapPos(x.to, -1), shown: tr.changes.mapPos(x.shown, 1) }];
     });
   },
   provide: (f) =>
     EditorView.decorations.from(f, (list): DecorationSet => {
       const b = new RangeSetBuilder<Decoration>();
-      for (const x of [...list].sort((a, c) => a.from - c.from)) {
-        const from = x.from === x.to ? Math.max(0, x.from - 1) : x.from;
+      for (const x of [...list].sort((a, c) => a.shown - c.shown)) {
+        const from = x.shown;
         const to = Math.max(x.to, from + 1);
         b.add(from, to, Decoration.mark({ class: 'margin-suggestion' }));
       }
@@ -59,7 +70,7 @@ const field = StateField.define<Stored[]>({
 });
 
 export function suggestionsAt(state: EditorState, pos: number): Stored[] {
-  return state.field(field, false)?.filter((x) => pos >= Math.max(0, x.from - (x.from === x.to ? 1 : 0)) && pos <= Math.max(x.to, x.from + 1)) ?? [];
+  return state.field(field, false)?.filter((x) => pos >= x.shown && pos <= Math.max(x.to, x.shown + 1)) ?? [];
 }
 
 export function marginEditor(hooks: EditorHooks): Extension {
@@ -81,7 +92,7 @@ export function marginEditor(hooks: EditorHooks): Extension {
     const [x] = suggestionsAt(view.state, pos);
     if (!x) return null;
     return {
-      pos: x.from,
+      pos: x.shown,
       end: Math.max(x.to, x.from + 1),
       above: true, // Harper's plugin shows its card below
       create: () => {
