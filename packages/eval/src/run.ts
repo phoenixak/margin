@@ -12,6 +12,8 @@ import { binaryInlined } from 'harper.js/binaryInlined';
 import { type Item, type ItemResult, layout, scoreItem, type Summary, summarize } from './score.ts';
 
 const { values } = parseArgs({
+  // pnpm passes the `--` separator through.
+  args: process.argv.slice(2).filter((a) => a !== '--'),
   options: {
     label: { type: 'string', default: 'run' },
     provider: { type: 'string', default: 'gemini' },
