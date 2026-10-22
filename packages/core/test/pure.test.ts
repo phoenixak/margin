@@ -19,6 +19,13 @@ import {
 const views = (text: string, lang?: 'markdown' | 'plaintext') => splitBlocks(text, lang).map((b) => b.view.trim().replace(/\s+/g, ' '));
 
 describe('splitBlocks', () => {
+  it('drops admonition fences (:::) but keeps the prose inside', () => {
+    // Found on Vite's docs: ":::" was part of the last sentence and the model's fix deleted it.
+    const md = '::: tip Compatibility Note\nSome templates need a newer Node.js, please upgrade.\n:::\n';
+    const blocks = splitBlocks(md);
+    expect(blocks.map((b) => md.slice(b.start, b.end))).toEqual(['Some templates need a newer Node.js, please upgrade.']);
+  });
+
   it('keeps prose and skips code, front matter, tables, HTML and math', () => {
     const md = [
       '---',
@@ -95,6 +102,16 @@ describe('splitSentences', () => {
     expect(splitSentences(block!).map((s) => s.text)).toEqual(['She hissed: “You promised!” into his ear.', 'He did not answer her.']);
     const [b2] = splitBlocks('“Where are you going?” she asked quietly. Nobody knew the answer.');
     expect(splitSentences(b2!).length).toBe(2);
+  });
+
+  it('never splits inside a link target, URL or inline code', () => {
+    // Found on Docusaurus's docs: a split at the "?" of "/showcase?…" left half a link, and the "fix" deleted an emoji.
+    const [block] = splitBlocks('💅 Check the **[best Docusaurus sites](/showcase?tags=favorite)** for ideas today. See https://example.com/a.b?c=1 for more about it. Run `a.b()` now please.');
+    expect(splitSentences(block!).map((s) => s.text)).toEqual([
+      '💅 Check the **[best Docusaurus sites](/showcase?tags=favorite)** for ideas today.',
+      'See https://example.com/a.b?c=1 for more about it.',
+      'Run `a.b()` now please.',
+    ]);
   });
 
   it('does not split after an initial', () => {

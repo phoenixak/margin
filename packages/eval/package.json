@@ -10,7 +10,9 @@
     "typecheck": "tsc -p . --noEmit",
     "test": "vitest run",
     "fetch-human": "node --experimental-strip-types src/fetch-human.ts",
-    "eval-human": "node --experimental-strip-types src/human.ts"
+    "eval-human": "node --experimental-strip-types src/human.ts",
+    "fetch-real": "node --experimental-strip-types src/fetch-real.ts",
+    "eval-real": "node --experimental-strip-types src/real.ts"
   },
   "dependencies": {
     "@margin/core": "workspace:*",

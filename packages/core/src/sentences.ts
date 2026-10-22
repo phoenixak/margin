@@ -24,7 +24,7 @@ export const countWords = (s: string) => s.match(WORD)?.length ?? 0;
 export function splitSentences(block: Block, locale = 'en'): Sentence[] {
   const out: Sentence[] = [];
   const segmenter = new Intl.Segmenter(locale, { granularity: 'sentence' });
-  for (const seg of [...segmenter.segment(block.view)].flatMap(splitBeforeLowercase)) {
+  for (const seg of [...segmenter.segment(opaque(block.view))].flatMap(splitBeforeLowercase)) {
     const lead = seg.segment.length - seg.segment.trimStart().length;
     const trimmed = seg.segment.trim();
     if (!trimmed) continue;
@@ -43,6 +43,13 @@ export function splitSentences(block: Block, locale = 'en'): Sentence[] {
   }
   return out.filter((s) => /\p{L}/u.test(s.text));
 }
+
+/**
+ * The text with link targets, URLs and inline code turned into letters of the same length, so
+ * their "." "?" "!" can't end a sentence ("](/showcase?tags=…)"). Offsets are unchanged.
+ */
+const OPAQUE = /\]\([^)\s]*\)|<[a-z][\w+.-]*:[^>\s]*>|\b[a-z][\w+.-]*:\/\/[^\s<>()]*[^\s<>().,;:!?'"]|`[^`\n]+`/gi;
+const opaque = (view: string) => view.replace(OPAQUE, (m) => m.replace(/[^\s]/g, 'x'));
 
 /**
  * ICU doesn't break before a lowercase letter ("missing. is how was you"), but in

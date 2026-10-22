@@ -19,6 +19,8 @@ const HTML = /^ {0,3}<(?:[a-zA-Z][\w-]*|\/[a-zA-Z][\w-]*|!--)/;
 const TABLE = /^ {0,3}\|/;
 const INDENTED_CODE = /^(?: {4}|\t)/;
 const HEADING = /^ {0,3}#{1,6}(?:\s+|$)/;
+// Container directives (Docusaurus/VitePress admonitions, Pandoc divs): the fence line isn't prose, its content is.
+const DIRECTIVE = /^ {0,3}:{3,}/;
 const RULE = /^ {0,3}(?:(?:-\s*){3,}|(?:\*\s*){3,}|(?:_\s*){3,}|=+\s*)$/;
 const QUOTE = /^ {0,3}(?:>\s?)+/;
 const LIST = /^\s*(?:[-*+]|\d{1,9}[.)])\s+(?:\[[ xX]\]\s+)?/;
@@ -99,7 +101,7 @@ export function splitBlocks(text: string, language: Language = 'markdown'): Bloc
       while (i + 1 < all.length && all[i + 1]!.text.trim()) i++;
       continue;
     }
-    if (TABLE.test(t) || RULE.test(t)) {
+    if (TABLE.test(t) || RULE.test(t) || DIRECTIVE.test(t)) {
       flush();
       continue;
     }
