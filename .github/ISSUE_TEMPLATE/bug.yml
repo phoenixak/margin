@@ -5,9 +5,12 @@ body:
     id: where
     attributes: { label: Where, options: [VS Code, Browser (Chrome), Browser (Firefox), margin-ls, Obsidian, CLI, Core] }
     validations: { required: true }
+  - type: input
+    id: version
+    attributes: { label: Margin version, placeholder: "0.1.2" }
   - type: dropdown
     id: provider
-    attributes: { label: Provider, options: [Local model, Gemini API] }
+    attributes: { label: Provider, options: [Local model (Ollama), Local model (LM Studio or other), Gemini API] }
   - type: textarea
     id: what
     attributes: { label: What happened, description: "Steps, what you expected, what you saw. Please use made-up text, not your own documents." }

@@ -1,0 +1,42 @@
+name: Wrong or missed suggestion
+description: Margin underlined something that was correct, suggested a bad fix, or missed a clear error.
+labels: [quality]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        These reports are how Margin gets more accurate. **Please don't paste your own private text.** Write a short made-up sentence that shows the same problem (check that Margin still does it with your sentence).
+        A spelling or grammar rule that *Harper* gets wrong belongs in [Harper's repository](https://github.com/Automattic/harper/issues).
+  - type: dropdown
+    id: what
+    attributes:
+      label: What happened
+      options:
+        - Margin changed a sentence that was already correct
+        - Margin's fix was wrong or changed the meaning
+        - Margin missed a clear error
+        - Margin and Harper both underlined the same spot
+        - A rewrite (Improve, Concise, Formal, Friendly, Fix only) went wrong
+    validations: { required: true }
+  - type: textarea
+    id: sentence
+    attributes:
+      label: The sentence
+      description: A made-up sentence that shows the problem, and what Margin suggested.
+      placeholder: |
+        Text: The data shows a clear trend.
+        Margin suggested: "shows" → "show"
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: What you expected, placeholder: "No suggestion: “data” as a mass noun takes a singular verb." }
+  - type: input
+    id: model
+    attributes: { label: Model, placeholder: "gemma4:26b-a4b-it-qat (Ollama) / gemma-4-26b-a4b-it (Gemini API)" }
+    validations: { required: true }
+  - type: dropdown
+    id: where
+    attributes: { label: Where, options: [VS Code, Obsidian, Chrome, Firefox, margin-ls, CLI] }
+  - type: input
+    id: version
+    attributes: { label: Margin version, placeholder: "0.1.2" }
