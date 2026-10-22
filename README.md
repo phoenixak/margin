@@ -4,21 +4,26 @@
 
 Margin is an independent project. It is not made by or affiliated with Harper or Automattic.
 
-> **Status: early.** Built: the core, a CLI, a VS Code extension, a Chrome/Firefox extension, a language server ([margin-ls](packages/ls/README.md): Neovim, Helix, Sublime, Emacs) and an [Obsidian plugin](packages/obsidian/README.md). Tested in real apps so far: VS Code, Chrome. See [docs/PLAN.md](docs/PLAN.md).
+> **Status: early, and everything is published or in store review.** Built: the core, a CLI, a VS Code extension, a Chrome/Firefox extension, a language server ([margin-ls](packages/ls/README.md): Neovim, Helix, Sublime, Emacs) and an [Obsidian plugin](packages/obsidian/README.md). See [docs/PLAN.md](docs/PLAN.md).
 
 ## What's tested, honestly
 
-| | Hosted Gemma 4 26B A4B (Gemini API) | Local model (Ollama / LM Studio) |
-|---|---|---|
-| Check quality | **Eval: 100% precision, 82% recall, 0 of 70 correct sentences changed** on 137 synthetic items ([report](packages/eval/results/README.md)) | Not run. Same weights as the hosted model, so it should be close. Please [report](.github/ISSUE_TEMPLATE/local-model-report.yml) |
-| CLI | Tested | Error handling tested (no server); a real run is not |
-| VS Code | Tested in VS Code 1.142 (check, quick fixes, rewrite) | Model picker built; not run |
-| Chrome | Tested alongside Grammarly (check, Apply, rewrite, undo) | Not run |
-| Firefox | Built, not run | Not run |
-| margin-ls | Protocol tests + a real stdio run; editor configs written from docs, not tried | Not run |
-| Obsidian | Bundle loads; not run inside Obsidian | Not run |
+Both paths use the same model, Gemma 4 26B A4B: hosted through the Gemini API, or on your own machine through Ollama (`gemma4:26b-a4b-it-qat`).
 
-Small models (under ~9B) tend to over-correct, according to research and the eval's design. Margin only lets models that pass its eval check automatically while you type.
+| | Local (Ollama) | Hosted (Gemini API) |
+|---|---|---|
+| Synthetic eval (140 items we wrote) | **100% precision, 93.7% recall, 0 of 71 correct sentences changed** | 100% precision, 80.6% recall, 0 of 70 changed (137 items, Oct 21 code) |
+| Real learner writing ([JFLEG](https://github.com/keisks/jfleg), 747 sentences) | Harper alone catches 23.7% of the human corrections; **with Margin, 45.7%**. Margin's own edits: 71.8% precision | With Margin, 35.7%. Margin's own edits: 75.1% precision |
+| Published books (16,600 words of professionally edited prose) | Suggests a change in 6.4% of sentences, mostly to deliberate style | 4.2% of sentences |
+| Speed | ~0.75 s per sentence in batches on an RX 9070 XT (16 GB); a 12-sentence note takes ~7 s; the first call loads the model (~40 s) | ~1.1 s per sentence on the free tier |
+| CLI | Tested | Tested |
+| VS Code | Not yet run with a local model | Tested in VS Code 1.142 (check, quick fixes, rewrite) |
+| Chrome | Not yet run with a local model | Tested alongside Grammarly (check, Apply, rewrite, undo) |
+| Firefox | Not yet run with a local model | Tested (check, rewrite) |
+| Obsidian | Tested against a mock local server; not yet with Ollama | Not run |
+| margin-ls | Protocol tests + a real stdio run; editor configs written from docs, not tried | Same |
+
+Full numbers, every sentence Margin changed in the books, and how they were measured: [eval results](packages/eval/results/README.md). The local and hosted runs differ even with the same weights, so each is measured separately. Other models haven't been evaluated; smaller ones (under ~9B) tend to over-correct. Ran one? Please post a [model review](https://github.com/phoenixak/margin/issues/new?template=model-review.yml).
 
 ## Where your text goes
 
@@ -28,13 +33,17 @@ Small models (under ~9B) tend to over-correct, according to research and the eva
 
 ## Install
 
-- **VS Code:** [Margin on the Marketplace](https://marketplace.visualstudio.com/items?itemName=phoenixak.margin-ai), or `code --install-extension phoenixak.margin-ai`. It installs Harper's extension too.
-- **Browser, margin-ls, Obsidian, CLI:** from source for now (see below and each package's README).
+Margin needs Harper installed alongside it.
+
+- **VS Code:** [Margin on the Marketplace](https://marketplace.visualstudio.com/items?itemName=phoenixak.margin-ai), or `code --install-extension phoenixak.margin-ai`. It installs Harper's extension too. (Open VSX: pending.)
+- **Chrome, Firefox:** submitted to the Chrome Web Store and Firefox Add-ons, in review. Until then, build from source (below).
+- **Obsidian:** submitted to the community directory as **Margin AI Proofreader**, in review. Manual install: the files from [margin-obsidian's releases](https://github.com/phoenixak/margin-obsidian/releases). Needs Harper's Obsidian plugin.
+- **Neovim, Helix, Emacs, Sublime, Zed:** [margin-ls](packages/ls/README.md), from source.
 
 ## Use a local model (text never leaves your computer)
 
 1. Install [Ollama](https://ollama.com) (or [LM Studio](https://lmstudio.ai)).
-2. Pull the recommended model (about 18 GB; needs a ~16 GB GPU, or a smaller GPU plus plenty of RAM):
+2. Pull the recommended model (15.6 GB download; wants a 16 GB GPU, or a smaller GPU plus plenty of RAM, which is slower):
    `ollama pull gemma4:26b-a4b-it-qat`
 3. In VS Code: **Margin: Choose where text is checked… → Local model**. Margin finds Ollama/LM Studio and lists your models.
 4. In the browser extension, Ollama refuses extension requests by default. Allow them once:
@@ -46,13 +55,13 @@ Small models (under ~9B) tend to over-correct, according to research and the eva
    The options page detects this and shows the right command.
 5. Check what you have: `node packages/cli/dist/cli.js models`.
 
-**Honest status:** this path is implemented but the maintainer hasn't been able to test it (limited bandwidth for multi-GB downloads). `gemma4:26b-a4b-it-qat` has the same weights as the hosted model that passed the eval, so it should behave the same. **If you run it, please run the eval and open an issue with the results:**
+Tried another model or different hardware? Run the two evals and post a [model review](https://github.com/phoenixak/margin/issues/new?template=model-review.yml):
 
 ```sh
-node packages/eval/src/run.ts --provider local --model gemma4:26b-a4b-it-qat --label local-test
+pnpm -F @margin/eval eval -- --provider local --model <model> --label <name>
+pnpm -F @margin/eval fetch-human
+pnpm -F @margin/eval eval-human -- --provider local --model <model> --label <name>
 ```
-
-Smaller models (under ~9B) tend to over-correct; the eval will show it.
 
 ## Browser extension (Chrome, Firefox)
 
@@ -75,12 +84,12 @@ pnpm install && pnpm build
 echo "GEMINI_API_KEY=..." > .env       # gitignored
 node packages/cli/dist/cli.js check fixtures/sample.md
 node packages/cli/dist/cli.js rewrite fixtures/sample.md --preset concise --lines 6-8
-node packages/cli/dist/cli.js check notes.md --provider local   # untested path
+node packages/cli/dist/cli.js check notes.md --provider local
 ```
 
 ## Roadmap and support
 
-Margin's focus is the local-model experience (Ollama, LM Studio) with Harper. More providers (OpenAI, Anthropic, …) are added when people ask for them: 👍 the [provider requests](https://github.com/phoenixak/margin/issues?q=is%3Aissue+label%3A%22gathering+interest%22) you'd use, or send a PR. Gemini (`packages/core/src/model.ts`) shows the pattern.
+Margin's focus is the local-model experience (Ollama, LM Studio) with Harper. More providers (OpenAI, Anthropic, …) are added when people ask for them: 👍 the [provider requests](https://github.com/phoenixak/margin/issues?q=is%3Aissue+label%3Aprovider) you'd use, [request another one](https://github.com/phoenixak/margin/issues/new?template=provider-request.yml), or send a PR. Gemini (`packages/core/src/model.ts`) shows the pattern.
 
 If Margin helps you, you can support it on [GitHub Sponsors](https://github.com/sponsors/phoenixak) or [Ko-fi](https://ko-fi.com/phoenixak).
 

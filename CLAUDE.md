@@ -1,6 +1,6 @@
 # Margin
 
-An AI second pass for Harper. Harper's fast, local, rule-based checks run first. An LLM then handles only what rules can't catch: agreement across clauses, tense, real-but-wrong words, run-ons, sentences that don't parse. It also does rewrite and tone on demand. Margin is an optional companion to Harper and an open-source starting point. **The tested path is hosted Gemma 4 26B A4B through the Gemini API** (user's own key). Local models (Ollama / LM Studio) are implemented but **untested**, and the docs say so.
+An AI second pass for Harper. Harper's fast, local, rule-based checks run first. An LLM then handles only what rules can't catch: agreement across clauses, tense, real-but-wrong words, run-ons, sentences that don't parse. It also does rewrite and tone on demand. Margin is an optional companion to Harper and an open-source starting point. **Tested: Gemma 4 26B A4B, hosted through the Gemini API (user's own key) and local on Ollama.** The editor and browser adapters with a local model are still being tested, and the docs say exactly what was run.
 
 "Margin" is a working name. Never put "Harper" in the product name; Harper is Automattic's project.
 
@@ -26,7 +26,7 @@ Adjust these paths if the repos live elsewhere.
 7. **Harper owns mechanical errors.** Suppress LLM edits that overlap a Harper lint, and don't render Harper's lints ourselves.
 8. **Model is injected.** `core` takes an AI SDK `LanguageModel` plus a provider profile; adapters build it with `createModel()`.
 9. **Companion to Harper.** Margin requires Harper (VS Code: `extensionDependencies`), uses Harper's dialect, and never duplicates Harper's lints.
-10. **Honesty.** Never claim something works that wasn't tested. The README's "What's tested" section must match reality (today: hosted Gemma yes, local no).
+10. **Honesty.** Never claim something works that wasn't tested. The README's "What's tested" section must match reality (today: hosted Gemma 4 26B A4B in VS Code, Chrome, Firefox; local Gemma 4 26B A4B in the CLI and evals).
 
 ## Verify before trusting
 
