@@ -23,7 +23,7 @@ const manifest = `${JSON.stringify(
   {
     // "Margin" alone is taken in Obsidian's plugin list.
     id: 'margin-ai-proofreader',
-    name: 'Margin Proofreader',
+    name: 'Margin AI Proofreader',
     version: pkg.version,
     minAppVersion: '1.11.4',
     description: "An AI second pass after Harper: catches what grammar rules can't and rewrites on request. Local model or Gemini.",

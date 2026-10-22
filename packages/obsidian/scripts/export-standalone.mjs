@@ -43,7 +43,7 @@ writeFileSync(
       name: 'margin-obsidian',
       version: pkg.version,
       private: true,
-      description: 'Margin Proofreader for Obsidian: an AI second pass after Harper. Generated from github.com/phoenixak/margin.',
+      description: 'Margin AI Proofreader for Obsidian: an AI second pass after Harper. Generated from github.com/phoenixak/margin.',
       license: 'MIT',
       type: 'module',
       scripts: { build: 'node build.mjs', typecheck: 'tsc --noEmit' },
@@ -104,7 +104,7 @@ const readme = readFileSync(join(plugin, 'README.md'), 'utf8').replace(
   /## Install \(from source, for now\)[\s\S]*?(?=## Where your text goes)/,
   `## Install
 
-From Obsidian: Settings → Community plugins → Browse → search "Margin Proofreader". Also install **Harper**.
+From Obsidian: Settings → Community plugins → Browse → search "Margin AI Proofreader". Also install **Harper**.
 
 Manual: download \`main.js\`, \`manifest.json\` and \`styles.css\` from the latest release into \`<vault>/.obsidian/plugins/margin-ai-proofreader/\`.
 

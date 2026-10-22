@@ -121,3 +121,5 @@ Published prose (four public-domain books) exposed two splitter bugs and one mod
 - It also split after initials ("M. Loucheur"). A single capital plus period (except "I.") now counts as an abbreviation.
 - Twice the model changed a sentence while its reason said "No changes needed." Such fixes are now rejected (`says-no-error`).
 Optional commas (after introductory clauses) were 16 of the 43 changed sentences; see the prompt decision below if one follows.
+
+Follow-up (same day): the directory also requires unique *names*. Submitting margin-obsidian answered "An entry with this name already exists" because the stale draft holds "Margin Proofreader", and the dashboard had shown that old entry instead. The plugin is now "Margin AI Proofreader" (0.1.3), matching its id. Two repos stay: the directory scans the whole repo (browser code fails Obsidian's rules, npm can't install pnpm workspaces) and ties root manifest and tags to the plugin.

@@ -38,5 +38,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "${GITHUB_REF_NAME}" dist/main.js dist/manifest.json dist/styles.css \
-            --title "Margin Proofreader ${GITHUB_REF_NAME}" \
+            --title "Margin AI Proofreader ${GITHUB_REF_NAME}" \
             --notes-file RELEASE_NOTES.md
