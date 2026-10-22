@@ -3,7 +3,7 @@ import { type BatchOptions, batches } from './batch.js';
 import { type Language, splitBlocks } from './blocks.js';
 import { type CachedResult, type CheckCache, sha256 } from './cache.js';
 import { applyHunks, toHunks } from './diff.js';
-import { type GuardOptions, guardFix, overlaps } from './guards.js';
+import { type GuardOptions, guardFix, overlaps, saysNoError } from './guards.js';
 import { mask, unmask } from './mask.js';
 import type { MarginModel } from './model.js';
 import { type Fix, Fixes, parseJsonLenient, parseTags } from './parse.js';
@@ -143,6 +143,7 @@ async function evaluate(p: Prepared, answer: CachedResult, input: CheckInput, re
 
   const relative = toHunks(p.collapsed, fixed, 0);
   if (!relative.length) return;
+  if (saysNoError(answer.why)) return reject('says-no-error');
   const why = guardFix(p.collapsed, fixed, relative, input.guard);
   if (why) return reject(why);
 

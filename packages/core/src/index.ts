@@ -6,7 +6,7 @@ export { type CheckInput, type CheckResult, check, ignoreKey, MarginParseError }
 export { applyHunks, toHunks } from './diff.js';
 export { type DocSnapshot, Engine, type EngineHost, type EngineOptions, type EngineSettings, type ModelState, type Status } from './engine.js';
 export { explainError } from './errors.js';
-export { type GuardOptions, guardFix, overlaps } from './guards.js';
+export { type GuardOptions, guardFix, saysNoError, overlaps } from './guards.js';
 export { type Masked, mask, unmask } from './mask.js';
 export { DEFAULT_LOCAL_URLS, detectLocalServers, type LocalProbe, type LocalProblem, type LocalServer, type LocalServerKind, localSetupHelp } from './local.js';
 export { MODELS, type ModelInfo, modelAdvice, modelInfo } from './models.js';

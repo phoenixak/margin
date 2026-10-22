@@ -41,6 +41,7 @@ export type RejectReason =
   | 'markdown'
   | 'harper-style'
   | 'harper-overlap'
+  | 'says-no-error'
   | 'ignored';
 
 export interface Rejection {

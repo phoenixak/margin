@@ -105,6 +105,42 @@ async function timed<T>(f: () => Promise<T>): Promise<[T, number]> {
   return [r, Math.round(performance.now() - t)];
 }
 
+type CheckResult = Awaited<ReturnType<typeof check>>;
+
+/**
+ * Checks the items a chunk at a time, so one failed call doesn't lose the run, and waits out
+ * free-tier quota errors ("Please retry in 46s"). Time spent waiting isn't counted.
+ */
+async function checkAll(text: string, ranges: Range[], existing: Range[]): Promise<[CheckResult, number]> {
+  const total: CheckResult = { suggestions: [], rejected: [], sentences: 0, modelCalls: 0, cacheHits: 0 };
+  let ms = 0;
+  const size = 40;
+  for (let i = 0; i < ranges.length; i += size) {
+    const chunk = { start: ranges[i]!.start, end: ranges[Math.min(i + size, ranges.length) - 1]!.end };
+    for (let attempt = 1; ; attempt++) {
+      try {
+        const [r, t] = await timed(() => check({ text, model, existing, ranges: [chunk], batch, concurrency }));
+        total.suggestions.push(...r.suggestions);
+        total.rejected.push(...r.rejected);
+        total.sentences += r.sentences;
+        total.modelCalls += r.modelCalls;
+        ms += t;
+        break;
+      } catch (error) {
+        const e = error as { message?: string; lastError?: { message?: string } };
+        const message = `${e.message ?? String(error)} ${e.lastError?.message ?? ''}`;
+        // Quota errors say how long to wait; Gemini's occasional "Internal error" passes after a pause.
+        const wait = /retry in ([\d.]+)s/i.exec(message)?.[1] ?? (/internal error|overloaded|unavailable|RESOURCE_EXHAUSTED/i.test(message) ? '30' : undefined);
+        if (!wait || attempt > 5) throw error;
+        console.error(`quota: waiting ${Math.ceil(Number(wait))} s`);
+        await new Promise((r) => setTimeout(r, (Number(wait) + 2) * 1000));
+      }
+    }
+    console.error(`  ${Math.min(i + size, ranges.length)}/${ranges.length}`);
+  }
+  return [total, ms];
+}
+
 if (sets.includes('jfleg')) {
   const lines = (f: string) => read(`jfleg/${f}`).split('\n').slice(0, Number(values.jfleg));
   const src = lines('test.src').map(detokenize);
@@ -112,7 +148,7 @@ if (sets.includes('jfleg')) {
   const n = src.filter((s) => s.length > 0).length;
   const { text, ranges } = layout(src.slice(0, n).map((t) => ({ id: '', text: t })));
   const h = await harper(text);
-  const [result, ms] = await timed(() => check({ text, model, existing: h.ranges, batch, concurrency }));
+  const [result, ms] = await checkAll(text, ranges, h.ranges);
   const score = (out: (i: number) => string): HumanSummary =>
     summarizeHuman(src.slice(0, n).map((s, i) => scoreSentence(s, out(i), refs.map((r) => r[i]!))));
   const margin = score((i) => applyInside(text, ranges[i]!, toHunks(result.suggestions)));
@@ -145,7 +181,7 @@ if (sets.includes('gutenberg')) {
   }
   const { text, ranges } = layout(items.map((it) => ({ id: '', text: it.text })));
   const h = await harper(text);
-  const [result, ms] = await timed(() => check({ text, model, existing: h.ranges, batch, concurrency }));
+  const [result, ms] = await checkAll(text, ranges, h.ranges);
   const words = text.split(/\s+/).filter(Boolean).length;
   const flagged = ranges.filter((r) => result.suggestions.some((s) => s.range.start >= r.start && s.range.end <= r.end)).length;
   const sentences = new Map<string, Suggestion>();

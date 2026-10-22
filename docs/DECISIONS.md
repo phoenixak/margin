@@ -113,3 +113,11 @@ AI SDK 7 requires Node 22+. CLAUDE.md and the root `package.json` updated. VS Co
 ## 2026-10-22: Obsidian plugin id `margin-ai-proofreader`
 
 The community directory bound `margin-proofreader` to the monorepo (phoenixak/margin) on the first submission, and deleting the draft and resubmitting phoenixak/margin-obsidian brought the same entry back, still pointing at the monorepo; the listing editor can't change the repository. Nothing was public yet, so the plugin moved to a new id, `margin-ai-proofreader` (0.1.2), submitted from margin-obsidian only. `margin-ai` is taken (MarginAI).
+
+## 2026-10-22: Findings from the first human-text eval (hosted Gemma 4 26B A4B)
+
+Published prose (four public-domain books) exposed two splitter bugs and one model habit:
+- The splitter broke quoted speech that ends in "!" or "?" and continues in lowercase (“You promised!” into his ear.), so the model "fixed" the fragment. Lowercase after "!"/"?" + closing quote now continues the sentence; the split-before-lowercase rule applies after periods only.
+- It also split after initials ("M. Loucheur"). A single capital plus period (except "I.") now counts as an abbreviation.
+- Twice the model changed a sentence while its reason said "No changes needed." Such fixes are now rejected (`says-no-error`).
+Optional commas (after introductory clauses) were 16 of the 43 changed sentences; see the prompt decision below if one follows.

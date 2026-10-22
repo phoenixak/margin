@@ -4,6 +4,7 @@ import {
   batches,
   checkSystemPrompt,
   guardFix,
+  saysNoError,
   mask,
   overlaps,
   parseJsonLenient,
@@ -85,6 +86,20 @@ describe('splitSentences', () => {
 
   it('merges short fragments into the previous sentence', () => {
     const [block] = splitBlocks('We met Dr. Smith yesterday at noon. It went well overall.');
+    expect(splitSentences(block!).length).toBe(2);
+  });
+
+  it('keeps quoted speech with its lowercase continuation', () => {
+    // Found on The Great Gatsby: the split made "into his ear." a fragment the model "fixed".
+    const [block] = splitBlocks('She hissed: “You promised!” into his ear. He did not answer her.');
+    expect(splitSentences(block!).map((s) => s.text)).toEqual(['She hissed: “You promised!” into his ear.', 'He did not answer her.']);
+    const [b2] = splitBlocks('“Where are you going?” she asked quietly. Nobody knew the answer.');
+    expect(splitSentences(b2!).length).toBe(2);
+  });
+
+  it('does not split after an initial', () => {
+    // Found on The Economic Consequences of the Peace: "M. Loucheur were made…" became its own sentence.
+    const [block] = splitBlocks('The statements of M. Dubois and M. Loucheur were made in the early spring. They mattered a great deal.');
     expect(splitSentences(block!).length).toBe(2);
   });
 });
@@ -179,5 +194,16 @@ describe('prompts', () => {
     expect(PROMPT_VERSION).toBe(2);
     expect(checkSystemPrompt('American', 'json')).toMatchSnapshot();
     expect(checkSystemPrompt('British', 'tags')).toMatchSnapshot();
+  });
+});
+
+describe('saysNoError', () => {
+  it('spots a reason that says the sentence was fine', () => {
+    expect(saysNoError('No changes needed.')).toBe(true);
+    expect(saysNoError('No changes needed. Sentence is correct.')).toBe(true);
+    expect(saysNoError('The sentence is already grammatically correct.')).toBe(true);
+    expect(saysNoError('Subject-verb agreement.')).toBe(false);
+    expect(saysNoError('Added a missing article; no other errors.')).toBe(false);
+    expect(saysNoError(undefined)).toBe(false);
   });
 });

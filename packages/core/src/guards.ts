@@ -35,6 +35,13 @@ export function guardFix(original: string, fixed: string, hunks: Hunk[], options
   return undefined;
 }
 
+/**
+ * The model's own reason says nothing was wrong ("No changes needed.") although it changed the
+ * sentence. Seen on published prose: the change is then a polish, not a fix.
+ */
+export const saysNoError = (why: string | undefined) =>
+  /\bno (?:changes?|corrections?|errors?|fix(?:es)?) (?:are |is )?(?:needed|required|necessary|found)\b|\b(?:sentence|it|this) is (?:already )?(?:grammatically )?correct\b/i.test(why ?? '');
+
 /** A hunk that only adds or removes the comma before "and"/"or" (the serial comma is a style choice Harper owns). */
 function isSerialComma(original: string, h: Hunk): boolean {
   const removed = original.slice(h.start, h.end).trim();

@@ -10,6 +10,9 @@ export interface Sentence {
 
 const MIN_WORDS = 3;
 const ABBREVIATION = /\b(?:Dr|Mr|Mrs|Ms|Prof|Sr|Jr|St|vs|etc|e\.g|i\.e|cf|approx|No|Fig|Eq)\.$/i;
+// A single capital and a period is an initial ("M. Dubois", "J. Smith"); "I." can end a sentence.
+const INITIAL = /(?:^|[\s(])[A-HJ-Z]\.$/;
+const endsInAbbreviation = (s: string) => ABBREVIATION.test(s) || INITIAL.test(s);
 const WORD = /[\p{L}\p{N}]+(?:['’][\p{L}]+)*/gu;
 
 export const countWords = (s: string) => s.match(WORD)?.length ?? 0;
@@ -30,7 +33,9 @@ export function splitSentences(block: Block, locale = 'en'): Sentence[] {
     const prev = out.at(-1);
     // A false split ("Dr. Smith", "e.g. this", a short fragment): keep it with the previous sentence.
     // A lowercase start is NOT a reason: "missing. is how was you" is two sentences (Harper flags the capital).
-    if (prev && (countWords(trimmed) < MIN_WORDS || ABBREVIATION.test(prev.text))) {
+    // Quoted speech ending in "!" or "?" that continues in lowercase (“You promised!” he said) is one sentence.
+    const continues = /[!?]["”’')\]]+$/.test(prev?.text ?? '') && /^\p{Ll}/u.test(trimmed);
+    if (prev && (countWords(trimmed) < MIN_WORDS || endsInAbbreviation(prev.text) || continues)) {
       merge(prev, block, end);
       continue;
     }
@@ -42,14 +47,15 @@ export function splitSentences(block: Block, locale = 'en'): Sentence[] {
 /**
  * ICU doesn't break before a lowercase letter ("missing. is how was you"), but in
  * prose that's usually a new sentence with a capitalization slip (Harper flags it).
- * Split there, unless the period belongs to an abbreviation ("e.g. this").
+ * Split there, unless the period belongs to an abbreviation ("e.g. this"). Only after a period:
+ * after "!" or "?" a lowercase word continues the sentence (“You promised!” he said).
  */
 function splitBeforeLowercase(seg: { segment: string; index: number }): { segment: string; index: number }[] {
   const out: { segment: string; index: number }[] = [];
   let from = 0;
-  for (const m of seg.segment.matchAll(/[.!?]["”’')\]]*\s+(?=\p{Ll})/gu)) {
+  for (const m of seg.segment.matchAll(/\.["”’')\]]*\s+(?=\p{Ll})/gu)) {
     const cut = m.index + m[0].length;
-    if (ABBREVIATION.test(seg.segment.slice(from, m.index + 1))) continue;
+    if (endsInAbbreviation(seg.segment.slice(from, m.index + 1))) continue;
     out.push({ segment: seg.segment.slice(from, cut), index: seg.index + from });
     from = cut;
   }
