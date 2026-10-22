@@ -1,8 +1,7 @@
 Margin AI Proofreader for Obsidian: an AI second pass after Harper.
 
-- README title matches the plugin name.
-- New name "Margin AI Proofreader" and plugin id `margin-ai-proofreader`, the name and id it's listed under in Obsidian's community directory. If you installed an earlier build by hand, remove `.obsidian/plugins/margin-proofreader/` and set the plugin up again.
-- Uses Harper's own Obsidian plugin for dedup instead of bundling a second copy of Harper, so main.js is about 1 MB. Install and enable Harper's plugin for dedup.
-- Built by GitHub Actions from this tag, with signed build provenance for main.js, manifest.json and styles.css.
+- Tested with a local model (Ollama and gemma4:26b-a4b-it-qat) alongside Harper's plugin: on 12 real READMEs and docs it added 15 underlines next to Harper's 425, none on the same spot.
+- Fewer optional edits: no added optional commas, hyphens or dashes, no edits to product names, and headings and list items are left alone.
+- Sentences are no longer split inside links, URLs or inline code, or after initials; `:::` callout-style fences aren't treated as prose.
 
 Desktop only for now. See the README for what's tested.

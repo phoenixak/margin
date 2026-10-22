@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.2
+
+- Tested with a local model: Ollama and gemma4:26b-a4b-it-qat, with Harper installed. On 12 real READMEs and docs it added 17 underlines next to Harper's 425, never on a spot Harper marks.
+- Fewer optional edits: the model no longer adds optional commas, hyphens or dashes, edits product names, or adds periods to list items and headings.
+- Sentences are no longer split inside links, URLs or inline code, or after initials ("M. Dubois"), and quoted speech like “Stop!” he said stays one sentence.
+- `:::` admonition fences (Docusaurus, VitePress) are no longer treated as part of a sentence.
+- A fix whose own reason says nothing was wrong is dropped.
+
 ## 0.1.1
 
 - A sentence that starts with a lowercase letter after a period is now checked on its own (it used to be merged into the previous sentence, which hid its errors).
