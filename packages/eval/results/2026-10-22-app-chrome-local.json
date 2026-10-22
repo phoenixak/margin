@@ -1,0 +1,194 @@
+{
+  "date": "2026-10-22",
+  "app": "Chrome (Margin 0.1.1 unpacked + Harper extension)",
+  "model": "local:gemma4:26b-a4b-it-qat",
+  "page": "packages/browser/static/bench.html (contenteditable)",
+  "labels": {
+    "correct": 1,
+    "style": 3,
+    "wrong": 0,
+    "duplicateOfHarper": 1
+  },
+  "documents": [
+    {
+      "name": "excalidraw-excalidraw-1",
+      "chars": 765,
+      "harper": 9,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 1264,
+      "firstMarginMs": null
+    },
+    {
+      "name": "excalidraw-excalidraw-2",
+      "chars": 827,
+      "harper": 8,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 266,
+      "firstMarginMs": null
+    },
+    {
+      "name": "excalidraw-excalidraw-3",
+      "chars": 1076,
+      "harper": 22,
+      "margin": 1,
+      "duplicates": 1,
+      "harperMs": 255,
+      "firstMarginMs": 4033
+    },
+    {
+      "name": "excalidraw-excalidraw-4",
+      "chars": 975,
+      "harper": 10,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 256,
+      "firstMarginMs": null
+    },
+    {
+      "name": "excalidraw-excalidraw-5",
+      "chars": 2480,
+      "harper": 3,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 255,
+      "firstMarginMs": null
+    },
+    {
+      "name": "home-assistant-core-1",
+      "chars": 3950,
+      "harper": 44,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 261,
+      "firstMarginMs": null
+    },
+    {
+      "name": "home-assistant-core-2",
+      "chars": 1400,
+      "harper": 45,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 263,
+      "firstMarginMs": null
+    },
+    {
+      "name": "home-assistant-core-3",
+      "chars": 2415,
+      "harper": 19,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 264,
+      "firstMarginMs": null
+    },
+    {
+      "name": "home-assistant-core-4",
+      "chars": 1284,
+      "harper": 43,
+      "margin": 3,
+      "duplicates": 0,
+      "harperMs": 259,
+      "firstMarginMs": 6773
+    },
+    {
+      "name": "home-assistant-core-5",
+      "chars": 1774,
+      "harper": 43,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 259,
+      "firstMarginMs": null
+    },
+    {
+      "name": "microsoft-vscode-1",
+      "chars": 1601,
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    },
+    {
+      "name": "microsoft-vscode-2",
+      "chars": 2151,
+      "harper": 13,
+      "margin": 1,
+      "duplicates": 0,
+      "harperMs": 256,
+      "firstMarginMs": 4790
+    },
+    {
+      "name": "microsoft-vscode-3",
+      "chars": 1842,
+      "harper": 4,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 265,
+      "firstMarginMs": null
+    },
+    {
+      "name": "microsoft-vscode-4",
+      "chars": 1371,
+      "harper": 5,
+      "margin": 1,
+      "duplicates": 0,
+      "harperMs": 264,
+      "firstMarginMs": 4121
+    },
+    {
+      "name": "microsoft-vscode-5",
+      "chars": 3191,
+      "harper": 126,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 529,
+      "firstMarginMs": null
+    },
+    {
+      "name": "ollama-ollama-1",
+      "chars": 3603,
+      "harper": 123,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 280,
+      "firstMarginMs": null
+    },
+    {
+      "name": "ollama-ollama-2",
+      "chars": 2222,
+      "harper": 24,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 264,
+      "firstMarginMs": null
+    },
+    {
+      "name": "ollama-ollama-3",
+      "chars": 1311,
+      "harper": 6,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 264,
+      "firstMarginMs": null
+    },
+    {
+      "name": "ollama-ollama-4",
+      "chars": 3648,
+      "harper": 83,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 280,
+      "firstMarginMs": null
+    },
+    {
+      "name": "ollama-ollama-5",
+      "chars": 1217,
+      "harper": 31,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 266,
+      "firstMarginMs": null
+    }
+  ]
+}

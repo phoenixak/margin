@@ -1,7 +1,7 @@
 import type { Dialect } from '../types.js';
 
 /** Bump on any change to the prompt bytes: it's part of every cache key. */
-export const PROMPT_VERSION = 2;
+export const PROMPT_VERSION = 3;
 
 export type OutputFormat = 'json' | 'tags';
 
@@ -20,6 +20,9 @@ Do not:
 - fix spelling or capitalization (another tool handles those): leave them as they are, but still fix any other error in that sentence
 - touch placeholders like ⟦0⟧; keep each one exactly once, in order
 - add or remove negation, numbers, names or facts
+- change product names, proper nouns or technical terms
+- add optional punctuation: commas after introductory words or phrases, commas around "however" or "on the other hand", hyphens, or dashes in place of hyphens
+- treat headings, list items, labels or short fragments as errors (don't add a final period or complete them)
 Return only the sentences you changed, each as the full corrected sentence, with a kind and a reason of at most 12 words. If nothing needs fixing, return an empty list.`;
 
 const EXAMPLE_INPUT = `<s id="1">The dogs barks at night.</s>

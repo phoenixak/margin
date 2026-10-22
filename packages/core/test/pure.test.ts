@@ -208,7 +208,7 @@ describe('batches', () => {
 
 describe('prompts', () => {
   it('are byte-stable for a PROMPT_VERSION (bump the version when this snapshot changes)', () => {
-    expect(PROMPT_VERSION).toBe(2);
+    expect(PROMPT_VERSION).toBe(3);
     expect(checkSystemPrompt('American', 'json')).toMatchSnapshot();
     expect(checkSystemPrompt('British', 'tags')).toMatchSnapshot();
   });

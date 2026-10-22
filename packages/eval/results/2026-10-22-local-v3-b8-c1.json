@@ -1,0 +1,1428 @@
+{
+  "date": "2026-10-22",
+  "commit": "cdff720",
+  "model": "local:gemma4:26b-a4b-it-qat",
+  "tested": false,
+  "batch": 8,
+  "concurrency": 1,
+  "maxEditRatio": 0.35,
+  "sets": [
+    "errors",
+    "clean",
+    "markdown"
+  ],
+  "runs": [
+    {
+      "summary": {
+        "errors": 63,
+        "clean": 71,
+        "correct": 58,
+        "wrong": 0,
+        "missed": 5,
+        "falsePositives": 0,
+        "precision": 1,
+        "recall": 0.9206349206349206,
+        "f05": 0.9830508474576272,
+        "falsePositiveRate": 0,
+        "harperFlagged": 21,
+        "combinedRecall": 0.9365079365079365,
+        "rejectedByReason": {}
+      },
+      "ms": 58276,
+      "calls": 19,
+      "errors": [],
+      "results": [
+        {
+          "id": "e01",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Each of the reports was checked by two reviewers.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e02",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The list of open issues is longer than it was last month.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e03",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Neither the manager nor the engineers were told about the change.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e04",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The results of the survey show a clear preference for remote work.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e05",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "They were waiting outside when the rain started.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e06",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "He doesn't think the plan will work.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e07",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "One of the servers in the cluster has failed twice this week.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e08",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The quality of the images depends on the camera settings.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e09",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Every student in both classes has submitted the assignment.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e10",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The documents that she sent yesterday were missing a signature.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e11",
+          "type": "tense",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Yesterday we met the client and agreed on the timeline.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e12",
+          "type": "tense",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Last year the company opened two new offices in Asia.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e13",
+          "type": "tense",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "She finished the report last Friday.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e14",
+          "type": "tense",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "When I arrived, the meeting had already started.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e15",
+          "type": "tense",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "If I had known, I would have come earlier.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e16",
+          "type": "tense",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The team was tired because they worked all night.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e17",
+          "type": "verb-form",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The library was closed, so we were studying at the cafe.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e18",
+          "type": "verb-form",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "She has gone to the office every day this week.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e19",
+          "type": "verb-form",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The package should have arrived by now.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e20",
+          "type": "verb-form",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "We are looking forward to meeting you next week.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e21",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The new policy will affect everyone who works remotely.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e22",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "This approach is faster than the old one.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e23",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Make sure you don't lose the backup drive.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e24",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The company changed its logo in the spring.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e25",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "They're going to announce the winners tomorrow.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e26",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Please send the files when you're ready.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e27",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The weather didn't stop us; we went anyway, whether it rained or not.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e28",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "missed",
+          "output": "I could care less about the color of the button.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e29",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "We need to get the principal stakeholders in one room.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e30",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The two teams complement each other well.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e31",
+          "type": "missing-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "missed",
+          "output": "We decided to postpone launch until next quarter.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e32",
+          "type": "missing-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "missed",
+          "output": "She asked me to send her the slides before meeting.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e33",
+          "type": "missing-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The test failed because the server was not running at the time.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e34",
+          "type": "missing-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "I will be able to attend the workshop on Monday.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e35",
+          "type": "missing-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The report is due at the end of the month.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e36",
+          "type": "repeated-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "We went to the station to meet them.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e37",
+          "type": "repeated-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The update is scheduled for tonight.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e38",
+          "type": "extra-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The report, which was long, covered every region.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e39",
+          "type": "extra-word",
+          "expectsFix": true,
+          "debatable": true,
+          "outcome": "missed",
+          "output": "Where are you going to?",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e40",
+          "type": "extra-word",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "missed",
+          "output": "The reason why is because the cache was empty.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e41",
+          "type": "comma-splice",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The results were surprising, so the team decided to repeat the test.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e42",
+          "type": "comma-splice",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "It was late; everyone had already gone home.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e43",
+          "type": "comma-splice",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The build passed, so we merged the branch.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e44",
+          "type": "run-on",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "I wanted to call you, but I didn't have your number.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e45",
+          "type": "pronoun",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Sarah and I will review the draft tomorrow.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e46",
+          "type": "pronoun",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Between you and me, the deadline is unrealistic.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e47",
+          "type": "pronoun",
+          "expectsFix": true,
+          "debatable": true,
+          "outcome": "wrong",
+          "output": "The committee gave its approval, and then it adjourned, but they later reversed it.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e48",
+          "type": "preposition",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "She is very good at solving hard problems.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e49",
+          "type": "preposition",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "We discussed the budget for an hour.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e50",
+          "type": "comparative",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "This laptop is faster than my old one.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e51",
+          "type": "comparative",
+          "expectsFix": true,
+          "debatable": true,
+          "outcome": "correct",
+          "output": "Of the two options, the second is the better.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e52",
+          "type": "article",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "It was a useful meeting overall.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e53",
+          "type": "article",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "This is an example of how to use the tool.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e54",
+          "type": "verb-form",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "You should have told me about the outage.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "e55",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "There are many reasons to update the library.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e56",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Here are the files you asked for.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e57",
+          "type": "tense",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The committee reviewed the proposal last week and approved it.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e58",
+          "type": "wrong-word",
+          "expectsFix": true,
+          "debatable": true,
+          "outcome": "correct",
+          "output": "The meeting was moved to accommodate fewer people than expected.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e60",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "A number of users have reported the same bug.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e61",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Hey, how were you?",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "e62",
+          "type": "agreement",
+          "expectsFix": true,
+          "debatable": true,
+          "outcome": "correct",
+          "output": "Please let me know if anything is missing. how were you doing after the launch?",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "c01",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Our team ships a new release every two weeks.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c02",
+          "type": "negation",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "She said she would call back, but she never did.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c03",
+          "type": "style-bait",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Honestly, the meeting could have been an email.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c04",
+          "type": "numbers",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The server restarts at 3:00 and takes about 40 seconds.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c05",
+          "type": "style-bait",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Data from the sensors is stored for thirty days.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c06",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The quick fix worked, though nobody is sure why.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c07",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "We need to decide by Friday whether to continue.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c08",
+          "type": "preposition-end",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "That's the tool I was telling you about.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c09",
+          "type": "split-infinitive",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "We want to really understand why the test fails.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c10",
+          "type": "singular-they",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "If a user forgets their password, they can reset it from the login page.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c11",
+          "type": "conjunction-start",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "And that's exactly what happened next.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c12",
+          "type": "conjunction-start",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "But the second attempt went much better.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c13",
+          "type": "passive",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The decision was made after a long discussion.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c14",
+          "type": "quotes",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "He wrote \"we was right\" in the chat, quoting the old meme.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "c15",
+          "type": "negation",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Nobody expected the migration to finish in under an hour.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c16",
+          "type": "negation",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "We can't ship this until the tests pass.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c17",
+          "type": "numbers",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Version 2.4.1 fixed 17 bugs and added 3 features.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c18",
+          "type": "long",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Although the first prototype was slow, the team learned enough from it to design a second version that was both faster and easier to maintain.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c19",
+          "type": "informal",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Yeah, that's fine by me.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c20",
+          "type": "informal",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Turns out the bug was a typo in the config file.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "c21",
+          "type": "fragment-ok",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Not great, but not terrible either.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c22",
+          "type": "style-bait",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "In order to keep things simple, we use a single database.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c23",
+          "type": "style-bait",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "There are a lot of reasons to prefer plain text.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c24",
+          "type": "british",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The colour of the logo was changed after the review.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "c25",
+          "type": "british",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "We organised the workshop at the centre of town.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "c26",
+          "type": "collective",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The team is meeting at noon to plan the sprint.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c27",
+          "type": "data-are",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The data are consistent with the earlier measurements.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c28",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Each reviewer reads the draft before the meeting.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c29",
+          "type": "subjunctive",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "If I were in charge, I would cancel the release.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c30",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Neither option is perfect, but the second is cheaper.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c31",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The files you asked for are in the shared folder.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c32",
+          "type": "semicolon",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "It was late; everyone had already gone home.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c33",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The build passed, so we merged the branch.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c34",
+          "type": "question",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Where did you put the backup drive?",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c35",
+          "type": "exclamation",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "What a relief that the outage is over!",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c36",
+          "type": "technical",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The function returns null when the cache misses.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c37",
+          "type": "technical",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Set the timeout to 30 s and retry with exponential backoff.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "c38",
+          "type": "names",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Priya and Tomás reviewed the pull request on Tuesday.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "c39",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Fewer people attended than we expected.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c40",
+          "type": "who-whom",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Who did you send the invitation to?",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c41",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "I couldn't care less about the color of the button.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c42",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The principal stakeholders were all in the room.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c43",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Its battery lasts longer than the old model's.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c44",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "They're going to announce the winners tomorrow.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c45",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Make sure the screws aren't loose before you start.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c46",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The new policy affects everyone who works remotely.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c47",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The effect of the change was smaller than expected.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c48",
+          "type": "long",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "When the network went down, the service kept serving cached pages, which meant most users never noticed the problem.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c49",
+          "type": "parenthetical",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The cache (which we added last year) saves about half of all requests.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c50",
+          "type": "dash",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The fix was simple — we just restarted the worker.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c51",
+          "type": "list",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "We tested Chrome, Firefox and Safari.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "c52",
+          "type": "list",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "We tested Chrome, Firefox, and Safari.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c53",
+          "type": "ellipsis",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "And then… nothing happened.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c54",
+          "type": "imperative",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Run the tests again before you push.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c55",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The meeting has been moved to Thursday afternoon.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c56",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "She has finished the report and sent it to the client.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c57",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "We met the client yesterday and agreed on the timeline.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c58",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "One of the servers in the cluster has failed twice this week.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c59",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "A number of users have reported the same bug.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c60",
+          "type": "style-bait",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Basically, the script just copies files from one folder to another.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c61",
+          "type": "style-bait",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "It's kind of hard to explain without a diagram.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c62",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Between you and me, the deadline is tight.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c63",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "We look forward to meeting you next week.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c64",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The package should have arrived by now.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c65",
+          "type": "numbers",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "About 12% of requests took longer than 2 seconds.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c66",
+          "type": "negation",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "None of the alerts were real.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c67",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Sarah and I will review the draft tomorrow.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c68",
+          "type": "plain",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Me too.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "c69",
+          "type": "pronoun-bait",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "The beta results were better than expected, so we decided to open it to everyone next week.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "m01",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Run `pnpm test` before you open a pull request, and see [the guide](https://example.com/guide) when you're ready.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "m02",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The `config.they_was` key is read at startup.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "m03",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Email ops@example.com or visit https://status.example.com if the site is down.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "m04",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "See [[Release Checklist]] and the footnote[^1] for details.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "m05",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "The formula $E = mc^2$ was derived in 1905.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "m06",
+          "expectsFix": false,
+          "debatable": false,
+          "outcome": "untouched",
+          "output": "Press <kbd>Ctrl</kbd>+<kbd>S</kbd> to save the file.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "m07",
+          "expectsFix": true,
+          "debatable": true,
+          "outcome": "correct",
+          "output": "This is **very** important, and the team knows it.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "m08",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "missed",
+          "output": "😀 The emoji at the start dont matter, but the grammar do.",
+          "rejected": [],
+          "harper": true
+        },
+        {
+          "id": "m09",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "日本語のメモ: the translation was finished yesterday.",
+          "rejected": [],
+          "harper": false
+        },
+        {
+          "id": "m10",
+          "expectsFix": true,
+          "debatable": false,
+          "outcome": "correct",
+          "output": "Use the [settings page](https://example.com/a_b-c?x=1&y=2) to change your password.",
+          "rejected": [],
+          "harper": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-22",
+  "app": "VS Code (isolated profile): Harper 2.13.0 + Margin 0.1.1 built from main",
+  "model": "local:gemma4:26b-a4b-it-qat",
+  "note": "firstMarginMs: from opening the file to the first Margin diagnostic (2 s idle delay included); checkDoneMs: until Margin's check had finished",
+  "documents": [
+    {
+      "file": "astral-sh-uv-readme-md.md",
+      "harper": 44,
+      "margin": 1,
+      "duplicates": 0,
+      "harperMs": 3115,
+      "firstMarginMs": 9433,
+      "checkDoneMs": 12854,
+      "forcedCheckMs": 7
+    },
+    {
+      "file": "denoland-deno-readme-md.md",
+      "harper": 9,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 294,
+      "firstMarginMs": null,
+      "checkDoneMs": 10431,
+      "forcedCheckMs": 3
+    },
+    {
+      "file": "excalidraw-excalidraw-readme-md.md",
+      "harper": 37,
+      "margin": 1,
+      "duplicates": 0,
+      "harperMs": 1050,
+      "firstMarginMs": 6242,
+      "checkDoneMs": 10369,
+      "forcedCheckMs": 5
+    },
+    {
+      "file": "facebook-docusaurus-website-docs-introduction-mdx.md",
+      "harper": 81,
+      "margin": 6,
+      "duplicates": 0,
+      "harperMs": 283,
+      "firstMarginMs": 18768,
+      "checkDoneMs": 18768,
+      "forcedCheckMs": 8234
+    },
+    {
+      "file": "mdn-content-files-en-us-web-javascript-guide-introduction-index-md.md",
+      "harper": 32,
+      "margin": 3,
+      "duplicates": 0,
+      "harperMs": 296,
+      "firstMarginMs": 13816,
+      "checkDoneMs": 13816,
+      "forcedCheckMs": 3375
+    },
+    {
+      "file": "microsoft-vscode-contributing-md.md",
+      "harper": 7,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 289,
+      "firstMarginMs": null,
+      "checkDoneMs": 10599,
+      "forcedCheckMs": 5
+    },
+    {
+      "file": "nodejs-node-contributing-md.md",
+      "harper": 14,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 284,
+      "firstMarginMs": null,
+      "checkDoneMs": 10586,
+      "forcedCheckMs": 3
+    },
+    {
+      "file": "obsidianmd-obsidian-help-en-getting-started-create-a-vault-md.md",
+      "harper": 4,
+      "margin": 2,
+      "duplicates": 0,
+      "harperMs": 284,
+      "firstMarginMs": 2398,
+      "checkDoneMs": 10587,
+      "forcedCheckMs": 3
+    },
+    {
+      "file": "ollama-ollama-readme-md.md",
+      "harper": 134,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 549,
+      "firstMarginMs": null,
+      "checkDoneMs": 15344,
+      "forcedCheckMs": 4836
+    },
+    {
+      "file": "rust-lang-book-src-ch03-01-variables-and-mutability-md.md",
+      "harper": 15,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 283,
+      "firstMarginMs": null,
+      "checkDoneMs": 10475,
+      "forcedCheckMs": 5
+    },
+    {
+      "file": "vitejs-vite-docs-guide-index-md.md",
+      "harper": 33,
+      "margin": 3,
+      "duplicates": 0,
+      "harperMs": 315,
+      "firstMarginMs": 12567,
+      "checkDoneMs": 12567,
+      "forcedCheckMs": 2027
+    },
+    {
+      "file": "zed-industries-zed-contributing-md.md",
+      "harper": 15,
+      "margin": 1,
+      "duplicates": 0,
+      "harperMs": 292,
+      "firstMarginMs": 6093,
+      "checkDoneMs": 10563,
+      "forcedCheckMs": 5
+    }
+  ]
+}
