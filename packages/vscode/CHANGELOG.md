@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- README: a short demo of Harper and Margin together (hover, quick fix). No code changes.
+
 ## 0.1.2
 
 - Tested with a local model: Ollama and gemma4:26b-a4b-it-qat, with Harper installed. On 12 real READMEs and docs it added 17 underlines next to Harper's 425, never on a spot Harper marks.

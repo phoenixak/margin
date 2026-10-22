@@ -4,6 +4,10 @@
 
 Margin is an independent project. It is not made by or affiliated with Harper or Automattic.
 
+![Margin in VS Code: Harper underlines in blue, Margin in yellow; hovering "stay" shows Margin's suggestion, and the quick fix changes it to "stays"](https://raw.githubusercontent.com/phoenixak/margin/main/packages/vscode/images/demo.gif)
+
+*Harper's suggestions in blue, Margin's in yellow (`"margin.severity": "warning"`; the default is the same blue as Harper). Local Gemma 4 on Ollama.*
+
 > **Status: early, and everything is published or in store review.** Built: the core, a CLI, a VS Code extension, a Chrome/Firefox extension, a language server ([margin-ls](packages/ls/README.md): Neovim, Helix, Sublime, Emacs) and an [Obsidian plugin](packages/obsidian/README.md). See [docs/PLAN.md](docs/PLAN.md).
 
 ## What's tested, honestly

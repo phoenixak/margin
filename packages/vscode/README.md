@@ -4,6 +4,10 @@ Margin catches what [Harper](https://writewithharper.com)'s rules can't: agreeme
 
 Margin is independent and not affiliated with Harper or Automattic.
 
+![Margin in VS Code: Harper underlines in blue, Margin in yellow; hovering "stay" shows Margin's suggestion, and the quick fix changes it to "stays"](https://raw.githubusercontent.com/phoenixak/margin/main/packages/vscode/images/demo.gif)
+
+*Harper's suggestions in blue, Margin's in yellow (`"margin.severity": "warning"`; the default is the same blue as Harper). Local Gemma 4 on Ollama.*
+
 ## Setup
 
 Run **Margin: Choose where text is checked…** (or click "Margin" in the status bar):
