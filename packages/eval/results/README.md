@@ -129,4 +129,4 @@ Harper made 714 flags on the same text. Real fixes look like "following instruct
 
 - Each preset does what it says: Concise cuts a fifth, Formal drops every contraction, Friendly adds them (and exclamation marks). No rewrite added errors that Harper catches.
 - Margin warns before you accept a rewrite that changed negation or numbers: 1–6 times per 40 paragraphs. The ones we read were false alarms ("can't really focus" → "too busy to focus"), so this check is noisier than it should be.
-- "Fix only" left the median paragraph untouched, but its added contractions show it still makes small changes.
+- "Fix only" left the median paragraph untouched. Its contraction count rose (8 → 11), most likely from fixes such as "its" → "it's"; we didn't check each one.
