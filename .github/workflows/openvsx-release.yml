@@ -1,0 +1,39 @@
+name: Open VSX release
+
+# Push a tag `vscode-vX.Y.Z` matching packages/vscode/package.json to publish that version to
+# Open VSX. No token: this workflow is the extension's trusted publisher on Open VSX, and
+# authenticates with a short-lived GitHub OIDC token (id-token: write).
+# Renaming this file breaks the trusted-publisher registration.
+on:
+  push:
+    tags: ['vscode-v[0-9]+.[0-9]+.[0-9]+']
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm test
+      - name: Check the tag matches the extension version
+        run: |
+          v=$(node -p "require('./packages/vscode/package.json').version")
+          test "vscode-v$v" = "${GITHUB_REF_NAME}" || { echo "package.json version $v != tag ${GITHUB_REF_NAME}"; exit 1; }
+      - name: Package
+        working-directory: packages/vscode
+        run: npx --yes @vscode/vsce package --no-dependencies -o margin-ai.vsix
+      - name: Publish to Open VSX (trusted publishing)
+        working-directory: packages/vscode
+        run: npx --yes ovsx@1.3.0 publish margin-ai.vsix --trusted-publishing
