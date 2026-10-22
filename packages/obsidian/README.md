@@ -1,4 +1,4 @@
-# Margin for Obsidian
+# Margin AI Proofreader
 
 An AI second pass for [Harper](https://writewithharper.com) in Obsidian: purple underlines for what Harper's rules can't catch (agreement, tense, wrong-but-real words, run-ons), with a hover card to Apply or Ignore, and **Rewrite selection…** (command palette or right-click). It never repeats what Harper flags. Not affiliated with Harper or Automattic.
 

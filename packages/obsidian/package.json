@@ -1,6 +1,6 @@
 {
   "name": "@margin/obsidian",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "description": "Margin for Obsidian: an AI second pass for Harper.",
   "license": "MIT",
