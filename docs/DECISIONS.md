@@ -123,3 +123,9 @@ Published prose (four public-domain books) exposed two splitter bugs and one mod
 Optional commas (after introductory clauses) were 16 of the 43 changed sentences; see the prompt decision below if one follows.
 
 Follow-up (same day): the directory also requires unique *names*. Submitting margin-obsidian answered "An entry with this name already exists" because the stale draft holds "Margin Proofreader", and the dashboard had shown that old entry instead. The plugin is now "Margin AI Proofreader" (0.1.3), matching its id. Two repos stay: the directory scans the whole repo (browser code fails Obsidian's rules, npm can't install pnpm workspaces) and ties root manifest and tags to the plugin.
+
+## 2026-10-22: Prompt v3, and the local path counts as tested
+
+Real READMEs and docs (packages/eval/results, "Real documents") showed half of Margin's flags were optional style: commas after introductory phrases, hyphens, dashes, final periods on list items, edits to product names. Prompt v3 adds those to the "Do not" list. Effect (local Gemma 4 26B A4B): flags on the docs 33 → 23 with the share of real fixes 45% → 57%; synthetic 100% precision, recall 93.7% → 92.1%; learner sentences (JFLEG) Harper + Margin recall 45.7% → 39.5% because many human corrections there add optional commas. Precision first, so v3 stays.
+The same run found two splitter bugs (a split inside a link target; `:::` fences inside a sentence), now fixed.
+Ollama + gemma4:26b-a4b-it-qat was tested in VS Code, Obsidian, Chrome and Firefox with Harper installed, so `tested` is now true for local models with an eval on record (models.ts). LM Studio stays untested.

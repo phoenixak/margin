@@ -205,7 +205,7 @@ export default class MarginPlugin extends Plugin {
     this.status.setAttr(
       'aria-label',
       s.state === 'ready' || s.state === 'checking'
-        ? `${s.model}${s.tested ? '' : ' (not yet tested by the maintainer)'}${s.model.startsWith('gemini:') ? ' · text is sent to Google' : ' · text stays on this device'}`
+        ? `${s.model}${s.tested ? '' : ' (not tested with Margin)'}${s.model.startsWith('gemini:') ? ' · text is sent to Google' : ' · text stays on this device'}`
         : s.state === 'error'
           ? s.message
           : s.state === 'busy'
@@ -327,7 +327,7 @@ class MarginSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName('Where your text is checked')
-      .setDesc('Local: Ollama or LM Studio, text stays on this device (implemented, not yet tested by the maintainer). Gemini: Google’s API with your key (tested; text is sent to Google).')
+      .setDesc('Local: Ollama or LM Studio, text stays on this device (tested with Ollama and gemma4:26b-a4b-it-qat). Gemini: Google’s API with your key (tested; text is sent to Google).')
       .addDropdown((d) =>
         d
           .addOptions({ off: 'Off (send nothing)', local: 'Local model (Ollama / LM Studio)', gemini: 'Google Gemini API' })

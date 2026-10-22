@@ -1,6 +1,7 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
 import type { LanguageModel } from 'ai';
+import { modelInfo } from './models.js';
 
 /** A model plus what Margin needs to know to call it well. */
 export interface MarginModel {
@@ -59,10 +60,11 @@ export function createModel(config: ModelConfig): MarginModel {
     model: local(modelId),
     foldSystem: false,
     structured: true,
-    // Ollama's OpenAI-compatible API maps reasoning_effort "none" to thinking off (docs.ollama.com, checked 2026-10-21).
-    // UNTESTED by Margin's maintainers, as is LM Studio's handling of it.
+    // Ollama's OpenAI-compatible API maps reasoning_effort "none" to thinking off (docs.ollama.com, checked 2026-10-21;
+    // works with Ollama 0.40.7, 2026-10-22). LM Studio's handling of it is untested.
     providerOptions: { local: { reasoningEffort: 'none' } },
-    tested: false,
+    // Tested end to end (eval + every adapter) only for the evaluated model on Ollama.
+    tested: modelInfo('local', modelId)?.eval !== undefined,
     parallel: 1,
     provider: 'local',
     modelId,

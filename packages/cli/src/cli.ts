@@ -27,8 +27,8 @@ Usage:
   margin rewrite <file> --preset <${[...Object.keys(REWRITE_PRESETS), 'custom'].join('|')}> [--instruction "…"] [--lines a-b]
 
 Options:
-  --provider local|gemini   local = Ollama / LM Studio (text stays here; not yet tested by the
-                            maintainers). gemini = Google Gemini API (tested; sends text to Google).
+  --provider local|gemini   local = Ollama / LM Studio (text stays here; tested with Ollama and
+                            gemma4:26b-a4b-it-qat). gemini = Google Gemini API (tested; sends text to Google).
                             Default: gemini if GEMINI_API_KEY is set, otherwise local.
   --model <id>              Default gemma-4-26b-a4b-it (gemini) or gemma4:26b-a4b-it-qat (local)
   --base-url <url>          Local server, default http://localhost:11434/v1
@@ -140,7 +140,7 @@ function makeModel(provider: string, modelId: string | undefined, baseURL: strin
   if (provider === 'local') {
     const m = createModel({ provider: 'local', ...(modelId ? { model: modelId } : {}), ...(baseURL ? { baseURL } : {}) });
     const advice = modelAdvice('local', m.modelId);
-    console.error(`Using a local server (${m.id}); text stays on this machine. Margin's local path is not yet tested by its maintainers.${advice.note ? ` ${advice.note}` : ''}`);
+    console.error(`Using a local server (${m.id}); text stays on this machine. ${advice.note ?? ''}`);
     return m;
   }
   throw new Error(`unknown provider "${provider}"`);

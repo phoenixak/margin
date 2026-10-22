@@ -21,7 +21,7 @@ Nothing is sent until you set `margin.provider`:
 
 | `provider` | What happens | Status |
 |---|---|---|
-| `"local"` | Ollama / LM Studio on `localBaseUrl` (default `http://localhost:11434/v1`). Text stays on your machine. | Implemented, **not yet tested by the maintainer** |
+| `"local"` | Ollama / LM Studio on `localBaseUrl` (default `http://localhost:11434/v1`). Text stays on your machine. | Tested with Ollama and `gemma4:26b-a4b-it-qat` in the CLI and other adapters; margin-ls itself only by protocol tests |
 | `"gemini"` | Google's Gemini API (Gemma 4) with your key. Text is sent to Google; on the free tier Google may use it to improve its products. | Tested |
 | `"off"` | Nothing (default). | |
 

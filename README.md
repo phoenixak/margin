@@ -8,22 +8,24 @@ Margin is an independent project. It is not made by or affiliated with Harper or
 
 ## What's tested, honestly
 
-Both paths use the same model, Gemma 4 26B A4B: hosted through the Gemini API, or on your own machine through Ollama (`gemma4:26b-a4b-it-qat`).
+Both paths use the same model, Gemma 4 26B A4B: on your own machine through Ollama (`gemma4:26b-a4b-it-qat`), or hosted through the Gemini API. Every app below was tested with Harper installed next to Margin.
 
 | | Local (Ollama) | Hosted (Gemini API) |
 |---|---|---|
-| Synthetic eval (140 items we wrote) | **100% precision, 93.7% recall, 0 of 71 correct sentences changed** | 100% precision, 80.6% recall, 0 of 70 changed (137 items, Oct 21 code) |
-| Real learner writing ([JFLEG](https://github.com/keisks/jfleg), 747 sentences) | Harper alone catches 23.7% of the human corrections; **with Margin, 45.7%**. Margin's own edits: 71.8% precision | With Margin, 35.7%. Margin's own edits: 75.1% precision |
-| Published books (16,600 words of professionally edited prose) | Suggests a change in 6.4% of sentences, mostly to deliberate style | 4.2% of sentences |
-| Speed | ~0.75 s per sentence in batches on an RX 9070 XT (16 GB); a 12-sentence note takes ~7 s; the first call loads the model (~40 s) | ~1.1 s per sentence on the free tier |
+| Synthetic eval (140 items we wrote) | **100% precision, 92.1% recall, 0 of 71 correct sentences changed** | 100% precision, 80.6% recall, 0 of 70 changed (137 items, earlier prompt) |
+| Real docs: 12 READMEs and docs pages from popular projects | Harper: 425 flags. **Margin: 17 more; 57% fix real errors, 30% optional style, 13% wrong** | Not run (we don't send other people's documents to a hosted API) |
+| Real learner writing ([JFLEG](https://github.com/keisks/jfleg), 747 sentences) | Harper alone catches 23.7% of the human corrections; **with Margin, 39.5%**. Margin's own edits: 74.9% precision | With Margin, 35.7% (earlier prompt) |
+| Published books (16,600 words of edited prose) | Suggests a change in 5.0% of sentences, mostly to deliberate style | 4.2% (earlier prompt) |
+| Speed | ~0.75 s per sentence on learner text, ~0.1 s on docs (code and lists are skipped); RX 9070 XT (16 GB). The first call loads the model (20–40 s) | ~1.1 s per sentence on the free tier |
 | CLI | Tested | Tested |
-| VS Code | Not yet run with a local model | Tested in VS Code 1.142 (check, quick fixes, rewrite) |
-| Chrome | Not yet run with a local model | Tested alongside Grammarly (check, Apply, rewrite, undo) |
-| Firefox | Not yet run with a local model | Tested (check, rewrite) |
-| Obsidian | Tested against a mock local server; not yet with Ollama | Not run |
+| VS Code | **Tested** on the 12 docs: first underline 2–19 s after opening, never on a spot Harper marks | Tested in VS Code 1.142 (check, quick fixes, rewrite) |
+| Obsidian | **Tested** on the 12 docs with Harper's plugin: no duplicates | Not run |
+| Chrome | **Tested** on 20 real GitHub issues: underlines 4–7 s after typing; 1 duplicate of Harper's in 6 | Tested alongside Grammarly (check, Apply, rewrite, undo) |
+| Firefox | **Tested** on the same issues: 4–9 s | Tested (check, rewrite) |
 | margin-ls | Protocol tests + a real stdio run; editor configs written from docs, not tried | Same |
+| LM Studio, other models | Not tested. Please post a [model review](https://github.com/phoenixak/margin/issues/new?template=model-review.yml) | |
 
-Full numbers, every sentence Margin changed in the books, and how they were measured: [eval results](packages/eval/results/README.md). The local and hosted runs differ even with the same weights, so each is measured separately. Other models haven't been evaluated; smaller ones (under ~9B) tend to over-correct. Ran one? Please post a [model review](https://github.com/phoenixak/margin/issues/new?template=model-review.yml).
+Full numbers, how they were measured, and what changed because of them: [eval results](packages/eval/results/README.md). "Wrong" and "optional style" were labelled by the maintainer's AI assistant, not by a second person. Local and hosted runs differ even with the same weights, so each is measured separately. Smaller models (under ~9B) tend to over-correct.
 
 ## Where your text goes
 

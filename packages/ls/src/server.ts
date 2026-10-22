@@ -198,7 +198,7 @@ export function startServer(connection: Connection, deps: ServerDeps): void {
     const m = modelState();
     if (m.ok) {
       const note = modelAdvice(m.model.provider, m.model.modelId).note;
-      connection.console.log(`margin-ls: ${m.model.id}${m.model.tested ? '' : ' (this path is not yet tested by Margin’s maintainers)'}${note ? `. ${note}` : ''}`);
+      connection.console.log(`margin-ls: ${m.model.id}${m.model.tested ? '' : ' (this model or server hasn’t been tested with Margin)'}${note ? `. ${note}` : ''}`);
     }
   });
 

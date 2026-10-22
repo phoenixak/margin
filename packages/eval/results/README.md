@@ -53,8 +53,10 @@ The synthetic fixtures were written by us, so they can flatter the approach. The
 | Harper alone (its first suggestion) | 52.2% | 23.7% | 10.3% | 2 / 32 |
 | Margin, local ([report](2026-10-22-human-local-gemma4-26b.md)) | 71.8% | 26.7% | 28.5% | 0 / 32 |
 | Margin, hosted ([report](2026-10-22-human-hosted-gemma4-26b.md)) | 75.1% | 14.7% | 15.9% | 0 / 32 |
+| Margin, local, prompt v3 ([report](2026-10-22-human-local-v3.md)) | 74.9% | 19.7% | 20.0% | 0 / 32 |
 | **Harper + Margin, local** | 60.2% | **45.7%** | 35.9% | 2 / 32 |
 | Harper + Margin, hosted | 58.8% | 35.7% | 24.6% | 2 / 32 |
+| Harper + Margin, local, prompt v3 | 59.3% | 39.5% | 27.9% | 2 / 32 |
 
 "Recall without spelling" leaves out one-word spelling and capitalization fixes, which Margin leaves to Harper. Precision here is a lower bound: an edit that differs from all four human corrections counts as wrong even when it is a valid fix.
 
@@ -62,8 +64,10 @@ The synthetic fixtures were written by us, so they can flatter the approach. The
 
 | | Harper | Margin, local | Margin, hosted |
 |---|---|---|---|
-| flags per 1,000 words | 24.2 | 3.3 | 2.0 |
-| sentences changed | | 46 of 719 (6.4%) | 30 of 719 (4.2%) |
+| flags per 1,000 words | 24.2 | 3.3 (v3: 2.4) | 2.0 |
+| sentences changed | | 46 of 719 (6.4%); v3: 36 (5.0%) | 30 of 719 (4.2%) |
+
+**Prompt v3 (below) trades some recall for precision:** on learner sentences Harper + Margin drops from 45.7% to 39.5% (many of JFLEG's human corrections add optional commas, which v3 leaves alone), while Margin's own precision rises and it changes fewer sentences of published prose. The hosted rows are prompt v2.
 
 **What this says:**
 - Adding Margin roughly doubles what gets caught in learner writing (Harper alone 23.7% of the human corrections, with local Margin 45.7%), and Margin's own edits are more precise than Harper's.
@@ -74,3 +78,39 @@ The synthetic fixtures were written by us, so they can flatter the approach. The
 **Fixed because of these runs (commit 4d09a2a):** the sentence splitter broke quoted speech like “You promised!” into his ear. and split after initials ("M. Loucheur"), so the model "fixed" fragments; and the model sometimes changed a sentence while saying "No changes needed", which is now rejected.
 
 **Caveats:** one model, two corpora, word-level matching against human references. JFLEG is learner English, not native writing; the books are 100 years old.
+
+# Real documents, in the real apps (2026-10-22, local model)
+
+What people will actually run Margin on, with Harper installed next to it and the local model (`gemma4:26b-a4b-it-qat` on Ollama 0.40.7, RX 9070 XT 16 GB). Fetch the documents with `pnpm -F @margin/eval fetch-real`; they're downloaded at run time and never committed.
+
+- **Docs** (VS Code, Obsidian, margin-ls): 12 READMEs, contributing guides and docs pages from Ollama, VS Code, Node.js, Deno, Zed, uv, Excalidraw, Vite, Docusaurus, MDN, the Rust Book and Obsidian's help. 11,000 words.
+- **Issues** (browser): 20 recent GitHub issues from Ollama, VS Code, Excalidraw and Home Assistant, typed into a comment box. 4,600 words.
+
+## What Margin flags, labelled
+
+Every Margin underline on the docs and issues was labelled by hand (by the maintainer's AI assistant, not checked by a second person): a real error fixed, an optional style change, or wrong. Run headless (`pnpm -F @margin/eval eval-real`), Harper first as in the apps.
+
+| prompt | Margin underlines | real fixes | optional style | wrong |
+|---|---|---|---|---|
+| v2, before the splitter fixes | 39 | 17 (44%) | 15 (38%) | 7 (18%) |
+| v2, after the splitter fixes | 33 | 15 (45%) | 16 (48%) | 2 (6%) |
+| **v3 (current)** | **23** | **13 (57%)** | **7 (30%)** | **3 (13%)** |
+
+Harper made 714 flags on the same text. Real fixes look like "following instructions are" → "the following instructions are", "Translate your site in multiple locales" → "into", "both … provides" → "provide", "ease to set up" → "ease of setup", "It like a lock mechanism" → "It is like". Wrong ones: "The series are named `Series 1` and `Series 2`" → "is"; "uv extends their interfaces" → "its" ("their" meant the tools uv replaces); "Confirming interest early and following this guide give" → "gives".
+
+**Fixed because of this run:** the sentence splitter split inside a link target (`/showcase?…`), and Vite's `:::` admonition fences were treated as part of a sentence, so two "fixes" deleted an emoji and a fence. **Prompt v3** tells the model not to add optional punctuation (commas after introductory phrases, hyphens, dashes), not to edit names or technical terms, and to leave headings and list items alone. On the synthetic fixtures it scored 100% precision, 92.1% recall, 0 of 71 correct sentences changed ([report](2026-10-22-local-v3-b8-c1.md)), against 93.7% before.
+
+## In each app
+
+| app | documents | Harper | Margin | same spot as Harper | first Margin underline |
+|---|---|---|---|---|---|
+| [VS Code](2026-10-22-app-vscode-local.json) | 12 docs | 425 | 17 | **0** | 2.4–19 s after opening (longer docs take longer) |
+| [Obsidian](2026-10-22-app-obsidian-local.json) | 12 docs | 425 | 15 | **0** | note fully checked 1.8–19 s after opening |
+| [Chrome](2026-10-22-app-chrome-local.json) | 20 issues | 661 | 6 | 1 | 4–7 s after the text arrived |
+| [Firefox](2026-10-22-app-firefox-local.json) | 20 issues | 35 | 4 | 1 | 4–9 s |
+
+- VS Code and Obsidian read Harper's own results, so Margin never marks a spot Harper marks. The browser extension can't read another extension's results; it checks with its bundled copy of harper.js, which can disagree with Harper's extension (here once, on "information").
+- Times include Margin's 2 s pause before checking. The first check after Ollama starts also loads the model (20–40 s).
+- Harper's Firefox extension showed no underlines on 11 of the 20 issues (Chrome's on 1). We didn't investigate.
+- The Chrome run may have used the build from before prompt v3; the other three used v3.
+- In the browser, Markdown is plain text, so Harper flags code and logs too (661 flags vs 289 when the same issues are linted as Markdown).

@@ -12,7 +12,7 @@ Copy `packages/obsidian/dist/` (main.js, manifest.json, styles.css) to `<your va
 
 ## Where your text goes
 
-- **Local model** (Ollama / LM Studio): text stays on this device. Obsidian's own network API is used, so **no OLLAMA_ORIGINS or CORS setup is needed**. Use **Find models** in Margin's settings. Implemented, **not yet tested by the maintainer**.
+- **Local model** (Ollama / LM Studio): text stays on this device. Obsidian's own network API is used, so **no OLLAMA_ORIGINS or CORS setup is needed**. Use **Find models** in Margin's settings. Tested with Ollama and `gemma4:26b-a4b-it-qat` alongside Harper's plugin: on 12 real READMEs and docs it added 15 underlines next to Harper's 425, none on the same spot.
 - **Gemini API**: sent to Google with your key; on the free tier Google may use it to improve its products. The key is kept in Obsidian's secret storage (device-local, not synced, never in `data.json`); needs Obsidian 1.11.4+.
 - Nothing is sent until you choose. Folders listed under "Never check these folders" are never sent.
 

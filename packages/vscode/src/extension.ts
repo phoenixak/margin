@@ -169,7 +169,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   async function chooseProvider() {
     const pick = await vscode.window.showQuickPick(
       [
-        { label: 'Local model (Ollama / LM Studio)', description: 'text stays on your machine · not yet tested by the maintainers', id: 'local' },
+        { label: 'Local model (Ollama / LM Studio)', description: 'text stays on your machine · tested with Ollama + gemma4:26b-a4b-it-qat', id: 'local' },
         { label: 'Gemini API (Gemma 4)', description: 'tested · sends text to Google · needs your API key', id: 'gemini' },
         { label: 'Off', description: 'send nothing', id: 'off' },
       ],
@@ -223,7 +223,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     await config().update('model', model, vscode.ConfigurationTarget.Global);
     const advice = modelAdvice('local', model!);
     void vscode.window.showInformationMessage(
-      `Margin will use ${model} on ${baseURL}. Text stays on your machine. Honest status: Margin's local path is implemented but hasn't been tested by its maintainers yet. ${advice.note ?? ''} Please report how it goes.`,
+      `Margin will use ${model} on ${baseURL}. Text stays on your machine.${advice.note ? ` ${advice.note}` : ''}`,
     );
     return true;
   }

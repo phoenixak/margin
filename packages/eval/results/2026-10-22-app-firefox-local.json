@@ -1,0 +1,169 @@
+{
+  "date": "2026-10-22",
+  "app": "Firefox (Margin built from main, temporary add-on, + Harper extension)",
+  "model": "local:gemma4:26b-a4b-it-qat",
+  "page": "packages/browser/static/bench.html (contenteditable)",
+  "note": "Harper's Firefox extension showed no underlines on 11 of the 20 issues (Chrome's showed 0 on 1); not investigated.",
+  "documents": [
+    {
+      "name": "excalidraw-excalidraw-1.md",
+      "harper": 5,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 1267,
+      "firstMarginMs": null
+    },
+    {
+      "name": "excalidraw-excalidraw-2.md",
+      "harper": 5,
+      "margin": 1,
+      "duplicates": 0,
+      "harperMs": 252,
+      "firstMarginMs": 8674
+    },
+    {
+      "name": "excalidraw-excalidraw-3.md",
+      "harper": 11,
+      "margin": 1,
+      "duplicates": 1,
+      "harperMs": 252,
+      "firstMarginMs": 5134
+    },
+    {
+      "name": "excalidraw-excalidraw-4.md",
+      "harper": 1,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 252,
+      "firstMarginMs": null
+    },
+    {
+      "name": "excalidraw-excalidraw-5.md",
+      "harper": 2,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 264,
+      "firstMarginMs": null
+    },
+    {
+      "name": "home-assistant-core-1.md",
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    },
+    {
+      "name": "home-assistant-core-2.md",
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    },
+    {
+      "name": "home-assistant-core-3.md",
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    },
+    {
+      "name": "home-assistant-core-4.md",
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    },
+    {
+      "name": "home-assistant-core-5.md",
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    },
+    {
+      "name": "microsoft-vscode-1.md",
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    },
+    {
+      "name": "microsoft-vscode-2.md",
+      "harper": 3,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 265,
+      "firstMarginMs": null
+    },
+    {
+      "name": "microsoft-vscode-3.md",
+      "harper": 2,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 263,
+      "firstMarginMs": null
+    },
+    {
+      "name": "microsoft-vscode-4.md",
+      "harper": 3,
+      "margin": 1,
+      "duplicates": 0,
+      "harperMs": 252,
+      "firstMarginMs": 4103
+    },
+    {
+      "name": "microsoft-vscode-5.md",
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    },
+    {
+      "name": "ollama-ollama-1.md",
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    },
+    {
+      "name": "ollama-ollama-2.md",
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    },
+    {
+      "name": "ollama-ollama-3.md",
+      "harper": 3,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": 252,
+      "firstMarginMs": null
+    },
+    {
+      "name": "ollama-ollama-4.md",
+      "harper": 0,
+      "margin": 1,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": 6908
+    },
+    {
+      "name": "ollama-ollama-5.md",
+      "harper": 0,
+      "margin": 0,
+      "duplicates": 0,
+      "harperMs": null,
+      "firstMarginMs": null
+    }
+  ]
+}

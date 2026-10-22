@@ -6,7 +6,7 @@ const $ = (id: string) => document.getElementById(id)!;
 async function init() {
   const status = (await chrome.runtime.sendMessage({ type: 'status' } satisfies Request)) as StatusResponse;
   $('status').textContent = status.ready
-    ? `${status.model}${status.tested ? '' : ' (not yet tested by the maintainer)'}${status.provider === 'gemini' ? ' · text goes to Google' : ' · text stays on this computer'}`
+    ? `${status.model}${status.tested ? '' : ' (not tested with Margin)'}${status.provider === 'gemini' ? ' · text goes to Google' : ' · text stays on this computer'}`
     : (status.problem ?? 'Not set up.');
   $('options').addEventListener('click', () => void chrome.runtime.openOptionsPage());
 

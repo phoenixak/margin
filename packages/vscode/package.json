@@ -135,7 +135,7 @@
           "enumDescriptions": [
             "Send nothing (default until you choose).",
             "Google Gemini API with Gemma 4 (tested). Sends the checked sentences to Google.",
-            "An OpenAI-compatible local server such as Ollama or LM Studio (implemented, untested)."
+            "An OpenAI-compatible local server such as Ollama or LM Studio (tested with Ollama and gemma4:26b-a4b-it-qat; LM Studio untested). Text stays on your machine."
           ],
           "default": "off",
           "scope": "application",

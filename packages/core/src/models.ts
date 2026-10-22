@@ -40,11 +40,20 @@ export const MODELS: ModelInfo[] = [
   {
     provider: 'local',
     id: 'gemma4:26b-a4b-it-qat',
-    // Same weights as the evaluated hosted model (4-bit QAT). The local path itself is untested.
+    // Same weights as the hosted model (4-bit QAT). Evaluated on Ollama 0.40.7; LM Studio untested.
     autoCheck: true,
     sameWeightsAs: 'gemini:gemma-4-26b-a4b-it',
     vramGb: 16,
     dataUse: 'Runs on your machine; nothing is sent.',
+    eval: {
+      date: '2026-10-22',
+      commit: 'e99e49c',
+      precision: 1,
+      recall: 0.921,
+      falsePositiveRate: 0,
+      items: 140,
+      report: 'packages/eval/results/2026-10-22-local-v3-b8-c1.md',
+    },
   },
 ];
 

@@ -15,7 +15,7 @@
     <h2>Where your text is checked</h2>
     <label class="choice"><input type="radio" name="provider" value="local">
       <span><b>A local model</b> (Ollama or LM Studio): text stays on your computer.
-      <small>Honest status: implemented, but not yet tested by the maintainer. Please report how it goes.</small></span></label>
+      <small>Tested with Ollama and gemma4:26b-a4b-it-qat. LM Studio and other models: please report how it goes.</small></span></label>
     <label class="choice"><input type="radio" name="provider" value="gemini">
       <span><b>Google Gemini API</b> (Gemma 4) with your own key: tested.
       <small>The text being checked is sent to Google.</small></span></label>
@@ -28,7 +28,7 @@
     <label>Server URL <input id="localBaseUrl" type="url" placeholder="http://localhost:11434/v1"></label>
     <div class="row"><button id="detect">Find models</button><span id="detectStatus" class="muted"></span></div>
     <label>Model <select id="localModel"></select></label>
-    <p class="muted">Recommended: <code>gemma4:26b-a4b-it-qat</code> (16 GB GPU). It has the same weights as the model that passed Margin's eval (100% precision on 137 test sentences). Smaller models tend to over-correct.</p>
+    <p class="muted">Recommended: <code>gemma4:26b-a4b-it-qat</code> (16 GB GPU). Margin's eval: 100% precision, 92% recall, no correct sentence changed (140 test sentences). Smaller models tend to over-correct.</p>
     <div id="help" class="help" hidden></div>
   </section>
 
