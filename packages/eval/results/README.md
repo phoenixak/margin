@@ -114,3 +114,19 @@ Harper made 714 flags on the same text. Real fixes look like "following instruct
 - Harper's Firefox extension showed no underlines on 11 of the 20 issues (Chrome's on 1). We didn't investigate.
 - The Chrome run may have used the build from before prompt v3; the other three used v3.
 - In the browser, Markdown is plain text, so Harper flags code and logs too (661 flags vs 289 when the same issues are linted as Markdown).
+
+# Rewrite and tone (2026-10-22, local model)
+
+40 real prose paragraphs from the docs and issues above, each rewritten with every preset ([numbers](2026-10-22-rewrite-local-gemma4-26b.json), `pnpm -F @margin/eval rewrite-bench`). A rewrite has no single right answer, so this measures what can be checked.
+
+| preset | finished | length (median) | words changed (median) | Harper errors, 52 before → after | contractions, 8 before → after | "!" 1 before → after | time (median) |
+|---|---|---|---|---|---|---|---|
+| Improve | 40/40 | 100% | 7% | 44 | 6 | 0 | 1.4 s |
+| Concise | 40/40 | 80% | 30% | 41 | 1 | 0 | 1.2 s |
+| Formal | 40/40 | 104% | 23% | 39 | 0 | 0 | 1.4 s |
+| Friendly | 40/40 | 112% | 27% | 42 | 41 | 11 | 1.5 s |
+| Fix only | 40/40 | 100% | 0% | 44 | 11 | 1 | 1.3 s |
+
+- Each preset does what it says: Concise cuts a fifth, Formal drops every contraction, Friendly adds them (and exclamation marks). No rewrite added errors that Harper catches.
+- Margin warns before you accept a rewrite that changed negation or numbers: 1–6 times per 40 paragraphs. The ones we read were false alarms ("can't really focus" → "too busy to focus"), so this check is noisier than it should be.
+- "Fix only" left the median paragraph untouched, but its added contractions show it still makes small changes.

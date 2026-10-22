@@ -1,0 +1,97 @@
+{
+  "model": "local:gemma4:26b-a4b-it-qat",
+  "checkSample": "Hi team, I tried the new release yesterday and their is a problem with the export button. When I click it nothing happen, and the progress bar stay stuck at zero. The logs shows a timeout error, but I don't think its the network, my connection was fine. Me and my colleague was able to reproduce it on two different machines. Could you please look into this? Its blocking our launch.",
+  "harper": [
+    {
+      "start": 47,
+      "end": 52,
+      "kind": "Grammar",
+      "message": "Did you mean `there`?",
+      "replacement": "there"
+    },
+    {
+      "start": 213,
+      "end": 220,
+      "kind": "Repetition",
+      "message": "Use either the definite article 'the' or the possessive. Using both together is ungrammatical in English.",
+      "replacement": "its"
+    }
+  ],
+  "margin": [
+    {
+      "start": 114,
+      "end": 120,
+      "replacement": "happens",
+      "why": "Subject–verb agreement errors.",
+      "kind": "grammar"
+    },
+    {
+      "start": 143,
+      "end": 147,
+      "replacement": "stays",
+      "why": "Subject–verb agreement errors.",
+      "kind": "grammar"
+    },
+    {
+      "start": 172,
+      "end": 177,
+      "replacement": "show",
+      "why": "Subject–verb agreement and missing apostrophe.",
+      "kind": "grammar"
+    },
+    {
+      "start": 359,
+      "end": 362,
+      "replacement": "It's",
+      "why": "Missing apostrophe in contraction.",
+      "kind": "grammar"
+    }
+  ],
+  "checkMs": 4562,
+  "rewriteSample": "So basically we decided that we are going to move the weekly sync to Thursday because a lot of people said that Monday mornings are really busy for them and they can't really focus, and also the design team is out on Mondays anyway, so it makes sense. Let me know if that doesn't work for you.",
+  "rewrites": [
+    {
+      "preset": "improve",
+      "label": "Improve",
+      "text": "We have decided to move the weekly sync to Thursday. Many people mentioned that Monday mornings are too busy to focus, and since the design team is out on Mondays anyway, this change makes sense. Let me know if this doesn't work for you.",
+      "ms": 1278,
+      "warnings": [
+        "negation"
+      ]
+    },
+    {
+      "preset": "concise",
+      "label": "Concise",
+      "text": "We are moving the weekly sync to Thursday because Monday mornings are too busy for many, and the design team is out on Mondays. Let me know if this doesn't work for you.",
+      "ms": 1004,
+      "warnings": [
+        "negation"
+      ]
+    },
+    {
+      "preset": "formal",
+      "label": "Formal",
+      "text": "We have decided to reschedule the weekly sync to Thursday. This change is due to feedback indicating that Monday mornings are often too busy for many team members to focus effectively. Additionally, since the design team is unavailable on Mondays, this shift is more practical. Please let me know if this new time presents any conflicts for you.",
+      "ms": 1514,
+      "warnings": [
+        "negation"
+      ]
+    },
+    {
+      "preset": "friendly",
+      "label": "Friendly",
+      "text": "So, we've decided to move our weekly sync to Thursdays! A lot of you mentioned that Monday mornings are super busy and it's hard to focus then, plus the design team is out on Mondays anyway, so this should work much better. Let me know if that doesn't work for you!",
+      "ms": 1478,
+      "warnings": [
+        "negation"
+      ]
+    },
+    {
+      "preset": "fix-only",
+      "label": "Fix only",
+      "text": "So basically, we decided that we are going to move the weekly sync to Thursday because a lot of people said that Monday mornings are really busy for them and they can't really focus, and also the design team is out on Mondays anyway, so it makes sense. Let me know if that doesn't work for you.",
+      "ms": 1554,
+      "warnings": []
+    }
+  ]
+}
