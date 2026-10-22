@@ -37,9 +37,9 @@ Full numbers, how they were measured, and what changed because of them: [eval re
 
 Margin needs Harper installed alongside it.
 
-- **VS Code:** [Margin on the Marketplace](https://marketplace.visualstudio.com/items?itemName=phoenixak.margin-ai), or `code --install-extension phoenixak.margin-ai`. It installs Harper's extension too. (Open VSX: pending.)
+- **VS Code:** [Margin on the Marketplace](https://marketplace.visualstudio.com/items?itemName=phoenixak.margin-ai) or [Open VSX](https://open-vsx.org/extension/phoenixak/margin-ai) (VSCodium, Cursor, Windsurf), or `code --install-extension phoenixak.margin-ai`. It installs Harper's extension too.
 - **Chrome, Firefox:** submitted to the Chrome Web Store and Firefox Add-ons, in review. Until then, build from source (below).
-- **Obsidian:** submitted to the community directory as **Margin AI Proofreader**, in review. Manual install: the files from [margin-obsidian's releases](https://github.com/phoenixak/margin-obsidian/releases). Needs Harper's Obsidian plugin.
+- **Obsidian:** **Margin AI Proofreader** in the [community plugins](https://community.obsidian.md/plugins/margin-ai-proofreader) (Settings → Community plugins → Browse). Needs Harper's Obsidian plugin.
 - **Neovim, Helix, Emacs, Sublime, Zed:** [margin-ls](packages/ls/README.md), from source.
 
 ## Use a local model (text never leaves your computer)
