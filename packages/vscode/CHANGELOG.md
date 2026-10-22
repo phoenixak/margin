@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- Same as 0.1.3; republished so the Open VSX listing matches the VS Code Marketplace.
+
 ## 0.1.3
 
 - README: a short demo of Harper and Margin together (hover, quick fix). No code changes.
