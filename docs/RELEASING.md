@@ -20,7 +20,7 @@ Build everything with `pnpm build`. Release files go in `release/` (gitignored).
 
 **Description:**
 
-> Margin is an optional AI companion to Harper, the private grammar checker. Harper's fast rules stay in charge of spelling and mechanical grammar; Margin adds what rules can't catch: agreement across clauses, tense, wrong-but-real words ("effect" for "affect"), missing or repeated words, run-ons and comma splices. It never repeats what Harper already flags.
+> Margin is an optional AI companion to Harper, the private grammar checker. Harper's fast rules stay in charge of spelling and mechanical grammar; Margin adds what rules can't catch: agreement across clauses, tense, wrong-but-real words ("effect" for "affect"), missing or repeated words, run-ons and comma splices. It never repeats what Harper already flags. Use it together with Harper's own browser extension.
 >
 > - Purple underlines in text fields; click one to Apply or Ignore.
 > - Rewrite a selection (Alt+Shift+R or right-click): Improve, Concise, Formal, Friendly, Fix only, or your own instruction, with Accept / Reject.
@@ -28,7 +28,7 @@ Build everything with `pnpm build`. Release files go in `release/` (gitignored).
 >
 > Where your text goes: with a local model (Ollama or LM Studio), nothing leaves your computer. With Google's Gemini API and your own key, the text being checked is sent to Google; on the free tier Google may use it to improve its products. Code, URLs and emails are masked first. No account, no server, no telemetry.
 >
-> Honest status: tested with hosted Gemma 4 (100% precision on Margin's 137-sentence eval). The local path is implemented but hasn't been tested by the maintainer yet; reports welcome on GitHub.
+> What's tested: Gemma 4 26B A4B, both on your own computer with Ollama and through the Gemini API. On 747 learner sentences corrected by people, Harper alone catches 24% of the fixes and Harper + Margin 40%; Margin changed none of the sentences the people left alone. In this extension, on 20 real GitHub issues, suggestions appeared 4 to 7 seconds after typing. The recommended local model needs about a 16 GB GPU (ollama pull gemma4:26b-a4b-it-qat); the options page shows the one-time setting Ollama needs for browser extensions. LM Studio and other models aren't tested yet; reports welcome on GitHub.
 >
 > Not affiliated with Harper or Automattic. Open source (MIT): https://github.com/phoenixak/margin
 
